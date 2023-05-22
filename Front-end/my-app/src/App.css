@@ -1,6 +1,44 @@
-.data-div{
-  background-color: red;
-  text-align: center;
-  width: 70%;
-  margin-left: 15%;
-}
+.data-row {
+    background-color: #293142;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .data-row__symbol {
+    color: #ffffff;
+    margin: 0;
+  }
+  
+  .data-row__price {
+    color: #ff9800;
+    margin: 0;
+  }
+  .header {
+    background-color: #101724; /* Change to your desired darker blue color */
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header-logo {
+    color: white;
+    margin: 0;
+    font-size: 32px;
+  }
+  
+  .header-link {
+    margin-right: 20px;
+  }
+  
+  .header-link__item {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    margin-right: 20px;
+  }
+  
+  .header-link__item:hover {
+    color: #ff9800;
+  }
