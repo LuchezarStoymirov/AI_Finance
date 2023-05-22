@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\AIF\\AIF\\AIF.csproj": {}
+    "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj": {}
   },
   "projects": {
-    "E:\\AIF\\AIF\\AIF.csproj": {
+    "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AIF\\AIF\\AIF.csproj",
+        "projectUniqueName": "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
         "projectName": "AIF",
-        "projectPath": "E:\\AIF\\AIF\\AIF.csproj",
+        "projectPath": "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
         "packagesPath": "C:\\Users\\Petkov\\.nuget\\packages\\",
-        "outputPath": "E:\\AIF\\AIF\\obj\\",
+        "outputPath": "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Petkov\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -41,13 +41,45 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.5, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.6, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
