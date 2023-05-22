@@ -8,9 +8,10 @@
             this.LastPrice = lastPrice;
         }
 
+        public int Id { get; set; }
 
         public string Symbol { get; set; }
-        public decimal LastPrice { get; set; }   
 
+        public decimal LastPrice { get; set; }   
     }
 }

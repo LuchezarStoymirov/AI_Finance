@@ -1,5 +1,4 @@
-
-using AIF.Models;
+using AIF.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace AIF
