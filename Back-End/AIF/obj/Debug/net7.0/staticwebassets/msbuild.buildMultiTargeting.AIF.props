@@ -1,3 +1,3 @@
 ﻿<Project>
-  <Import Project="..\build\AIF.props" />
+  <Import Project="../build/AIF.props" />
 </Project>
