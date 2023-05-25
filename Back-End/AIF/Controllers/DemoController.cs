@@ -1,6 +1,7 @@
 using AIF.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace AIF.Controllers
 {
@@ -22,7 +23,6 @@ namespace AIF.Controllers
             demoInfo.Add(new DemoModel("S & P 500", (decimal)4161.00));
             demoInfo.Add(new DemoModel("Dow 30", (decimal)33340.71));
             demoInfo.Add(new DemoModel("Nasdaq", (decimal)12570.71));
-
 
             return demoInfo;
         }
