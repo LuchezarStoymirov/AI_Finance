@@ -1,0 +1,41 @@
+
+.container {
+    position: relative;
+    background-image: url(src/images/dark-blue-background-geometric-triangle-y05htl5vjn4jm9bi.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px;
+  }
+  
+  .content {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    background: rgba(30, 36, 44, 0.6);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    margin-left: 5%;
+  }
+  
+  .title {
+    text-align: left;
+    margin-bottom: 30px;
+    color: #61dafb;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    mix-blend-mode: difference;
+  }
+  
+  .description {
+    text-align: left;
+    color: #fff;
+    line-height: 1.5;
+    mix-blend-mode: difference;
+  }
+  

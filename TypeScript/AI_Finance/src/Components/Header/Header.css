@@ -1,0 +1,28 @@
+.header {
+    background-color: #101724; 
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header-logo {
+    color: white;
+    margin: 0;
+    font-size: 32px;
+  }
+  
+  .header-link {
+    margin-right: 20px;
+  }
+  
+  .header-link__item {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    margin-right: 20px;
+  }
+  
+  .header-link__item:hover {
+    color: #ff9800;
+  }
