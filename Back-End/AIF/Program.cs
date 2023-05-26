@@ -27,8 +27,8 @@ namespace AIF
                 })
                 .AddGoogle(options =>
                 {
-                    options.ClientId = "your-google-client-id";
-                    options.ClientSecret = "your-google-client-secret";
+                    options.ClientId = "792906765364-01qa4kfa5a85r0n1s1quap2q9lvugg1h.apps.googleusercontent.com";
+                    options.ClientSecret = "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;
                 });
 
             var app = builder.Build();
