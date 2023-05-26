@@ -1,4 +1,11 @@
 :root{
   background-color: white;
   font-family: sans-serif;
+
+  --lightBlue : #61dafb;
+  --headerBlue : #101724;
+}
+
+body{
+  margin: 0;
 }
