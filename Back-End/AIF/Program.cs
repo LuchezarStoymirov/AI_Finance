@@ -28,12 +28,12 @@ namespace AIF
                 .AddGoogle(options =>
                 {
                     options.ClientId = "792906765364-01qa4kfa5a85r0n1s1quap2q9lvugg1h.apps.googleusercontent.com";
-                    options.ClientSecret = "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;
+                    options.ClientSecret = "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";
                 });
 
             var app = builder.Build();
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
