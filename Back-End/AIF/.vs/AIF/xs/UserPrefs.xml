@@ -2,23 +2,30 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.AIF PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Models/DemoModel.cs">
     <Files>
       <File FileName="Program.cs" Line="58" Column="1" />
-      <File FileName="appsettings.json" Line="1" Column="1" />
-      <File FileName="Migrations/AifDatabaseContextModelSnapshot.cs" Line="1" Column="1" />
-      <File FileName="Models/DemoModel.cs" Line="1" Column="1" />
-      <File FileName="Controllers/AccountController.cs" Line="3" Column="46" />
+      <File FileName="appsettings.json" Line="17" Column="1" />
+      <File FileName="Migrations/AifDatabaseContextModelSnapshot.cs" Line="42" Column="1" />
+      <File FileName="Models/DemoModel.cs" Line="18" Column="1" />
+      <File FileName="Controllers/AccountController.cs" Line="23" Column="64" />
+      <File FileName="Controllers/DemoController.cs" Line="24" Column="49" />
+      <File FileName="Data/AifDatabaseContext.cs" Line="24" Column="53" />
+      <File FileName="Properties/launchSettings.json" Line="16" Column="29" />
+      <File FileName="appsettings.Development.json" Line="1" Column="1" />
+      <File FileName="Migrations/20230522090321_initial.cs" Line="17" Column="61" />
+      <File FileName="Models/User.cs" Line="7" Column="21" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AIF" expanded="True">
-            <Node name="AIF" expanded="True" selected="True">
+            <Node name="AIF" expanded="True">
               <Node name="Controllers" expanded="True" />
               <Node name="Data" expanded="True" />
               <Node name="Migrations" expanded="True" />
               <Node name="Models" expanded="True" />
+              <Node name="Properties" selected="True" />
             </Node>
           </Node>
         </State>
