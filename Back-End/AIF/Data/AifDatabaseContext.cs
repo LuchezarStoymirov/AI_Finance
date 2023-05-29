@@ -24,7 +24,7 @@ namespace AIF.Data
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.Email).IsRequired();
-                entity.Property(e => e.PasswordHash).IsRequired();
+                entity.Property(e => e.Password).IsRequired();
             });
 
             OnModelCreatingPartial(modelBuilder);

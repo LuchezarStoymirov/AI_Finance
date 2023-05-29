@@ -79,7 +79,7 @@ namespace AIF.Controllers
             var newUser = new User
             {
                 Email = username,
-                PasswordHash = password
+                Password = password
             };
 
             _context.Users.Add(newUser);
