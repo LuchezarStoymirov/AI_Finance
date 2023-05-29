@@ -4,7 +4,6 @@ import './Header.css';
 
 export const Header = () => {
   return (
-    <div className="header">
       <Grid container className="header" alignItems="center">
         <Grid item>
           <img
@@ -25,6 +24,5 @@ export const Header = () => {
           </Link>
         </Grid>
       </Grid>
-    </div>
   );
 };
