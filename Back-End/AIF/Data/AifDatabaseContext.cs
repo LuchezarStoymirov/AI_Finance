@@ -1,45 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using AIF.Models;
-using System.Configuration;
-using Microsoft.Extensions.Configuration;
 
-
-namespace AIF.Data;
-
-public partial class AifDatabaseContext : DbContext
+namespace AIF.Data
 {
-    public AifDatabaseContext()
+    public partial class AifDatabaseContext : DbContext
     {
-    }
-
-    private readonly IConfiguration _configuration;
-
-    public AifDatabaseContext(DbContextOptions<AifDatabaseContext> options, IConfiguration configuration)
-        : base(options)
-    {
-        _configuration = configuration;
-    }
-
-
-    public DbSet<DemoModel> Demo { get; set; }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
+        public AifDatabaseContext(DbContextOptions<AifDatabaseContext> options)
+            : base(options)
         {
-            var connectionString = _configuration.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseSqlServer(connectionString);
         }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<DemoModel> Demo { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DemoModel>(entity =>
+            {
+                entity.Property(e => e.Symbol).IsRequired();
+                entity.Property(e => e.LastPrice).HasColumnType("decimal(18,2)");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.PasswordHash).IsRequired();
+            });
+
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
-
-
-
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        OnModelCreatingPartial(modelBuilder);
-    }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
