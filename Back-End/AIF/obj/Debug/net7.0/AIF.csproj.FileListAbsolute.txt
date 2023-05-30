@@ -922,3 +922,4 @@ E:\AI_Finance\AI_Finance\Back-End\AIF\obj\Debug\net7.0\refint\AIF.dll
 E:\AI_Finance\AI_Finance\Back-End\AIF\obj\Debug\net7.0\AIF.pdb
 E:\AI_Finance\AI_Finance\Back-End\AIF\obj\Debug\net7.0\AIF.genruntimeconfig.cache
 E:\AI_Finance\AI_Finance\Back-End\AIF\obj\Debug\net7.0\ref\AIF.dll
+E:\AI_Finance\AI_Finance\Back-End\AIF\bin\Debug\net7.0\Swashbuckle.AspNetCore.Annotations.dll

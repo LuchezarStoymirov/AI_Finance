@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 using AIF.Models;
 using AIF.Data;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AIF.Controllers
 {
-    public class AccountController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AccountController : ControllerBase
     {
         private readonly AifDatabaseContext _context;
 
@@ -20,22 +23,17 @@ namespace AIF.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        [HttpPost("login")]
+        [SwaggerOperation("User login")]
+        public async Task<IActionResult> Login(string email, string password)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(string username, string password, string returnUrl = null)
-        {
-            if (username == "admin" && password == "password")
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            if (user != null)
             {
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, username),
-                };
+        {
+            new Claim(ClaimTypes.Name, email),
+        };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var authProperties = new AuthenticationProperties
@@ -49,36 +47,30 @@ namespace AIF.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                {
-                    return Redirect(returnUrl);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                return Ok("Login successful");
             }
             else
             {
-                // Invalid credentials
-                ModelState.AddModelError(string.Empty, "Invalid username or password");
-                return View();
+                ModelState.AddModelError(string.Empty, "Invalid email or password");
+                return BadRequest("Invalid email or password");
             }
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
 
-        [HttpPost]
-        public async Task<IActionResult> Register(string username, string password)
+        [HttpPost("register")]
+        [SwaggerOperation("User registration")]
+        public async Task<IActionResult> Register(string email, string password)
         {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError(string.Empty, "Email already exists");
+                return BadRequest("Email already exists");
+            }
 
             var newUser = new User
             {
-                Email = username,
+                Email = email,
                 Password = password
             };
 
@@ -86,9 +78,9 @@ namespace AIF.Controllers
             await _context.SaveChangesAsync();
 
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, username),
-            };
+    {
+        new Claim(ClaimTypes.Name, email),
+    };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties
@@ -102,10 +94,12 @@ namespace AIF.Controllers
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
 
-            return RedirectToAction("Index", "Home");
+            return Ok("Registration successful");
         }
 
-        [HttpGet]
+
+        [HttpGet("google-login")]
+        [SwaggerOperation("Google login")]
         public IActionResult GoogleLogin(string returnUrl = null)
         {
             var redirectUrl = Url.Action("GoogleCallback", "Account", new { ReturnUrl = returnUrl });
@@ -113,7 +107,8 @@ namespace AIF.Controllers
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
 
-        [HttpGet]
+        [HttpGet("google-callback")]
+        [SwaggerOperation("Google login callback")]
         public async Task<IActionResult> GoogleCallback(string returnUrl = null)
         {
             var authenticateResult = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
@@ -164,11 +159,12 @@ namespace AIF.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("logout")]
+        [SwaggerOperation("User logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            return Ok("Logout successful");
         }
     }
 }
