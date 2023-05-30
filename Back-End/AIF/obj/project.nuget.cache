@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D4B7o5TQ32MfjGr39GWwOyJUFf04KqSATPuOkHPBsqNM1zcNu3zEKslo4RBYwrnsQDoXcVz7q+0dDHOYHNulkw==",
+  "dgSpecHash": "FNcamiAxJcucBM57RfRTWc25bJZXLUPf5pWjoZFqLiqymRuadmR6KsGzJCX0p/mwC5ghk1h7MCaJCDJryhoxVg==",
   "success": true,
-  "projectFilePath": "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
+  "projectFilePath": "E:\\AI_Finance2\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Petkov\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Petkov\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

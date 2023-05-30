@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj": {}
+    "E:\\AI_Finance2\\AI_Finance\\Back-End\\AIF\\AIF.csproj": {}
   },
   "projects": {
-    "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj": {
+    "E:\\AI_Finance2\\AI_Finance\\Back-End\\AIF\\AIF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
+        "projectUniqueName": "E:\\AI_Finance2\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
         "projectName": "AIF",
-        "projectPath": "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
+        "projectPath": "E:\\AI_Finance2\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
         "packagesPath": "C:\\Users\\Petkov\\.nuget\\packages\\",
-        "outputPath": "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\obj\\",
+        "outputPath": "E:\\AI_Finance2\\AI_Finance\\Back-End\\AIF\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Petkov\\AppData\\Roaming\\NuGet\\NuGet.Config",
