@@ -2,6 +2,11 @@ import { Grid } from "@mui/material";
 import style from "./Home.module.css";
 import { useState, useEffect } from "react";
 import { DataRow } from "../../Components/DataRow/DataRow";
+import { News } from "../../Components/News/News";
+import { StockData } from "../../Components/StockData/StockData";
+import { Statements } from "../../Components/Statements/Statements";
+import { Ratio } from "../../Components/Ratio/Ratio";
+import { Analisys } from "../../Components/Analisys/Analisys";
 
 export const Home = () => {
   const [data, setData] = useState([]);
@@ -26,42 +31,19 @@ export const Home = () => {
     <div className={style.container}>
       <Grid container>
         <Grid container lg={6} md={6} sm={12} className={style.gridrowOdd}>
-          <div className={style.box}>
-            <h1>Stocks</h1>
-            {data.map(createRow)}
-          </div>
+          <StockData/>
         </Grid>
         <Grid container lg={6} md={6} sm={12} className={style.gridrowEven}>
-          <div className={style.box}>
-            <h1>News</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
-              earum labore cumque, architecto quos similique vitae optio nisi
-              officiis ipsa provident nostrum quam velit tempora non debitis!
-              Ipsum, ad similique?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-              sapiente nesciunt id dignissimos nulla ducimus aliquid quibusdam a
-              itaque iste! Error consequatur autem at delectus repellendus
-              voluptatibus earum quasi ea.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus vel
-              laudantium deserunt reiciendis velit magnam eos ea iure, earum
-              similique! Dolorem quidem porro accusantium omnis sequi? Laborum
-              optio numquam molestiae!
-            </p>
-          </div>
+          <News/>
         </Grid>
         <Grid container lg={6} md={6} sm={12} className={style.gridrowOdd}>
-          <div className={style.box}></div>
+          <Statements/>
         </Grid>
         <Grid container lg={6} md={6} sm={12} className={style.gridrowEven}>
-          <div className={style.box}></div>
+          <Ratio/>
         </Grid>
       </Grid>
-      <div className={style.info}></div>
+      <Analisys/>
     </div>
   );
 };
