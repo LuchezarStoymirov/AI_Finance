@@ -16,9 +16,6 @@ export const Header = () => {
           <Link to="/" className="header-link__item">
             Home
           </Link>
-          <Link to="/data" className="header-link__item">
-            Data
-          </Link>
           <Link to="/profile" className="header-link__item">
             Profile
           </Link>
