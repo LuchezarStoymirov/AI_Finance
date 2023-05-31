@@ -1,13 +1,20 @@
-import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider, useLocation } from 'react-router-dom';
-import { Header } from './Components/Header/Header';
-import { Home } from './Pages/Home/Home';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Outlet,
+  RouterProvider,
+  useLocation,
+} from "react-router-dom";
+import { Header } from "./Components/Header/Header";
+import { Home } from "./Pages/Home/Home";
 
-import './App.css';
+import "./App.css";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path='/' element={<Root />} >
+      <Route path="/" element={<Root />}>
         <Route index element={<Home />} />
       </Route>
     )
@@ -22,7 +29,8 @@ function App() {
 
 const Root = () => {
   const location = useLocation();
-  const hideNavbar = location.pathname === '/register' || location.pathname === '/login';
+  const hideNavbar =
+    location.pathname === "/register" || location.pathname === "/login";
 
   return (
     <>
@@ -32,6 +40,6 @@ const Root = () => {
       </div>
     </>
   );
-}
+};
 
 export default App;

@@ -1,7 +1,3 @@
-import style from './Analisys.module.css';
+import style from "./Analisys.module.css";
 
-export const Analisys = () => {
-    return(
-        <div className={style.info}></div>
-    );
-}
+export const Analisys = () => <div className={style.info}></div>;

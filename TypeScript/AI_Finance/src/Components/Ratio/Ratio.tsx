@@ -1,7 +1,3 @@
-import style from './Ratio.module.css'
+import style from "./Ratio.module.css";
 
-export const Ratio = () => {
-    return(
-        <div className={style.box}></div>
-    );
-}
+export const Ratio = () => <div className={style.box}></div>;

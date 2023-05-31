@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
-import style from './DataRow.module.css'
+import style from "./DataRow.module.css";
 
-export const DataRow = (props:any) => {
+export const DataRow = (props: any) => {
   return (
     <div className={style.row}>
       <Grid container rowSpacing={3} justifyContent="space-evenly">
@@ -20,4 +20,4 @@ export const DataRow = (props:any) => {
       </Grid>
     </div>
   );
-}
+};
