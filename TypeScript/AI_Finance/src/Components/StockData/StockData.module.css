@@ -1,0 +1,17 @@
+.box{
+    width: 80%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    height: 200px;
+    border-radius: 8px;
+    margin: 10px;
+    overflow: auto;
+    text-align: center;
+    color: white;
+  }
+
+  @media (max-width: 767px){
+    .box{
+      padding: 10px;
+    }
+  }
