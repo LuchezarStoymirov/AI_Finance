@@ -23,56 +23,69 @@ namespace AIF
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            var builder = WebApplication.CreateBuilder(args);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+            // Add services to the container.
 
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
-        public IConfiguration Configuration { get; }
+            builder.Services.AddDbContext<AifDatabaseContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<JwtService>();
 
-            services.AddDbContext<AifDatabaseContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddControllers();
-
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<JwtService>();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
+            builder.Services.AddSwaggerGen(c =>
             {
-                app.UseDeveloperExceptionPage();
+               c.SwaggerDoc("v1", new OpenApiInfo
+               {
+                   Title = "My API",
+                   Version = "v1"
+               });
+               c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+               {
+                   In = ParameterLocation.Header,
+                   Description = "Please insert JWT with Bearer into field",
+                   Name = "Authorization",
+                   Type = SecuritySchemeType.ApiKey
+               });
+               c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                  {
+                    new OpenApiSecurityScheme
+                    {
+                      Reference = new OpenApiReference
+                      {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                      }
+                     },
+                     new string[] { }
+                   }
+                 });
+             });
+
+            var app = builder.Build();
+
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173"));
+
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173"));
-
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.MapControllers();
+
+            app.Run();
         }
     }
 }
