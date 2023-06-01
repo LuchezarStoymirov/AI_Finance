@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "D4B7o5TQ32MfjGr39GWwOyJUFf04KqSATPuOkHPBsqNM1zcNu3zEKslo4RBYwrnsQDoXcVz7q+0dDHOYHNulkw==",
+  "dgSpecHash": "Wc6AJjpgmeIhGKG/gzTXr0MEpXq6p/NOt/CQfT+rHRBHtwAhG1sEhEEqUZQv19gfqb+0Rdq1ZgElNvdfzV1ksg==",
   "success": true,
-  "projectFilePath": "E:\\AI_Finance\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
+  "projectFilePath": "C:\\Users\\Petkov\\Desktop\\Project\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Petkov\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Petkov\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\Petkov\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Petkov\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Petkov\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.11\\microsoft.aspnetcore.razor.language.6.0.11.nupkg.sha512",
     "C:\\Users\\Petkov\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
