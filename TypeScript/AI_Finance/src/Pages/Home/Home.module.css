@@ -10,13 +10,12 @@
   flex-direction: column;
 }
 
-
-.gridrowOdd{
+.gridrowOdd {
   justify-content: flex-end;
   padding: 10px;
 }
 
-.gridrowEven{
+.gridrowEven {
   justify-content: flex-start;
   padding: 10px;
 }
@@ -74,14 +73,13 @@
     line-height: 1.3;
   }
 
-  .box{
+  .box {
     margin: 10px;
     width: 100%;
   }
 
   .gridrowOdd,
-  .gridrowEven{
+  .gridrowEven {
     justify-content: center;
   }
 }
-

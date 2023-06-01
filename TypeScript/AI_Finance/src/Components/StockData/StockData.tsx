@@ -1,6 +1,6 @@
 import style from "./StockData.module.css";
 import { DataRow } from "../DataRow/DataRow";
-import { fetchWrapper } from "../../services/fetchWrapper";
+import { services } from "../../services/services";
 import { useState, useEffect } from "react";
 
 export const StockData = () => {
@@ -8,11 +8,11 @@ export const StockData = () => {
 
   useEffect(() => {
     (async () => {
-      setData(await fetchWrapper.get("https://localhost:7085/Demo"));
+      setData(await services.get("https://localhost:7085/Demo"));
     })();
   }, []);
 
-  const createRow = (item: any, index: any) => {
+  const createRow = (item: { symbol: string; lastPrice: number; }, index: number) => {
     return <DataRow key={index} symbol={item.symbol} price={item.lastPrice} />;
   };
 
