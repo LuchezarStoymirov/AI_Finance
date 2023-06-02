@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { autservie } from "../../services/autService";
+import { autservice } from "../../services/autService";
 import style from './Login.module.css';
 
 export const Login = () => {
@@ -12,7 +12,7 @@ export const Login = () => {
     const url = 'https://localhost:7085/api/login';
     e.preventDefault();
     try {
-      const response =  autservie.login(url, data);
+      const response =  autservice.login(url, data);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -24,9 +24,7 @@ export const Login = () => {
   return (
     <div className={style.container}>
       <form onSubmit={handleSubmit} className={style.form}>
-      <div className={style.image}>
         <img src="src\images\CashGrab-logo-light.png" alt="Login Image" className={style.image} />
-      </div>
         <h2 className={style.title}>Welcome</h2>
         <div className={style.registerInputContainer}>
           <input
