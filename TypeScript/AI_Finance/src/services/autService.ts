@@ -5,6 +5,7 @@ const login = (url: string, data: object) => {
         'content-type': 'application/json'
     }
     const response = fetchWrapper.post(url, data, config)
+    console.log('post reached autsevice');
     return response;
 }
 

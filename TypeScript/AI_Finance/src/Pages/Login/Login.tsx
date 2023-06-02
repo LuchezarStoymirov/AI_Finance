@@ -8,12 +8,12 @@ export const Login = () => {
   });
 
   const handleSubmit = (e: any) => {
+    e.preventDefault();
     try {
       const response =  autservie.login('https://localhost:7085/swagger/api/login', data);
       console.log(response);
     } catch (error) {
       console.log(error);
-     
     } 
   };
   
