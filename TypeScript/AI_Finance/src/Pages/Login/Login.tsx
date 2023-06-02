@@ -9,9 +9,10 @@ export const Login = () => {
   });
 
   const handleSubmit = (e: any) => {
+    const url = 'https://localhost:7085/api/login';
     e.preventDefault();
     try {
-      const response =  autservie.login('https://localhost:7085/swagger/api/login', data);
+      const response =  autservie.login(url, data);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -39,7 +40,7 @@ export const Login = () => {
         </div>
         <div className={style.registerInputContainer}>
           <input
-            type="text"
+            type="password"
             placeholder="Password"
             onChange={(e) => {
               setData({ ...data, password: e.target.value });
