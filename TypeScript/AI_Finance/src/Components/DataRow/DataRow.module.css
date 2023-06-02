@@ -1,0 +1,34 @@
+.row {
+    background-color: var(--dataRowBlue);
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    max-width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  
+  .symbol {
+    color: var(--lightBlue);
+    margin: 0;
+  }
+  
+  .price {
+    color: white;
+    margin: 0;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 767px) {
+    .row {
+      max-width: 100%;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  
+    .symbol,
+    .price {
+      font-size: 14px;
+    }
+  }
+  
