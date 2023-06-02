@@ -8,6 +8,7 @@
     overflow: auto;
     text-align: center;
     color: white;
+    box-shadow: var(--boxShadow);
   }
 
   @media (max-width: 767px){

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { autservie } from "../../services/autService";
+import style from './Login.module.css';
 
 export const Login = () => {
   const [data, setData] = useState({
@@ -20,30 +21,33 @@ export const Login = () => {
   
 
   return (
-    <div className="register-container">
-      <form onSubmit={handleSubmit} className="register-form">
-        <h2 className="register-title">Welcome</h2>
-        <div className="register-input-container">
+    <div className={style.container}>
+      <form onSubmit={handleSubmit} className={style.form}>
+      <div className={style.image}>
+        <img src="src\images\CashGrab-logo-light.png" alt="Login Image" className={style.image} />
+      </div>
+        <h2 className={style.title}>Welcome</h2>
+        <div className={style.registerInputContainer}>
           <input
             type="text"
             placeholder="Email"
             onChange={(e) => {
               setData({ ...data, email: e.target.value });
             }}
-            className="register-input"
+            className={style.input}
           />
         </div>
-        <div className="register-input-container">
+        <div className={style.registerInputContainer}>
           <input
             type="text"
             placeholder="Password"
             onChange={(e) => {
               setData({ ...data, password: e.target.value });
             }}
-            className="register-input"
+            className={style.input}
           />
         </div>
-        <button type="submit" className="register-button">Login</button>
+        <button type="submit" className={style.button}>Login</button>
       </form>
     </div>
   );
