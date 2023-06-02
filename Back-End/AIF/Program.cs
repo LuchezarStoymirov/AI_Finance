@@ -68,7 +68,7 @@ namespace AIF
 
             var app = builder.Build();
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
 
 
             // Configure the HTTP request pipeline.
