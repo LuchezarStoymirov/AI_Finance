@@ -2,6 +2,7 @@ import style from './Register.module.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { autservice } from '../../services/autService';
+import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 
 
@@ -18,21 +19,22 @@ export const Register = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = (data:any) => {
-    const url = 'https://localhost:7085/api/register'
+  const onSubmit = async (data: any) => {
+    const url = 'https://localhost:7085/api/register';
     const info = {
-        user: data.user,
-        email: data.email,
-        password: data.password
-    }
+      user: data.user,
+      email: data.email,
+      password: data.password
+    };
     try {
-        const response = autservice.register(url, info);
-        console.log(response);
+      const response = await autservice.register(url, info);
+      console.log(response);
     } catch (error) {
-        console.log(error);
-        throw error;
+      console.log(error);
+      throw error;
     }
   };
+  
 
   return (
     <div className={style.container}>
@@ -54,6 +56,10 @@ export const Register = () => {
         <div className="register-button-container">
           <button type="submit" className={style.button}>Submit</button>
         </div>
+        <p className={style.redirect}>
+          Already an account? Click{" "}
+          <Link to='/login' className={style.link}>Here</Link>.
+        </p>
       </form>
     </div>
   );

@@ -82,6 +82,14 @@
     margin: 0 auto;
     width: 400px;
   }
+
+  .redirect{
+    color: white;
+  }
+
+  .link{
+    color: var(--lightBlue);
+  }
   
   /* Responsive Styles */
   @media only screen and (max-width: 768px) {

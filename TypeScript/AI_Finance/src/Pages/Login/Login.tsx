@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom"; // Import Link component
 import { autservice } from "../../services/autService";
 import style from './Login.module.css';
 
@@ -18,8 +19,6 @@ export const Login = () => {
       console.log(error);
     } 
   };
-  
-  
 
   return (
     <div className={style.container}>
@@ -47,6 +46,10 @@ export const Login = () => {
           />
         </div>
         <button type="submit" className={style.button}>Login</button>
+        <p className={style.redirect}>
+          Don't have an account? Sign up{" "}
+          <Link to="/register" className={style.link}>Here</Link>.
+        </p>
       </form>
     </div>
   );
