@@ -14,7 +14,7 @@ const register = async (url: string, data: object) => {
       'Content-type': 'application/json'
     };
   
-    const response = await fetchWrapper.post(url, data, config);
+    const response = fetchWrapper.post(url, data, config);
     console.log('post reached autservice');
     return response;
   };

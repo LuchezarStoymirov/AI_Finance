@@ -27,8 +27,10 @@ export const Register = () => {
       password: data.password
     };
     try {
-      const response = await autservice.register(url, info);
+      const response = autservice.register(url, info);
       console.log(response);
+      console.log(info);
+      return(response);
     } catch (error) {
       console.log(error);
       throw error;
