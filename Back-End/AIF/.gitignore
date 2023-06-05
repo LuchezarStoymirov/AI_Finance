@@ -368,9 +368,3 @@ FodyWeavers.xsd
 **/target
 
 
-# Removing Migration folder
-Migrations/
-
-# Removing appSetings
-appsettings
-appsettings.Development
