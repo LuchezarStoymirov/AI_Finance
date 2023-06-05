@@ -1,7 +1,15 @@
+import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link component
+import { Link } from "react-router-dom";
 import { autservice } from "../../services/autService";
 import style from './Login.module.css';
+import jwt_decode from 'jwt-decode';
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
 
 export const Login = () => {
   const [data, setData] = useState({
@@ -9,11 +17,30 @@ export const Login = () => {
     password: "",
   });
 
-  const handleSubmit = (e: any) => {
-    const url = 'https://localhost:7085/api/login';
+  const handleCallbackResponse = (response: any) => {
+    console.log('Encoded JWT token:', response.credential)
+    const decodedJWT = jwt_decode(response.credential);
+    console.log(decodedJWT);
+  }
+
+  useEffect(() => {
+    window.google?.accounts.id.initialize({
+      client_id: '477276107037-6nvps4ht1setgd3c4o4sao17fau71r17.apps.googleusercontent.com',
+      callback: handleCallbackResponse
+    });
+
+    window.google?.accounts.id.renderButton(
+        document.getElementById('loginDiv'),
+        {theme:'outline', size:'large'}
+    );
+  },[]);
+
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const url = 'https://localhost:7085/api/login';
     try {
-      const response =  autservice.login(url, data);
+      const response = autservice.login(url, data);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -50,6 +77,9 @@ export const Login = () => {
           Don't have an account? Sign up{" "}
           <Link to="/register" className={style.link}>Here</Link>.
         </p>
+        <div id = 'loginDiv'>
+            
+        </div>
       </form>
     </div>
   );
