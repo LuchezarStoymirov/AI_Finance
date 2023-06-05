@@ -1,0 +1,12 @@
+
+*.cache
+Back-End/AIF/obj/project.nuget.cache
+Back-End/AIF/obj/project.assets.json
+Back-End/AIF/obj/Debug/net7.0/AIF.GeneratedMSBuildEditorConfig.editorconfig
+Back-End/AIF/obj/Debug/net7.0/AIF.csproj.AssemblyReference.cache
+Back-End/AIF/obj/Debug/net7.0/AIF.assets.cache
+Back-End/AIF/obj/AIF.csproj.nuget.g.targets
+Back-End/AIF/obj/AIF.csproj.nuget.g.targets
+Back-End/AIF/obj/AIF.csproj.nuget.g.props
+Back-End/AIF/obj/AIF.csproj.nuget.dgspec.json
+Back-End/AIF/.vs/AIF/xs/project-cache/AIF-Debug.json
