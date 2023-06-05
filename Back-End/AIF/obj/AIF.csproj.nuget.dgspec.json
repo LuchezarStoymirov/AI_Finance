@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Petkov\\Desktop\\Ново repository\\AI_Finance\\Back-End\\AIF\\AIF.csproj": {}
+    "C:\\Users\\lucho\\Desktop\\Test\\Back-End\\AIF\\AIF.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Petkov\\Desktop\\Ново repository\\AI_Finance\\Back-End\\AIF\\AIF.csproj": {
+    "C:\\Users\\lucho\\Desktop\\Test\\Back-End\\AIF\\AIF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Petkov\\Desktop\\Ново repository\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
+        "projectUniqueName": "C:\\Users\\lucho\\Desktop\\Test\\Back-End\\AIF\\AIF.csproj",
         "projectName": "AIF",
-        "projectPath": "C:\\Users\\Petkov\\Desktop\\Ново repository\\AI_Finance\\Back-End\\AIF\\AIF.csproj",
-        "packagesPath": "C:\\Users\\Petkov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Petkov\\Desktop\\Ново repository\\AI_Finance\\Back-End\\AIF\\obj\\",
+        "projectPath": "C:\\Users\\lucho\\Desktop\\Test\\Back-End\\AIF\\AIF.csproj",
+        "packagesPath": "C:\\Users\\lucho\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lucho\\Desktop\\Test\\Back-End\\AIF\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Petkov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lucho\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
