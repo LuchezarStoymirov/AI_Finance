@@ -50,6 +50,7 @@
 
   input:focus{
     outline: none;
+    background-color: inherit;
   }
   
   .registerInputContainer {

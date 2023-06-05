@@ -59,7 +59,7 @@ export const Register = () => {
           <button type="submit" className={style.button}>Submit</button>
         </div>
         <p className={style.redirect}>
-          Already an account? Click{" "}
+          Already have an account? Click{" "}
           <Link to='/login' className={style.link}>Here</Link>.
         </p>
       </form>

@@ -9,6 +9,7 @@ const get = async (url: string) => {
 const post = async (url:string, data: object, config: object) => {
   const response = await axios.post(url, data, config)
   console.log('post reacher wrapper');
+  console.log(response)
   return response;
 }
 
