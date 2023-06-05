@@ -22,7 +22,7 @@ export const Register = () => {
   const onSubmit = async (data: any) => {
     const url = 'https://localhost:7085/api/register';
     const info = {
-      user: data.user,
+      name: data.user,
       email: data.email,
       password: data.password
     };
