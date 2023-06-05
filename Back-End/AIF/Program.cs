@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AIF.Data;
 using AIF.Helpers;
-using AIF.Data;
-using AIF.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

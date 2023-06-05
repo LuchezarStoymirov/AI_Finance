@@ -10,3 +10,8 @@ Back-End/AIF/obj/AIF.csproj.nuget.g.targets
 Back-End/AIF/obj/AIF.csproj.nuget.g.props
 Back-End/AIF/obj/AIF.csproj.nuget.dgspec.json
 Back-End/AIF/.vs/AIF/xs/project-cache/AIF-Debug.json
+Back-End/AIF/.vs/AIF/xs/project-cache/AIF-Debug.json
+Back-End/AIF/bin/Debug/net7.0/AIF.deps.json
+Back-End/AIF/bin/Debug/net7.0/AIF.dll
+Back-End/AIF/bin/Debug/net7.0/AIF.pdb
+Back-End/AIF/bin/Debug/net7.0/BCrypt.Net-Next.dll
