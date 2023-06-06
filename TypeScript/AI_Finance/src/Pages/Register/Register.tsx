@@ -1,11 +1,16 @@
 import style from './Register.module.css';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { autservice } from '../../services/autService';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 
-
+interface FormData {
+  user: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 export const Register = () => {
   const schema = yup.object().shape({
@@ -15,11 +20,11 @@ export const Register = () => {
     confirmPassword: yup.string().oneOf([yup.ref("password")]).required()
   });
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     const url = 'https://localhost:7085/api/register';
     const info = {
       name: data.user,
@@ -30,7 +35,7 @@ export const Register = () => {
       const response = autservice.register(url, info);
       console.log(response);
       console.log(info);
-      return(response);
+      return response;
     } catch (error) {
       console.log(error);
       throw error;

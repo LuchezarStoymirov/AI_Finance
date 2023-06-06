@@ -7,10 +7,12 @@ const get = async (url: string) => {
 };
 
 const post = async (url:string, data: object, config: object) => {
-  const response = await axios.post(url, data).then(res => {
-    console.log(res.data);
+  let response;
+  await axios.post(url, data, config).then(res => {
+    response = res.data;
   })
-  console.log('post reached wrapper');
+  // console.log('in wrapper: ');
+  // console.log(response);
   return response;
 }
 

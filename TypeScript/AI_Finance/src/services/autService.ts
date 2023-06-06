@@ -1,15 +1,16 @@
 import { fetchWrapper } from "./fetchWrapper"
 
-const login = (url: string, data: object) => {
+const login = async (url: string, data: object) => {
   const config = {
     'Content-type': 'application/json'
   };
-    const response = fetchWrapper.post(url, data, config)
-    console.log('post reached autsevice');
+    const response = await fetchWrapper.post(url, data, config)
+    // console.log('in autservice: ');
+    // console.log(response);
     return response;
 }
 
-const register = async (url: string, data: object) => {
+const register = (url: string, data: object) => {
     const config = {
       'Content-type': 'application/json'
     };

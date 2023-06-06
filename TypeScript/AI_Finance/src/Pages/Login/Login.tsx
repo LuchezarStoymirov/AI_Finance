@@ -17,6 +17,8 @@ export const Login = () => {
     password: "",
   });
 
+  const [token, setToken] = useState();
+
   const handleCallbackResponse = (response: any) => {
     console.log('Encoded JWT token:', response.credential)
     const decodedJWT = jwt_decode(response.credential);
@@ -39,14 +41,13 @@ export const Login = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const url = 'https://localhost:7085/api/login';
-    try {
-      const response = autservice.login(url, data);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    } 
+    autservice.login(url, data)
+      .then(res => setToken(res))
+      .catch(error => console.log(error));
   };
-
+  
+  console.log(localStorage);
+  
   return (
     <div className={style.container}>
       <form onSubmit={handleSubmit} className={style.form}>
