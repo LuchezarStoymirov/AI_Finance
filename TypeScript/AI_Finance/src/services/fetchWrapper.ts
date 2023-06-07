@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 interface Data {
   email: string,
@@ -6,11 +6,11 @@ interface Data {
 }
 
 const get = async (url: string) => {
-    const header = {
+    const headers = {
       'Content-type' : 'application/json',
-      Authorization : {}
+      'Authorization' : `Bearer ${localStorage.getItem('token')}`
     }
-    const response = await axios.get(url);
+    const response = await axios.get(url, {headers});
     return response.data;
 };
 

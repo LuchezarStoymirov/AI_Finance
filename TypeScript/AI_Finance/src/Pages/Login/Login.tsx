@@ -1,12 +1,9 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import jwtDecode from "jwt-decode";
 import { Link } from "react-router-dom";
 import { autservice } from "../../services/autService";
-import { config } from "../../Config/urlConfig";
 import { googleToken } from "./constants";
 import style from "./Login.module.css";
-
 
 declare global {
   interface Window {
@@ -26,8 +23,6 @@ export const Login = () => {
 
   const handleCallbackResponse = (response: CallBack) => {
     console.log("Encoded JWT token:", response.credential);
-    const decoded_token = jwtDecode(response.credential);
-    console.log(decoded_token);
   };
 
   useEffect(() => {
@@ -44,11 +39,11 @@ export const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const url = config.baseURL + config.login;
     await autservice
-      .login(url, data)
+      .login(data)
       .then((res) => {
         localStorage.setItem('token', res.data.token);
+        console.log(localStorage);
       })
       .catch((error) => {throw error});
   };
