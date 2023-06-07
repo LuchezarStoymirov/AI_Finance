@@ -1,14 +1,21 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import jwtDecode from "jwt-decode";
 import { Link } from "react-router-dom";
 import { autservice } from "../../services/autService";
 import { config } from "../../Config/urlConfig";
+import { googleToken } from "./constants";
 import style from "./Login.module.css";
+
 
 declare global {
   interface Window {
     google: any;
   }
+}
+
+interface CallBack {
+  credential: string;
 }
 
 export const Login = () => {
@@ -17,16 +24,15 @@ export const Login = () => {
     password: "",
   });
 
-  const [token, setToken] = useState();
-
-  const handleCallbackResponse = (response: any) => {
+  const handleCallbackResponse = (response: CallBack) => {
     console.log("Encoded JWT token:", response.credential);
+    const decoded_token = jwtDecode(response.credential);
+    console.log(decoded_token);
   };
 
   useEffect(() => {
     window.google?.accounts.id.initialize({
-      client_id:
-        "477276107037-6nvps4ht1setgd3c4o4sao17fau71r17.apps.googleusercontent.com",
+      client_id: googleToken,
       callback: handleCallbackResponse,
     });
 
@@ -41,10 +47,12 @@ export const Login = () => {
     const url = config.baseURL + config.login;
     await autservice
       .login(url, data)
-      .then((res) => setToken(res))
+      .then((res) => {
+        localStorage.setItem('token', res.data.token);
+      })
       .catch((error) => {throw error});
   };
-  
+
   return (
     <div className={style.container}>
       <form onSubmit={handleSubmit} className={style.form}>

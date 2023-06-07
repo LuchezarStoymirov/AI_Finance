@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 interface Data {
   email: string,
@@ -6,16 +6,16 @@ interface Data {
 }
 
 const get = async (url: string) => {
+    const header = {
+      'Content-type' : 'application/json',
+      Authorization : {}
+    }
     const response = await axios.get(url);
     return response.data;
 };
 
-const post = async (url:string, data: Data) => {
-  let response;
-  await axios.post(url, data).then(res => {
-    response = res.data;
-  })
-  return response;
+const post = <T,>(url:string, data: Data) => {
+  return axios.post<T>(url, data);
 }
 
 export const fetchWrapper = {

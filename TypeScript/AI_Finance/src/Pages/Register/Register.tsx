@@ -32,14 +32,11 @@ export const Register = () => {
       email: data.email,
       password: data.password
     };
-    try {
-      const response = autservice.register(url, info);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-
+  
+    const response = await autservice.register(url, info);
+    return response;
   };
+  
   
 
   return (
