@@ -49,7 +49,7 @@ namespace AIF.Controllers
 
             var jwt = _jwtService.Generate(user.Id);
 
-            return Ok(new { token = jwt });
+            return Ok(new { token = jwt, name = user.Name, email = user.Email });
         }
 
         [HttpGet("user")]

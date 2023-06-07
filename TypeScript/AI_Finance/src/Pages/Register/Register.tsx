@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { autservice } from '../../services/autService';
 import { Link } from 'react-router-dom';
+import { config } from '../../Config/urlConfig';
 import * as yup from 'yup';
 
 interface FormData {
@@ -25,7 +26,7 @@ export const Register = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const url = 'https://localhost:7085/api/register';
+    const url = config.baseURL + config.register;
     const info = {
       name: data.user,
       email: data.email,
@@ -33,13 +34,11 @@ export const Register = () => {
     };
     try {
       const response = autservice.register(url, info);
-      console.log(response);
-      console.log(info);
       return response;
     } catch (error) {
-      console.log(error);
       throw error;
     }
+
   };
   
 
