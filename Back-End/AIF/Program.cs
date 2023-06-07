@@ -1,18 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AIF.Data;
 using AIF.Helpers;
+using AIF.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace AIF
@@ -24,17 +22,23 @@ namespace AIF
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<AifDatabaseContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            // Configure DbContext
+            builder.Services.AddDbContext<AifDatabaseContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // Configure Identity
+            builder.Services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AifDatabaseContext>()
+                .AddDefaultTokenProviders();
+
+            // Add other services
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<JwtService>();
 
+            // Configure Swagger
+            builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -49,27 +53,25 @@ namespace AIF
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                  {
-                    new OpenApiSecurityScheme
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
                     {
-                      Reference = new OpenApiReference
-                      {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                      }
-                     },
-                     new string[] { }
-                   }
-                 });
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
 
             var app = builder.Build();
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
-
-
-            // Configure the HTTP request pipeline.
+            // Configure middleware
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -77,9 +79,10 @@ namespace AIF
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173"));
+            app.UseRouting();
 
             app.MapControllers();
 
