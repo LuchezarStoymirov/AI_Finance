@@ -23,7 +23,7 @@ namespace AIF.Data
 
         public User GetByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+            return this._context.Users.FirstOrDefault(u => u.Email == email);
         }
 
         public User GetById(int id)

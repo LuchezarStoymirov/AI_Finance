@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace AIF.Controllers
 {
-    [Route ("api")]
+    [Route("api")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -25,7 +25,7 @@ namespace AIF.Controllers
             _jwtService = jwtService;
         }
 
-        [HttpPost ("register")]
+        [HttpPost("register")]
         public IActionResult Register(RegisterDto dto)
         {
             var user = new User
@@ -38,7 +38,7 @@ namespace AIF.Controllers
             return Created ("success", _repository.Create(user));
         }
 
-        [HttpPost ("login")]
+        [HttpPost("login")]
         public IActionResult Login(LoginDto dto)
         {
             var user = _repository.GetByEmail(dto.Email);
@@ -72,7 +72,7 @@ namespace AIF.Controllers
                 return BadRequest (new { error = validation.ErrorMessage });
             }
 
-            var user = _repository.GetByEmail (dto.Email);
+            var user = _repository.GetByEmail(dto.Email);
             if (user == null)
             {
                 // If the user does not exist, create a new user using the provided email
@@ -90,8 +90,8 @@ namespace AIF.Controllers
 
         }
 
-        [HttpPost ("Validate-Google-Token")]
-        public async Task<GoogleTokenValidationResult> ValidateGoogleToken(string googleToken)
+        [HttpPost("Validate-Google-Token")]
+        public async Task<GoogleTokenValidationResult>ValidateGoogleToken(string googleToken)
         {
             using (var httpClient = new HttpClient())
             {
@@ -127,7 +127,7 @@ namespace AIF.Controllers
             }
         }
 
-        [HttpGet ("user")]
+        [HttpGet("user")]
         public IActionResult User()
         {
             try
@@ -142,13 +142,13 @@ namespace AIF.Controllers
         
                 return Ok(user);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 return Unauthorized();
            }
         }
 
-        [HttpPost ("logout")]
+        [HttpPost("logout")]
         public IActionResult Logout()
         {
             Response.Cookies.Delete("jwt");

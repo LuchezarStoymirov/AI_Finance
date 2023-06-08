@@ -37,20 +37,6 @@ namespace AIF.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.CreateTable(
-                name: "Demo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LastPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Symbol = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Demo", x => x.Id);
-                });
         }
     }
 }
