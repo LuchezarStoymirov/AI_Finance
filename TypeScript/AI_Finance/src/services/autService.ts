@@ -2,9 +2,15 @@ import { AxiosResponse } from "axios";
 import { fetchWrapper } from "./fetchWrapper"
 import { config } from "../Config/urlConfig";
 
-interface Data {
+interface LoginData {
   email: string;
   password: string;
+}
+
+interface RegisterData {
+  name: string;
+  email: string;
+  password: string
 }
 
 interface LoginResponse {
@@ -19,18 +25,17 @@ interface RegisterResponse {
   password: string
 }
 
-const login = async (data: Data) : Promise<AxiosResponse<LoginResponse>> => {
+const login = async (data: LoginData) : Promise<AxiosResponse<LoginResponse>> => {
     const url = config.baseURL + config.login;
-    const response = await fetchWrapper.post<LoginResponse>(url, data)
+    const response = await fetchWrapper.post<LoginResponse, LoginData>(url, data)
     return response;
 }
 
-const register = (data: Data) => {
+const register = (data: RegisterData) => {
     const url = config.baseURL + config.register;
-    const response = fetchWrapper.post<RegisterResponse>(url, data);
+    const response = fetchWrapper.post<RegisterResponse, RegisterData>(url, data);
     return response;
   };
-  
 
 export const autservice = { 
     login,

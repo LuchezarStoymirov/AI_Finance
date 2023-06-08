@@ -42,10 +42,11 @@ export const Login = () => {
     await autservice
       .login(data)
       .then((res) => {
-        localStorage.setItem('token', res.data.token);
-        console.log(localStorage);
+        localStorage.setItem("token", res.data.token);
       })
-      .catch((error) => {throw error});
+      .catch((error) => {
+        throw error;
+      });
   };
 
   return (

@@ -1,20 +1,13 @@
 import axios from "axios";
 
-interface Data {
-  email: string,
-  password: string;
-}
+
 
 const get = async (url: string) => {
-    const headers = {
-      'Content-type' : 'application/json',
-      'Authorization' : `Bearer ${localStorage.getItem('token')}`
-    }
-    const response = await axios.get(url, {headers});
+    const response = await axios.get(url);
     return response.data;
 };
 
-const post = <T,>(url:string, data: Data) => {
+const post = <T, D>(url:string, data: D) => {
   return axios.post<T>(url, data);
 }
 
