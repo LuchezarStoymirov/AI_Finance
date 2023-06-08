@@ -16,13 +16,13 @@ interface RegisterData {
 interface LoginResponse {
   token: string;
   email: string;
-  name: string
+  name: string;
 }
 
 interface RegisterResponse {
   name: string;
   email: string;
-  password: string
+  password: string;
 }
 
 const login = async (data: LoginData) : Promise<AxiosResponse<LoginResponse>> => {
