@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AIF.Data;
-using AIF.Helpers;
-using AIF.Data;
-using AIF.Helpers;
+using AIF.Services;
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -64,6 +63,15 @@ namespace AIF
                      new string[] { }
                    }
                  });
+            });
+
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "Your API Name", Version = "v2" });
+
+                // Add the scraping endpoint to Swagger
+                c.MapType<List<string>>(() => new OpenApiSchema { Type = "array", Items = new OpenApiSchema { Type = "string" } });
+
             });
 
             var app = builder.Build();
