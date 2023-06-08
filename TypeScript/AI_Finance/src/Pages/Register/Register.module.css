@@ -98,11 +98,11 @@ input:focus {
   margin-top: 5px;
   margin-bottom: 5px;
   height: 10px;
-  color: red;
+  color: var(--errorRed);
 }
 
 .errorInput {
-  border-color: red !important;
+  border-color: var(--errorRed) !important;
 }
 
 @keyframes shake {

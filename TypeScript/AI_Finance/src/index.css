@@ -6,6 +6,7 @@
   --headerBlue : #101724;
   --dataRowBlue: #293142;
   --formColor: rgba(0, 0, 0, 0.6);
+  --errorRed: #ff4030;
 }
 
 body{

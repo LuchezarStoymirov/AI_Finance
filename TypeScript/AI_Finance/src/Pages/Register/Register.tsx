@@ -20,7 +20,7 @@ export const Register = () => {
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "Passwords must match")
-      .required(),
+      .required("Field cannot be  empty"),
   });
 
   const {
