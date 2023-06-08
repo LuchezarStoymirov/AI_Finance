@@ -1,20 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AIF.Data;
 using AIF.Services;
-using HtmlAgilityPack;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using HtmlAgilityPack;
 
 namespace AIF
 {
@@ -27,9 +20,6 @@ namespace AIF
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<AifDatabaseContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -50,46 +40,40 @@ namespace AIF
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                  {
-                    new OpenApiSecurityScheme
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
                     {
-                      Reference = new OpenApiReference
-                      {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                      }
-                     },
-                     new string[] { }
-                   }
-                 });
-            });
-
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v2", new OpenApiInfo { Title = "Your API Name", Version = "v2" });
-
-                // Add the scraping endpoint to Swagger
-                c.MapType<List<string>>(() => new OpenApiSchema { Type = "array", Items = new OpenApiSchema { Type = "string" } });
-
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
 
             var app = builder.Build();
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173"));
 
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+                    c.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
