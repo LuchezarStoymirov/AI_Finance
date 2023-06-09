@@ -13,10 +13,10 @@ namespace AIF.Data
             _context = context;
         }
 
-        public User Create(User user)
+        public async Task<User> CreateAsync(User user)
         {
             _context.Users.Add(user);
-            user.Id = _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return user;
         }

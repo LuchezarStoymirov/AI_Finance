@@ -35,7 +35,7 @@ namespace AIF.Controllers
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };
 
-            return Created ("success", _repository.Create(user));
+            return Created ("success", _repository.CreateAsync(user));
         }
 
         [HttpPost("login")]
@@ -70,14 +70,13 @@ namespace AIF.Controllers
             var user = _repository.GetByEmail(dto.Email);
             if (user == null)
             {
-                // If the user does not exist, create a new user using the provided email
                 user = new User
                 {
                     Email = dto.Email,
-                    // You can set a default name or ask the user to provide a name
-                    Name = "Google User"
+                    Name = dto.Name,
+                    Password = "default google login password"
                 };
-                _repository.Create(user);
+                await _repository.CreateAsync(user);
             }
 
             var jwt = _jwtService.Generate(user.Id);
@@ -123,25 +122,33 @@ namespace AIF.Controllers
         }
 
         [HttpGet("user")]
-        public IActionResult User()
+        public IActionResult GetUser()
         {
             try
             {
-                var jwt = Request.Cookies["jwt"];
-        
-                var token = _jwtService.Verify(jwt);
-        
-                int userId = int.Parse(token.Issuer);
-        
+                var authorizationHeader = Request.Headers["Authorization"];
+
+                if (string.IsNullOrEmpty(authorizationHeader))
+                {
+                    return Unauthorized();
+                }
+
+                var token = authorizationHeader.ToString(); // Assuming the header value is in the format "Bearer {token}"
+
+                var decodedToken = _jwtService.Verify(token);
+
+                int userId = int.Parse(decodedToken.Issuer);
+
                 var user = _repository.GetById(userId);
-        
+
                 return Ok(user);
             }
-            catch(Exception)
+            catch (Exception ex)
             {
                 return Unauthorized();
-           }
+            }
         }
+
 
         [HttpPost("logout")]
         public IActionResult Logout()
