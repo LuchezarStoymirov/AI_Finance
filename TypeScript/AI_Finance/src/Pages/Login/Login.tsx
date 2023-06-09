@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { autservice } from "../../services/autService";
 import { googleToken } from "./constants";
 import style from "./Login.module.css";
+import jwtDecode from "jwt-decode";
 
 declare global {
   interface Window {
@@ -15,14 +16,33 @@ interface CallBack {
   credential: string;
 }
 
+interface GoogleLogin {
+  email: string;
+  name: string;
+}
+
 export const Login = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
 
-  const handleCallbackResponse = (response: CallBack) => {
-    console.log("Encoded JWT token:", response.credential);
+  const handleCallbackResponse = async (response: CallBack) => {
+    const decoded_jwt: GoogleLogin = jwtDecode(response.credential);
+    const info = {
+      name: decoded_jwt.name,
+      email: decoded_jwt.email,
+      googleToken: response.credential
+    }
+    await autservice.googleLogin(info)
+      .then(res => {
+        localStorage.setItem("token", res.data.token);
+        window.location.href = '/';
+      })
+      .catch(error => {
+        console.log(error)
+        throw error
+      });
   };
 
   useEffect(() => {

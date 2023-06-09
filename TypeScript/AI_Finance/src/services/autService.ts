@@ -7,6 +7,12 @@ interface LoginData {
   password: string;
 }
 
+interface GoogleLoginData {
+  name: string;
+  email: string;
+  googleToken: string;
+}
+
 interface RegisterData {
   name: string;
   email: string;
@@ -31,6 +37,12 @@ const login = async (data: LoginData) : Promise<AxiosResponse<LoginResponse>> =>
     return response;
 }
 
+const googleLogin = async (data: GoogleLoginData) : Promise<AxiosResponse<LoginResponse>> => {
+  const url = config.baseURL + config.googleLogin;
+  const response = await fetchWrapper.post<LoginResponse, GoogleLoginData>(url, data)
+  return response;
+}
+
 const register = (data: RegisterData) => {
     const url = config.baseURL + config.register;
     const response = fetchWrapper.post<RegisterResponse, RegisterData>(url, data);
@@ -39,5 +51,6 @@ const register = (data: RegisterData) => {
 
 export const autservice = { 
     login,
-    register
+    register,
+    googleLogin
 }
