@@ -52,12 +52,7 @@ namespace AIF.Controllers
 
             var jwt = _jwtService.Generate(user.Id);
 
-            Response.Cookies.Append("jwt", jwt, new CookieOptions
-            {
-                HttpOnly = true
-            });
-
-            return Ok(new { message = "success" });
+            return Ok(new { token = jwt, name = user.Name, email = user.Email });
         }
 
 
