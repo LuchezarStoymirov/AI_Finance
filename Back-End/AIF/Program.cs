@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace AIF
 {
@@ -62,6 +64,18 @@ namespace AIF
                      new string[] { }
                    }
                  });
+            });
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddGoogle(options =>
+            {
+                options.ClientId = "477276107037-6nvps4ht1setgd3c4o4sao17fau71r17.apps.googleusercontent.com";
+                options.ClientSecret = "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";
             });
 
             var app = builder.Build();

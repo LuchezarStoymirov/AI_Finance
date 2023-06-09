@@ -13,17 +13,17 @@ namespace AIF.Data
             _context = context;
         }
 
-        public User Create(User user)
+        public async Task<User> CreateAsync(User user)
         {
             _context.Users.Add(user);
-            user.Id = _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return user;
         }
 
         public User GetByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+            return this._context.Users.FirstOrDefault(u => u.Email == email);
         }
 
         public User GetById(int id)
