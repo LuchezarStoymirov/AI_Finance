@@ -15,20 +15,41 @@ namespace AIF.Data
 
         public async Task<User> CreateAsync(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
 
-            return user;
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to create user.", ex);
+            }
         }
 
         public User GetByEmail(string email)
         {
-            return this._context.Users.FirstOrDefault(u => u.Email == email);
+            try
+            {
+                return _context.Users.FirstOrDefault(u => u.Email == email);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to retrieve user by email.", ex);
+            }
         }
 
         public User GetById(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            try
+            {
+                return _context.Users.FirstOrDefault(u => u.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to retrieve user by ID.", ex);
+            }
         }
     }
 }

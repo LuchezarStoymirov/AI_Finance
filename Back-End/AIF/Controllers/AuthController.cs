@@ -28,96 +28,116 @@ namespace AIF.Controllers
         [HttpPost("register")]
         public IActionResult Register(RegisterDto dto)
         {
-            var user = new User
+            try
             {
-                Name = dto.Name,
-                Email = dto.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
-            };
+                var user = new User
+                {
+                    Name = dto.Name,
+                    Email = dto.Email,
+                    Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+                };
 
-            return Created ("success", _repository.CreateAsync(user));
+                _repository.CreateAsync(user);
+
+                return Created("success", user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPost("login")]
         public IActionResult Login(LoginDto dto)
         {
-            var user = _repository.GetByEmail(dto.Email);
-
-            if (user == null) return BadRequest (new { message = "Invalid Credentials" });
-
-            if (!BCrypt.Net.BCrypt.Verify (dto.Password, user.Password))
+            try
             {
-                return BadRequest (new { message = "Invalid Credentials" });
+                var user = _repository.GetByEmail(dto.Email);
+
+                if (user == null)
+                    throw new Exception("Invalid Credentials");
+
+                if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+                    throw new Exception("Invalid Credentials");
+
+                var jwt = _jwtService.Generate(user.Id);
+
+                return Ok(new { token = jwt, name = user.Name, email = user.Email });
             }
-
-            var jwt = _jwtService.Generate(user.Id);
-
-            return Ok(new { token = jwt, name = user.Name, email = user.Email });
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
-
 
         [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin(GoogleLoginDto dto)
         {
-            // Validate the Google login token
-            var validation = await ValidateGoogleToken(dto.GoogleToken);
-            if (!validation.IsValid)
+            try
             {
-                // Handle token validation failure
-                return BadRequest (new { error = validation.ErrorMessage });
-            }
+                var validation = await ValidateGoogleToken(dto.GoogleToken);
+                if (!validation.IsValid)
+                    return BadRequest(new { error = validation.ErrorMessage });
 
-            var user = _repository.GetByEmail(dto.Email);
-            if (user == null)
-            {
-                user = new User
+                var user = _repository.GetByEmail(dto.Email);
+                if (user == null)
                 {
-                    Email = dto.Email,
-                    Name = dto.Name,
-                    Password = "default google login password"
-                };
-                await _repository.CreateAsync(user);
+                    user = new User
+                    {
+                        Email = dto.Email,
+                        Name = dto.Name,
+                        Password = "default google login password"
+                    };
+                    await _repository.CreateAsync(user);
+                }
+
+                var jwt = _jwtService.Generate(user.Id);
+                return Ok(new { token = jwt, name = dto.Name, email = dto.Email });
             }
-
-            var jwt = _jwtService.Generate(user.Id);
-            return Ok(new { token = jwt, name = dto.Name, email = dto.Email });
-
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPost("Validate-Google-Token")]
-        public async Task<GoogleTokenValidationResult>ValidateGoogleToken(string googleToken)
+        public async Task<GoogleTokenValidationResult> ValidateGoogleToken(string googleToken)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                var validationEndpoint = "https://oauth2.googleapis.com/tokeninfo?id_token=" + googleToken;
-                var response = await httpClient.GetAsync (validationEndpoint);
-                if (response.IsSuccessStatusCode)
+                using (var httpClient = new HttpClient())
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    var tokenInfo = JsonConvert.DeserializeObject<GoogleTokenInfo>(responseContent);
+                    var validationEndpoint = "https://oauth2.googleapis.com/tokeninfo?id_token=" + googleToken;
+                    var response = await httpClient.GetAsync(validationEndpoint);
 
-                    // Perform additional validation or checks if necessary
-
-                    var validationResult = new GoogleTokenValidationResult
+                    if (response.IsSuccessStatusCode)
                     {
-                        IsValid = true,
-                        Email = tokenInfo.Email
-                        // Extract other necessary information as needed
-                    };
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        var tokenInfo = JsonConvert.DeserializeObject<GoogleTokenInfo>(responseContent);
 
-                    return validationResult;
-                }
-                else
-                {
-                    // Handle validation error
-                    var validationResult = new GoogleTokenValidationResult
+                        var validationResult = new GoogleTokenValidationResult
+                        {
+                            IsValid = true,
+                            Email = tokenInfo.Email
+                        };
+
+                        return validationResult;
+                    }
+                    else
                     {
-                        IsValid = false,
-                        ErrorMessage = "Token validation failed."
-                    };
+                        var validationResult = new GoogleTokenValidationResult
+                        {
+                            IsValid = false,
+                            ErrorMessage = "Token validation failed."
+                        };
 
-                    return validationResult;
+                        return validationResult;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to validate Google token.", ex);
             }
         }
 
@@ -129,11 +149,9 @@ namespace AIF.Controllers
                 var authorizationHeader = Request.Headers["Authorization"];
 
                 if (string.IsNullOrEmpty(authorizationHeader))
-                {
                     return Unauthorized();
-                }
 
-                var token = authorizationHeader.ToString(); // Assuming the header value is in the format "Bearer {token}"
+                var token = authorizationHeader.ToString();
 
                 var decodedToken = _jwtService.Verify(token);
 
@@ -149,16 +167,22 @@ namespace AIF.Controllers
             }
         }
 
-
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("jwt");
-
-            return Ok(new
+            try
             {
-                message = "success"
-            });
+                Response.Cookies.Delete("jwt");
+
+                return Ok(new
+                {
+                    message = "success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 
