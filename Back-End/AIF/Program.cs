@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AIF.Data;
 using AIF.Helpers;
-using AIF.Data;
-using AIF.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -68,7 +66,7 @@ namespace AIF
 
             var app = builder.Build();
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
 
 
             // Configure the HTTP request pipeline.

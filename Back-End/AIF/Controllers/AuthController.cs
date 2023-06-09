@@ -3,7 +3,6 @@ using AIF.Models;
 using AIF.Data;
 using AIF.Dtos;
 using AIF.Helpers;
-using AIF.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
@@ -50,12 +49,7 @@ namespace AIF.Controllers
 
             var jwt = _jwtService.Generate(user.Id);
 
-            Response.Cookies.Append("jwt", jwt, new CookieOptions
-            {
-                HttpOnly = true
-            });
-
-            return Ok(new { message = "success" });
+            return Ok(new { token = jwt, name = user.Name, email = user.Email });
         }
 
         [HttpGet("user")]
