@@ -1,7 +1,13 @@
 import { fetchWrapper } from "./fetchWrapper"
 
 const get = async (url: string) => {
-    const data = await fetchWrapper.get(url);
+    const token = localStorage.getItem('token');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+    const data = await fetchWrapper.get(url, config);
     return data;
 }
 
