@@ -7,9 +7,10 @@ export const Header = () => {
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleChange = (event: any) => {
-    setAuth(event.target.checked);
-  };
+  const logUserOut = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  }
 
   const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -56,9 +57,9 @@ export const Header = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Username goes here</MenuItem>
-              <MenuItem onClick={handleClose}>User email goes here</MenuItem>
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem>Username goes here</MenuItem>
+              <MenuItem>User email goes here</MenuItem>
+              <MenuItem onClick={logUserOut}>Sign out</MenuItem>
             </Menu>
           </div>
         )}
