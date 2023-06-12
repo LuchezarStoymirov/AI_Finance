@@ -9,7 +9,7 @@ export const StockData = () => {
   useEffect(() => {
     (async () => {
       try {
-        setData(await services.get("https://localhost:7085/Demo"));
+        setData(await services.get());
       } catch (error) {
         console.log(error);
         throw error;
