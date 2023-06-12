@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Grid, IconButton, Menu, MenuItem } from "@mui/material";
+import style from './Header.module.css';
+import { Grid, IconButton, Menu, MenuItem, Paper } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import "./Header.css";
+
 
 export const Header = () => {
   const [auth, setAuth] = useState(true);
@@ -21,12 +22,12 @@ export const Header = () => {
   };
 
   return (
-    <Grid container className="header" alignItems="center">
+    <Grid container className={style.header} alignItems="center">
       <Grid item>
         <img
           src="src/images/CashGrab-logo-light.png"
           alt="CashGrab logo"
-          className="logo-image"
+          className={style.logoImage}
         />
       </Grid>
       <Grid item sx={{ marginLeft: "auto" }}>
@@ -40,10 +41,11 @@ export const Header = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle sx={{ fontSize: 32, color: 'white' }} />
+              <AccountCircle sx={{ fontSize: 32, color: 'white', border: '2px solid var(--lightBlue)', borderRadius: '50%' }} />
             </IconButton>
             <Menu
               id="menu-appbar"
+              className={style.profile}
               anchorEl={anchorEl}
               anchorOrigin={{
                 vertical: "top",
@@ -56,6 +58,15 @@ export const Header = () => {
               }}
               open={Boolean(anchorEl)}
               onClose={handleClose}
+              PaperProps={{
+                elevation: 12, 
+                sx: { 
+                  marginTop: '50px',
+                  marginRight: '0px',
+                  borderRadius: '8px',
+                  border: '2px solid var(--lightBlue)'
+                },
+              }}
             >
               <MenuItem>Username goes here</MenuItem>
               <MenuItem>User email goes here</MenuItem>
