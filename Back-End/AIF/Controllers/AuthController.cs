@@ -1,14 +1,10 @@
-﻿using System;
-using AIF.Models;
-using AIF.Data;
-using AIF.Dtos;
-using AIF.Helpers;
-using System.Threading.Tasks;
-using System.Net.Http;
-using Microsoft.AspNetCore.Http;
+﻿using AIF.Dtos;
+using AIF.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Scripting;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace AIF.Controllers
 {
@@ -16,12 +12,12 @@ namespace AIF.Controllers
     [ApiController]
     public class AuthController : Controller
     {
-        private readonly IUserRepository _repository;
+        private readonly UserServices _userServices;
         private readonly JwtService _jwtService;
 
-        public AuthController(IUserRepository repository, JwtService jwtService)
+        public AuthController(UserServices userServices, JwtService jwtService)
         {
-            _repository = repository;
+            _userServices = userServices;
             _jwtService = jwtService;
         }
 
@@ -30,16 +26,9 @@ namespace AIF.Controllers
         {
             try
             {
-                var user = new User
-                {
-                    Name = dto.Name,
-                    Email = dto.Email,
-                    Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
-                };
+                _userServices.CreateUserAsync(dto.Name, dto.Email, dto.Password);
 
-                _repository.CreateAsync(user);
-
-                return Created("success", user);
+                return Created("success", dto);
             }
             catch (Exception ex)
             {
@@ -52,13 +41,13 @@ namespace AIF.Controllers
         {
             try
             {
-                var user = _repository.GetByEmail(dto.Email);
+                var user = _userServices.GetUserByEmail(dto.Email);
 
                 if (user == null)
-                    throw new Exception("Invalid Credentials");
+                    throw new Exception("Invalid User");
 
                 if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
-                    throw new Exception("Invalid Credentials");
+                    throw new Exception("Invalid Password");
 
                 var jwt = _jwtService.Generate(user.Id);
 
@@ -79,16 +68,10 @@ namespace AIF.Controllers
                 if (!validation.IsValid)
                     return BadRequest(new { error = validation.ErrorMessage });
 
-                var user = _repository.GetByEmail(dto.Email);
+                var user = _userServices.GetUserByEmail(dto.Email);
                 if (user == null)
                 {
-                    user = new User
-                    {
-                        Email = dto.Email,
-                        Name = dto.Name,
-                        Password = "default google login password"
-                    };
-                    await _repository.CreateAsync(user);
+                    user = _userServices.CreateUserWithDefaultPassword(dto.Name, dto.Email);
                 }
 
                 var jwt = _jwtService.Generate(user.Id);
@@ -157,7 +140,7 @@ namespace AIF.Controllers
 
                 int userId = int.Parse(decodedToken.Issuer);
 
-                var user = _repository.GetById(userId);
+                var user = _userServices.GetUserById(userId);
 
                 return Ok(user);
             }

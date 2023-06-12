@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AIF.Data;
-using AIF.Helpers;
+using AIF.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +36,7 @@ namespace AIF
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<JwtService>();
+            builder.Services.AddTransient<UserServices>();
 
             builder.Services.AddSwaggerGen(c =>
             {
