@@ -12,6 +12,11 @@
   font-size: 32px;
 }
 
+.username, .email {
+  cursor: default;
+  pointer-events: none;
+}
+
 .header-link {
   margin-right: 20px;
 }

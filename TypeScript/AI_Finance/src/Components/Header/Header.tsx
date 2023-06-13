@@ -68,8 +68,8 @@ export const Header = () => {
                 },
               }}
             >
-              <MenuItem>Username goes here</MenuItem>
-              <MenuItem>User email goes here</MenuItem>
+              <MenuItem className={style.username}>Username goes here</MenuItem>
+              <MenuItem className={style.email}>User email goes here</MenuItem>
               <MenuItem onClick={logUserOut}>Sign out</MenuItem>
             </Menu>
           </div>
