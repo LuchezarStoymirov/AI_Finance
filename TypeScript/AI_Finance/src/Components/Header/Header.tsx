@@ -1,19 +1,19 @@
 import { useState } from "react";
+import { MouseEvent } from "react";
 import style from './Header.module.css';
-import { Grid, IconButton, Menu, MenuItem, Paper } from "@mui/material";
+import { Grid, IconButton, Menu, MenuItem } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-
 
 export const Header = () => {
   const [auth, setAuth] = useState(true);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const logUserOut = () => {
     localStorage.removeItem('token');
     window.location.href = '/login';
   }
 
-  const handleMenu = (event: any) => {
+  const handleMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -41,7 +41,7 @@ export const Header = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle className={style.profileIcon} sx={{fontSize: 32}}/>
+              <AccountCircle className={style.profileIcon} sx={{ fontSize: 32 }}/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -59,7 +59,7 @@ export const Header = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
               PaperProps={{
-                elevation: 12, 
+                elevation: 12,
                 sx: { 
                   marginTop: '50px',
                   marginRight: '0px',

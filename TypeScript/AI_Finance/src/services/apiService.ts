@@ -1,18 +1,21 @@
 import { fetchWrapper } from "./fetchWrapper"
 import { config } from "../Config/urlConfig";
 
-const get = async () => {
-  const url = config.baseURL;
+const authHeader = () => {
   const token = localStorage.getItem('token');
-  const header = {
+  return {
     headers: {
       Authorization: `Bearer ${token}`
     }
   };
-    const data = await fetchWrapper.get(url, header);
+}
+
+const get = async () => {
+  const url = config.baseURL;
+    const data = await fetchWrapper.get(url, authHeader());
     return data;
 }
 
-export const services = {
+export const apiService = {
     get
 }
