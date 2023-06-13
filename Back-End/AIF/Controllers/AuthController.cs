@@ -22,11 +22,11 @@ namespace AIF.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterDto dto)
+        public async Task<IActionResult> Register(RegisterDto dto)
         {
             try
             {
-                _userServices.CreateUserAsync(dto.Name, dto.Email, dto.Password);
+                await _userServices.CreateUserAsync(dto.Name, dto.Email, dto.Password);
 
                 return Created("success", dto);
             }
@@ -37,11 +37,11 @@ namespace AIF.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginDto dto)
+        public async Task<IActionResult> Login(LoginDto dto)
         {
             try
             {
-                var user = _userServices.GetUserByEmail(dto.Email);
+                var user = await _userServices.GetUserByEmail(dto.Email);
 
                 if (user == null)
                     throw new Exception("Invalid User");
@@ -68,10 +68,10 @@ namespace AIF.Controllers
                 if (!validation.IsValid)
                     return BadRequest(new { error = validation.ErrorMessage });
 
-                var user = _userServices.GetUserByEmail(dto.Email);
+                var user = await _userServices.GetUserByEmail(dto.Email);
                 if (user == null)
                 {
-                    user = _userServices.CreateUserWithDefaultPassword(dto.Name, dto.Email);
+                    user = await _userServices.CreateUserWithDefaultPassword(dto.Name, dto.Email);
                 }
 
                 var jwt = _jwtService.Generate(user.Id);

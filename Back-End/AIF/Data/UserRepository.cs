@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using AIF.Data;
+using System.Threading.Tasks;
 using AIF.Models;
 
 namespace AIF.Data
@@ -21,9 +21,14 @@ namespace AIF.Data
             return user;
         }
 
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            return await Task.FromResult(_context.Users.FirstOrDefault(u => u.Email == email));
+        }
+
         public User GetByEmail(string email)
         {
-            return this._context.Users.FirstOrDefault(u => u.Email == email);
+            return _context.Users.FirstOrDefault(u => u.Email == email);
         }
 
         public User GetById(int id)

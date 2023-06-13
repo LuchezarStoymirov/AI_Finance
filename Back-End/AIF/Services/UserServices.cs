@@ -28,12 +28,12 @@ namespace AIF.Services
             return user;
         }
 
-        public User GetUserByEmail(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
-            return _repository.GetByEmail(email);
+            return await _repository.GetByEmailAsync(email);
         }
 
-        public User CreateUserWithDefaultPassword(string name, string email)
+        public async Task<User> CreateUserWithDefaultPassword(string name, string email)
         {
             var user = new User
             {
@@ -42,7 +42,7 @@ namespace AIF.Services
                 Password = "default google login password"
             };
 
-            _repository.CreateAsync(user).GetAwaiter().GetResult();
+            await _repository.CreateAsync(user);
 
             return user;
         }
