@@ -1,6 +1,6 @@
 import style from "./StockData.module.css";
 import { DataRow } from "../DataRow/DataRow";
-import { services } from "../../services/apiServices";
+import { apiService } from "../../services/apiService";
 import { useState, useEffect } from "react";
 
 export const StockData = () => {
@@ -9,8 +9,9 @@ export const StockData = () => {
   useEffect(() => {
     (async () => {
       try {
-        setData(await services.get("https://localhost:7085/Demo"));
+        setData(await apiService.get());
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(error);
         throw error;
       }
