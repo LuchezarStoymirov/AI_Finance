@@ -17,6 +17,13 @@
   pointer-events: none;
 }
 
+.profileIcon {
+  color: white;
+  border-radius: 50%;
+  border: 2px solid var(--lightBlue);
+
+}
+
 .header-link {
   margin-right: 20px;
 }

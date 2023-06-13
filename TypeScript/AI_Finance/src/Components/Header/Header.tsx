@@ -41,7 +41,7 @@ export const Header = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle sx={{ fontSize: 32, color: 'white', border: '2px solid var(--lightBlue)', borderRadius: '50%' }} />
+              <AccountCircle className={style.profileIcon} sx={{fontSize: 32}}/>
             </IconButton>
             <Menu
               id="menu-appbar"
