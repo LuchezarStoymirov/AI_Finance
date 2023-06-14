@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import style from "./DataRow.module.css";
 
+
 export const DataRow = (props: {symbol: string, price: number}) => {
   return (
     <div className={style.row}>
