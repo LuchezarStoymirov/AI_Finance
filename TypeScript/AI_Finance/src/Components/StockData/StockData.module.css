@@ -23,21 +23,6 @@
   margin-bottom: 15px;
 }
 
-::-webkit-scrollbar{
-  width: 10px;
-}
-
-::-webkit-scrollbar-track{
-  background-color: var(--dataRowBlue);
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb{
-  background-color: var(--lightBlue);
-  border-radius: 8px;
-}
-
 @media (max-width: 767px) {
   .box {
     padding: 0;

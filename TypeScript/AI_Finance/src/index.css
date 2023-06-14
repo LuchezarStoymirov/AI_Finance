@@ -12,3 +12,19 @@
 body{
   margin: 0;
 }
+
+
+::-webkit-scrollbar{
+  width: 10px;
+}
+
+::-webkit-scrollbar-track{
+  background-color: var(--dataRowBlue);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: var(--lightBlue);
+  border-radius: 8px;
+}
