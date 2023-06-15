@@ -40,7 +40,6 @@ export const Login = () => {
         window.location.href = '/';
       })
       .catch(error => {
-        console.log(error)
         throw error
       });
   };
