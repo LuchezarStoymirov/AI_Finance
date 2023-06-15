@@ -7,6 +7,7 @@ import { SimulatedStockData } from "../../MockData/MockData";
 export const StockData = () => {
   const [data, setData] = useState([]);
 
+  //TODO
   // useEffect(() => {
   //   (async () => {
   //     try {
@@ -21,9 +22,9 @@ export const StockData = () => {
 
   const createRow = (
     item: { symbol: string; price: number },
-    index: number
+    id: number
   ) => {
-    return <DataRow key={index} symbol={item.symbol} price={item.price} />;
+    return <DataRow key={id} symbol={item.symbol} price={item.price} />;
   };
 
   return (
