@@ -31,6 +31,12 @@ export const StockData = () => {
     <div className={style.box}>
       <div className={style.titlebox}>
         <h1 className={style.title}>Prices</h1>
+        <div className={style.header}>
+          <h4>Symbol</h4>
+          <h4>Last Price</h4>
+          <h4>Change</h4>
+          <h4>% Change</h4>
+        </div>
       </div>
       {SimulatedStockData.map(createRow)}
     </div>

@@ -13,14 +13,24 @@
 .titlebox{
   color: var(--lightBlue);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: start;
+  align-items: start;
   padding-left: 50px;
   background-color: var(--dataRowBlue);
   border-bottom: 1px solid var(--lightBlue);
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   margin-bottom: 10px;
+}
+
+.header{
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 90%;
+  padding-left: 40px;
 }
 
 @media (max-width: 767px) {
