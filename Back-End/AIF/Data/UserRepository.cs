@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AIF.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AIF.Data
 {
@@ -23,7 +24,7 @@ namespace AIF.Data
 
         public async Task<User> GetByEmailAsync(string email)
         {
-            return await Task.FromResult(_context.Users.FirstOrDefault(u => u.Email == email));
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public User GetByEmail(string email)
@@ -34,6 +35,11 @@ namespace AIF.Data
         public User GetById(int id)
         {
             return _context.Users.FirstOrDefault(u => u.Id == id);
+        }
+
+        public User GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

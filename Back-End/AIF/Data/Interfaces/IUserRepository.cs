@@ -7,7 +7,7 @@ namespace AIF.Data
     {
         Task<User> CreateAsync(User user);
         Task<User> GetByEmailAsync(string email);
-        User GetByEmail(string email);
-        User GetById(int id);
+        //User GetByEmailAsync(string email);
+        User GetByIdAsync(int id);
     }
 }

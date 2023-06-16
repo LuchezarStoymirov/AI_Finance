@@ -12,10 +12,10 @@ namespace AIF.Controllers
     [ApiController]
     public class AuthController : Controller
     {
-        private readonly UserServices _userServices;
+        private readonly IUserService _userServices;
         private readonly JwtService _jwtService;
 
-        public AuthController(UserServices userServices, JwtService jwtService)
+        public AuthController(IUserService userServices, JwtService jwtService)
         {
             _userServices = userServices;
             _jwtService = jwtService;
@@ -64,14 +64,14 @@ namespace AIF.Controllers
         {
             try
             {
-                var validation = await ValidateGoogleToken(dto.GoogleToken);
+                var validation = await ValidateGoogleTokenAsync(dto.GoogleToken);
                 if (!validation.IsValid)
                     return BadRequest(new { error = validation.ErrorMessage });
 
                 var user = await _userServices.GetUserByEmail(dto.Email);
                 if (user == null)
                 {
-                    user = await _userServices.CreateUserWithDefaultPassword(dto.Name, dto.Email);
+                    user = await _userServices.UserCreation(dto.Name, dto.Email);
                 }
 
                 var jwt = _jwtService.Generate(user.Id);
@@ -84,7 +84,7 @@ namespace AIF.Controllers
         }
 
         [HttpPost("Validate-Google-Token")]
-        public async Task<GoogleTokenValidationResult> ValidateGoogleToken(string googleToken)
+        public async Task<GoogleTokenValidationResult> ValidateGoogleTokenAsync(string googleToken)
         {
             try
             {

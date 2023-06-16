@@ -31,5 +31,9 @@
 
   <ItemGroup>
     <None Remove="Data\" />
+    <None Remove="Services\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
 </Project>

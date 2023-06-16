@@ -33,7 +33,7 @@ namespace AIF.Services
             return await _repository.GetByEmailAsync(email);
         }
 
-        public async Task<User> CreateUserWithDefaultPassword(string name, string email)
+        public async Task<User> UserCreation(string name, string email)
         {
             var user = new User
             {
@@ -49,7 +49,7 @@ namespace AIF.Services
 
         public User GetUserById(int userId)
         {
-            return _repository.GetById(userId);
+            return _repository.GetByIdAsync(userId);
         }
     }
 }
