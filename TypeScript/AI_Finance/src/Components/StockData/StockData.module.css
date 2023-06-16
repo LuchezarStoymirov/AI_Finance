@@ -50,4 +50,9 @@
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
   }
+
+  .header{
+    padding-left: 20px;
+    font-size: 10px;
+  }
 }
