@@ -1,6 +1,6 @@
 .box {
   width: 80%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--formColor);
   backdrop-filter: blur(5px);
   height: 200px;
   border-radius: 8px;
@@ -52,7 +52,7 @@
   }
 
   .header{
-    padding-left: 20px;
     font-size: 10px;
+    padding-left: 30px;
   }
 }
