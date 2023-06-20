@@ -5,6 +5,7 @@ import { Grid, IconButton, Menu, MenuItem } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 export const Header = () => {
+
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -68,8 +69,8 @@ export const Header = () => {
                 },
               }}
             >
-              <MenuItem className={style.username}>Username goes here</MenuItem>
-              <MenuItem className={style.email}>User email goes here</MenuItem>
+              <MenuItem className={style.username}>{localStorage.getItem('username')}</MenuItem>
+              <MenuItem className={style.email}>{localStorage.getItem('email')}</MenuItem>
               <MenuItem onClick={logUserOut}>Sign out</MenuItem>
             </Menu>
           </div>

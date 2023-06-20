@@ -36,6 +36,8 @@ export const Login = () => {
     }
     await autservice.googleLogin(info)
       .then(res => {
+        localStorage.setItem('username', decoded_jwt.name);
+        localStorage.setItem('email', decoded_jwt.email);
         localStorage.setItem("token", res.data.token);
         window.location.href = '/';
       })
@@ -62,12 +64,15 @@ export const Login = () => {
       .login(data)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("username", res.data.name);
+        localStorage.setItem("email", res.data.email);
         window.location.href = '/';
       })
       .catch((error) => {
         throw error;
       });
   };
+
 
   return (
     <div className={style.container}>

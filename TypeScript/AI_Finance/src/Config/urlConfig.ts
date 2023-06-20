@@ -3,5 +3,5 @@ export const config = {
     register: 'register',
     login: 'login',
     authorise: 'user',
-    googleLogin: 'google-login'
+    googleLogin: 'google-login',
 }
