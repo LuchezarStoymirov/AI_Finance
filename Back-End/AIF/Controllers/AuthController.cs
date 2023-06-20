@@ -3,6 +3,8 @@ using AIF.Models;
 using AIF.Data;
 using AIF.Dtos;
 using AIF.Services;
+using System.Threading.Tasks;
+using System.Net.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
@@ -33,7 +35,7 @@ namespace AIF.Controllers
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };
 
-            return Created ("success", _repository.CreateAsync(user));
+            return Created("success", _repository.CreateAsync(user));
         }
 
         [HttpPost("login")]
@@ -41,11 +43,11 @@ namespace AIF.Controllers
         {
             var user = _repository.GetByEmail(dto.Email);
 
-            if (user == null) return BadRequest (new { message = "Invalid Credentials" });
+            if (user == null) return BadRequest(new { message = "Invalid Credentials" });
 
-            if (!BCrypt.Net.BCrypt.Verify (dto.Password, user.Password))
+            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
-                return BadRequest (new { message = "Invalid Credentials" });
+                return BadRequest(new { message = "Invalid Credentials" });
             }
 
             var jwt = _jwtService.Generate(user.Id);
@@ -62,7 +64,7 @@ namespace AIF.Controllers
             if (!validation.IsValid)
             {
                 // Handle token validation failure
-                return BadRequest (new { error = validation.ErrorMessage });
+                return BadRequest(new { error = validation.ErrorMessage });
             }
 
             var user = _repository.GetByEmail(dto.Email);
@@ -83,12 +85,12 @@ namespace AIF.Controllers
         }
 
         [HttpPost("Validate-Google-Token")]
-        public async Task<GoogleTokenValidationResult>ValidateGoogleToken(string googleToken)
+        public async Task<GoogleTokenValidationResult> ValidateGoogleToken(string googleToken)
         {
             using (var httpClient = new HttpClient())
             {
                 var validationEndpoint = "https://oauth2.googleapis.com/tokeninfo?id_token=" + googleToken;
-                var response = await httpClient.GetAsync (validationEndpoint);
+                var response = await httpClient.GetAsync(validationEndpoint);
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();

@@ -58,7 +58,6 @@ namespace AIF.Services
             }
             catch (Exception ex)
             {
-                // Handle the exception or log the error message
                 throw new Exception("Failed to retrieve top currencies.", ex);
             }
         }
