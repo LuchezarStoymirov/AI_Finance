@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace AIF
 {
@@ -56,9 +58,21 @@ namespace AIF
                 });
             });
 
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddGoogle(options =>
+            {
+                options.ClientId = "477276107037-6nvps4ht1setgd3c4o4sao17fau71r17.apps.googleusercontent.com";
+                options.ClientSecret = "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";
+            });
+
             var app = builder.Build();
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

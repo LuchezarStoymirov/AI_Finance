@@ -6,6 +6,7 @@ using AIF.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
+using Newtonsoft.Json;
 
 namespace AIF.Controllers
 {
@@ -32,7 +33,7 @@ namespace AIF.Controllers
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };
 
-            return Created("success", _repository.Create(user));
+            return Created ("success", _repository.CreateAsync(user));
         }
 
         [HttpPost("login")]
@@ -40,43 +41,112 @@ namespace AIF.Controllers
         {
             var user = _repository.GetByEmail(dto.Email);
 
-            if (user == null) return BadRequest(new { message = "Invalid Credentials" });
+            if (user == null) return BadRequest (new { message = "Invalid Credentials" });
 
-            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            if (!BCrypt.Net.BCrypt.Verify (dto.Password, user.Password))
             {
-                return BadRequest(new { message = "Invalid Credentials" });
+                return BadRequest (new { message = "Invalid Credentials" });
             }
 
             var jwt = _jwtService.Generate(user.Id);
 
-            Response.Cookies.Append("jwt", jwt, new CookieOptions
-            {
-                HttpOnly = true
-            });
+            return Ok(new { token = jwt, name = user.Name, email = user.Email });
+        }
 
-            return Ok(new { message = "success" });
+
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin(GoogleLoginDto dto)
+        {
+            // Validate the Google login token
+            var validation = await ValidateGoogleToken(dto.GoogleToken);
+            if (!validation.IsValid)
+            {
+                // Handle token validation failure
+                return BadRequest (new { error = validation.ErrorMessage });
+            }
+
+            var user = _repository.GetByEmail(dto.Email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    Email = dto.Email,
+                    Name = dto.Name,
+                    Password = "default google login password"
+                };
+                await _repository.CreateAsync(user);
+            }
+
+            var jwt = _jwtService.Generate(user.Id);
+            return Ok(new { token = jwt, name = dto.Name, email = dto.Email });
+
+        }
+
+        [HttpPost("Validate-Google-Token")]
+        public async Task<GoogleTokenValidationResult>ValidateGoogleToken(string googleToken)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var validationEndpoint = "https://oauth2.googleapis.com/tokeninfo?id_token=" + googleToken;
+                var response = await httpClient.GetAsync (validationEndpoint);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var tokenInfo = JsonConvert.DeserializeObject<GoogleTokenInfo>(responseContent);
+
+                    // Perform additional validation or checks if necessary
+
+                    var validationResult = new GoogleTokenValidationResult
+                    {
+                        IsValid = true,
+                        Email = tokenInfo.Email
+                        // Extract other necessary information as needed
+                    };
+
+                    return validationResult;
+                }
+                else
+                {
+                    // Handle validation error
+                    var validationResult = new GoogleTokenValidationResult
+                    {
+                        IsValid = false,
+                        ErrorMessage = "Token validation failed."
+                    };
+
+                    return validationResult;
+                }
+            }
         }
 
         [HttpGet("user")]
-        public IActionResult User()
+        public IActionResult GetUser()
         {
             try
             {
-                var jwt = Request.Cookies["jwt"];
+                var authorizationHeader = Request.Headers["Authorization"];
 
-                var token = _jwtService.Verify(jwt);
+                if (string.IsNullOrEmpty(authorizationHeader))
+                {
+                    return Unauthorized();
+                }
 
-                int userId = int.Parse(token.Issuer);
+                var token = authorizationHeader.ToString(); // Assuming the header value is in the format "Bearer {token}"
+
+                var decodedToken = _jwtService.Verify(token);
+
+                int userId = int.Parse(decodedToken.Issuer);
 
                 var user = _repository.GetById(userId);
 
                 return Ok(user);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Unauthorized();
             }
         }
+
 
         [HttpPost("logout")]
         public IActionResult Logout()
@@ -88,5 +158,10 @@ namespace AIF.Controllers
                 message = "success"
             });
         }
+    }
+
+    internal class GoogleTokenInfo
+    {
+        internal object Email;
     }
 }

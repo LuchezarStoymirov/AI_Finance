@@ -12,6 +12,17 @@
   font-size: 32px;
 }
 
+.username, .email {
+  cursor: default;
+  pointer-events: none;
+}
+
+.profileIcon {
+  color: white;
+  border-radius: 50%;
+  border: 2px solid var(--lightBlue);
+}
+
 .header-link {
   margin-right: 20px;
 }
@@ -27,11 +38,10 @@
   color: var(--lightBlue);
 }
 
-.logo-image {
+.logoImage {
   width: 100%;
   max-width: 200px;
 }
-
 
 @media (max-width: 767px) {
   .header {

@@ -1,12 +1,30 @@
-:root{
+:root {
   background-color: white;
   font-family: sans-serif;
 
-  --lightBlue : #61dafb;
-  --headerBlue : #101724;
+  --lightBlue: #03a9f4;
+  --headerBlue: #101724;
   --dataRowBlue: #293142;
+  --formColor: rgba(0, 0, 0, 0.6);
+  --errorRed: #ff4030;
 }
 
-body{
+body {
   margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--dataRowBlue);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--lightBlue);
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
 }
