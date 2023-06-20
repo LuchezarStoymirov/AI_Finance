@@ -65,7 +65,7 @@ namespace AIF.Services
 
         private string RemoveNewLines(string input)
         {
-            return string.Join(" ", input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries));
+            return string.Join("", input.Split(new[] { '\n', '\r', ' ' }, StringSplitOptions.RemoveEmptyEntries));
         }
     }
 }
