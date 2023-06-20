@@ -18,8 +18,6 @@ namespace AIF.Services
                 var httpClient = new HttpClient();
                 var html = await httpClient.GetStringAsync(url);
 
-                Console.WriteLine(html); // Print the HTML content to the console
-
                 var doc = new HtmlDocument();
                 doc.LoadHtml(html);
 
@@ -32,17 +30,27 @@ namespace AIF.Services
 
                 var currencies = new List<CurrencyDto>();
 
-                foreach (var row in currencyRows.Take(5))
+                foreach (var row in currencyRows.Take(3))
                 {
                     var nameCell = row.SelectSingleNode(".//span[@class='profile__subtitle-name']");
                     var priceCell = row.SelectSingleNode(".//td[@class='table__cell table__cell--2-of-8 table__cell--responsive']//div[@class='valuta valuta--light']");
+                    var marketCapCell = row.SelectSingleNode(".//td[@class='table__cell table__cell--2-of-8 table__cell--s-hide']//div[@class='valuta valuta--light']");
+                    var changeCell = row.SelectSingleNode(".//td[contains(@class, 'table__cell--right')]//div[contains(@class, 'change--light')]");
 
-                    if (nameCell != null && priceCell != null)
+                    if (nameCell != null && priceCell != null && marketCapCell != null && changeCell != null)
                     {
                         var currencyName = nameCell.InnerText.Trim();
-                        var price = priceCell.InnerText.Trim();
+                        var price = RemoveNewLines(priceCell.InnerText);
+                        var marketCap = RemoveNewLines(marketCapCell.InnerText);
+                        var change = RemoveNewLines(changeCell.InnerText);
 
-                        currencies.Add(new CurrencyDto { Name = currencyName, Price = price });
+                        currencies.Add(new CurrencyDto
+                        {
+                            Name = currencyName,
+                            Price = price,
+                            MarketCap = marketCap,
+                            Change = change
+                        });
                     }
                 }
 
@@ -53,6 +61,11 @@ namespace AIF.Services
                 // Handle the exception or log the error message
                 throw new Exception("Failed to retrieve top currencies.", ex);
             }
+        }
+
+        private string RemoveNewLines(string input)
+        {
+            return string.Join(" ", input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries));
         }
     }
 }
