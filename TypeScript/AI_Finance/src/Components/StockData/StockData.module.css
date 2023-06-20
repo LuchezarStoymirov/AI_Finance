@@ -1,6 +1,6 @@
 .box {
   width: 80%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--formColor);
   backdrop-filter: blur(5px);
   height: 200px;
   border-radius: 8px;
@@ -49,5 +49,10 @@
     padding-left: 8px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
+  }
+
+  .header{
+    font-size: 10px;
+    padding-left: 30px;
   }
 }
