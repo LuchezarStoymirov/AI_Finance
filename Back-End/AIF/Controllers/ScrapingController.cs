@@ -1,5 +1,6 @@
 ﻿using AIF.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace AIF.Controllers
@@ -18,8 +19,15 @@ namespace AIF.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTopCurrenciesAsync()
         {
-            var currencies = await _scrapingService.GetTopCurrenciesAsync();
-            return Ok(currencies);
+            try
+            {
+                var currencies = await _scrapingService.GetTopCurrenciesAsync();
+                return Ok(currencies);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Failed to retrieve top currencies. Error: " + ex.Message);
+            }
         }
     }
 }
