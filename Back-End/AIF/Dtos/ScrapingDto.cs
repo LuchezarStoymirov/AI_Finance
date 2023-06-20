@@ -1,4 +1,4 @@
-﻿public class CurrencyDto
+﻿public class ScrapingDto
 {
     public string Name { get; set; }
     public string Price { get; set; }
