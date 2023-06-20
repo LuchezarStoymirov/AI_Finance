@@ -1,5 +1,7 @@
-﻿using AIF.Dtos;
+﻿using AIF.Controllers;
+using AIF.Dtos;
 using AIF.Services;
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -71,7 +73,7 @@ namespace AIF.Controllers
                 var user = await _userServices.GetUserByEmail(dto.Email);
                 if (user == null)
                 {
-                    user = await _userServices.UserCreation(dto.Name, dto.Email);
+                    user = await _userServices.CreateUserAsync(dto.Name, dto.Email);
                 }
 
                 var jwt = _jwtService.Generate(user.Id);
@@ -98,11 +100,7 @@ namespace AIF.Controllers
                         var responseContent = await response.Content.ReadAsStringAsync();
                         var tokenInfo = JsonConvert.DeserializeObject<GoogleTokenInfo>(responseContent);
 
-                        var validationResult = new GoogleTokenValidationResult
-                        {
-                            IsValid = true,
-                            Email = tokenInfo.Email
-                        };
+                        var validationResult = new GoogleTokenValidationResult { IsValid = true, Email = tokenInfo.Email };
 
                         return validationResult;
                     }

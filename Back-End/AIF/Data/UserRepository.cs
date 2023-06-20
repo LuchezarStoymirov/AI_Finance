@@ -27,19 +27,9 @@ namespace AIF.Data
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public User GetByEmail(string email)
+        public async Task<User> GetByIdAsync(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
-        }
-
-        public User GetById(int id)
-        {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
-        }
-
-        public User GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AIF.Services
 {
-    public class UserServices
+    public class UserServices : IUserService
     {
         private readonly IUserRepository _repository;
 
@@ -33,7 +33,7 @@ namespace AIF.Services
             return await _repository.GetByEmailAsync(email);
         }
 
-        public async Task<User> UserCreation(string name, string email)
+        public async Task<User> CreateUserAsync(string name, string email)
         {
             var user = new User
             {
@@ -47,9 +47,14 @@ namespace AIF.Services
             return user;
         }
 
-        public User GetUserById(int userId)
+        public async Task<User> GetUserById(int userId)
         {
-            return _repository.GetByIdAsync(userId);
+            return await _repository.GetByIdAsync(userId);
+        }
+
+        public Task<User> UserCreation(string name, string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }
