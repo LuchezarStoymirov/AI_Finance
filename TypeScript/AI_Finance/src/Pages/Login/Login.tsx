@@ -36,8 +36,8 @@ export const Login = () => {
     }
     await autservice.googleLogin(info)
       .then(res => {
-        localStorage.setItem('username', decoded_jwt.name);
-        localStorage.setItem('email', decoded_jwt.email);
+        localStorage.setItem("username", decoded_jwt.name);
+        localStorage.setItem("email", decoded_jwt.email);
         localStorage.setItem("token", res.data.token);
         window.location.href = '/';
       })
