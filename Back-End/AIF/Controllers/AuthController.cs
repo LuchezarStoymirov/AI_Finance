@@ -59,11 +59,9 @@ namespace AIF.Controllers
         [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin(GoogleLoginDto dto)
         {
-            // Validate the Google login token
             var validation = await ValidateGoogleToken(dto.GoogleToken);
             if (!validation.IsValid)
             {
-                // Handle token validation failure
                 return BadRequest(new { error = validation.ErrorMessage });
             }
 
@@ -96,20 +94,16 @@ namespace AIF.Controllers
                     var responseContent = await response.Content.ReadAsStringAsync();
                     var tokenInfo = JsonConvert.DeserializeObject<GoogleTokenInfo>(responseContent);
 
-                    // Perform additional validation or checks if necessary
-
                     var validationResult = new GoogleTokenValidationResult
                     {
                         IsValid = true,
                         Email = tokenInfo.Email
-                        // Extract other necessary information as needed
                     };
 
                     return validationResult;
                 }
                 else
                 {
-                    // Handle validation error
                     var validationResult = new GoogleTokenValidationResult
                     {
                         IsValid = false,
@@ -133,7 +127,7 @@ namespace AIF.Controllers
                     return Unauthorized();
                 }
 
-                var token = authorizationHeader.ToString(); // Assuming the header value is in the format "Bearer {token}"
+                var token = authorizationHeader.ToString();
 
                 var decodedToken = _jwtService.Verify(token);
 
