@@ -42,7 +42,7 @@ export const Header = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle className={style.profileIcon} sx={{ fontSize: 32 }}/>
+              <AccountCircle className={style.profileIcon} sx={{ fontSize: 32 }} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -61,7 +61,7 @@ export const Header = () => {
               onClose={handleClose}
               PaperProps={{
                 elevation: 12,
-                sx: { 
+                sx: {
                   marginTop: '50px',
                   marginRight: '0px',
                   borderRadius: '8px',
