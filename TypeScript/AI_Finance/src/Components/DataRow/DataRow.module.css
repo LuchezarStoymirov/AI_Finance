@@ -3,9 +3,9 @@
     padding: 16px;
     border-radius: 8px;
     margin-bottom: 8px;
-    max-width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    max-width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
   }
   
   .symbol {
@@ -16,19 +16,20 @@
   .price {
     color: white;
     margin: 0;
+    font-size: 16px;
   }
   
   /* Media Queries */
   @media (max-width: 767px) {
     .row {
       max-width: 100%;
-      margin-left: 5px;
-      margin-right: 5px;
+      margin-left: 2px;
+      margin-right: 2px;
     }
   
     .symbol,
     .price {
-      font-size: 14px;
+      font-size: 10px;
     }
   }
   
