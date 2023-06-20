@@ -26,7 +26,6 @@ namespace AIF.Controllers
             }
             catch (Exception ex)
             {
-                // Log the error or handle it as needed
                 return StatusCode(500, "An error occurred while retrieving top currencies.");
             }
         }
