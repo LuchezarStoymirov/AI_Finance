@@ -32,7 +32,7 @@ export const StockData = () => {
     })();
   }
 
-  setInterval(getStocks, 60000);
+  setInterval(getStocks, 10000);
 
   const createRow = (
     item: { name: string; price: string, marketCap: string, change: string },
