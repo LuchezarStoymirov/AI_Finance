@@ -1,21 +1,21 @@
-import { fetchWrapper } from "./fetchWrapper"
+import { fetchWrapper } from "./fetchWrapper";
 import { config } from "../Config/urlConfig";
 
 const authHeader = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   return {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   };
-}
+};
 
-const get = async () => {
+const getStockData = async () => {
   const url = config.baseURL;
-    const data = await fetchWrapper.get(url, authHeader());
-    return data;
-}
+  const data = await fetchWrapper.get(url, authHeader());
+  return data;
+};
 
 export const apiService = {
-    get
-}
+  getStockData,
+};

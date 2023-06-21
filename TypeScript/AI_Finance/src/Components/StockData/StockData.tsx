@@ -1,29 +1,9 @@
 import style from "./StockData.module.css";
 import { DataRow } from "../DataRow/DataRow";
-import { apiService } from "../../services/apiService";
-import { useState, useEffect } from "react";
 import { SimulatedStockData } from "../../MockData/MockData";
 
 export const StockData = () => {
-  const [data, setData] = useState([]);
-
-  //TODO
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       setData(await apiService.get());
-  //     } catch (error) {
-  //       // eslint-disable-next-line no-console
-  //       console.log(error);
-  //       throw error;
-  //     }
-  //   })();
-  // }, []);  
-
-  const createRow = (
-    item: { symbol: string; price: number },
-    id: number
-  ) => {
+  const createRow = (item: { symbol: string; price: number }, id: number) => {
     return <DataRow key={id} symbol={item.symbol} price={item.price} />;
   };
 
