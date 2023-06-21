@@ -34,6 +34,7 @@ namespace AIF
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<JwtService>();
             builder.Services.AddTransient<UserServices>();
+            builder.Services.AddScoped<IScrapingService, ScrapingService>();
 
             builder.Services.AddSwaggerGen(c =>
             {
