@@ -11,7 +11,6 @@ export const StockData = () => {
       try {
         setData(await apiService.getStockData());
       } catch (error) {
-        // eslint-disable-next-line no-console
         throw error;
       }
     })();
