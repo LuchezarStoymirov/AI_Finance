@@ -3,10 +3,8 @@ import { DataRow } from "../DataRow/DataRow";
 import { apiService } from "../../services/apiService";
 import { useState, useEffect } from "react";
 
-
 export const StockData = () => {
   const [data, setData] = useState([]);
-
 
   useEffect(() => {
     (async () => {
@@ -24,21 +22,36 @@ export const StockData = () => {
     (async () => {
       try {
         setData(await apiService.getStockData());
+        console.log(data);
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
         throw error;
       }
     })();
-  }
+  };
 
-  setInterval(getStocks, 10000);
+  setInterval(getStocks, 5000);
 
   const createRow = (
-    item: { name: string; price: string, marketCap: string, change: string },
+    item: {
+      imageUrl: string;
+      name: string;
+      price: string;
+      marketCap: string;
+      change: string;
+    },
     id: number
   ) => {
-    return <DataRow key={id} symbol={item.name} price={item.price} marketCap={item.marketCap} change={item.change} />;
+    console.log(data);
+    return (
+      <DataRow
+        key={id}
+        picture={item.imageUrl}
+        symbol={item.name}
+        price={item.price}
+        marketCap={item.marketCap}
+        change={item.change}
+      />
+    );
   };
 
   return (
