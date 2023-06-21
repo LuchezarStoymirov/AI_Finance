@@ -10,7 +10,7 @@
   color: white;
 }
 
-.titlebox{
+.titlebox {
   color: var(--lightBlue);
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
   margin-bottom: 10px;
 }
 
-.header{
+.header {
   color: white;
   display: flex;
   flex-direction: row;
@@ -32,8 +32,23 @@
   padding-left: 20px;
 }
 
-.title{
+.title {
   padding-left: 30px;
+  padding-right: 20px;
+}
+
+.titlecluster {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.export {
+  height: 20px;
+  background-color: var(--lightBlue);
+  border: 1px solid var(--lightBlue);
+  border-radius: 8px;
+  color: white;
 }
 
 @media (max-width: 767px) {
@@ -41,12 +56,13 @@
     padding: 10px;
   }
 
-  .title{
+  .title {
     margin: 0;
     padding: 0;
+    padding-right: 10px;
   }
 
-  .titlebox{
+  .titlebox {
     margin: 0;
     margin-bottom: 10px;
     padding: 10px;
@@ -55,7 +71,7 @@
     border-top-left-radius: 8px;
   }
 
-  .header{
+  .header {
     font-size: 10px;
     padding-left: 0px;
     justify-content: space-around;

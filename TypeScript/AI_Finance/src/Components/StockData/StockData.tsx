@@ -52,7 +52,10 @@ export const StockData = () => {
   return (
     <div className={style.box}>
       <div className={style.titlebox}>
-        <h1 className={style.title}>Prices</h1>
+        <div className={style.titlecluster}>
+          <h1 className={style.title}>Prices</h1>
+          <button className={style.export}>Export</button>
+        </div>
         <div className={style.header}>
           <h4>Symbol</h4>
           <h4>Price</h4>
