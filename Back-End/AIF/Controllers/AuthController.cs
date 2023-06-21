@@ -1,163 +1,98 @@
-﻿using System;
-using AIF.Models;
-using AIF.Data;
-using AIF.Dtos;
+﻿using AIF.Dtos;
 using AIF.Services;
-using System.Threading.Tasks;
-using System.Net.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Scripting;
-using Newtonsoft.Json;
+using System;
+using System.Threading.Tasks;
 
 namespace AIF.Controllers
 {
     [Route("api")]
     [ApiController]
-    public class AuthController : Controller
+    public class AuthController : ControllerBase
     {
-        private readonly IUserRepository _repository;
-        private readonly JwtService _jwtService;
+        private readonly IAuthService _authService;
 
-        public AuthController(IUserRepository repository, JwtService jwtService)
+        public AuthController(IAuthService authService)
         {
-            _repository = repository;
-            _jwtService = jwtService;
+            _authService = authService;
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterDto dto)
+        public async Task<IActionResult> Register(RegisterDto dto)
         {
-            var user = new User
+            try
             {
-                Name = dto.Name,
-                Email = dto.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
-            };
-
-            return Created("success", _repository.CreateAsync(user));
+                return await _authService.RegisterAsync(dto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginDto dto)
+        public async Task<IActionResult> Login(LoginDto dto)
         {
-            var user = _repository.GetByEmail(dto.Email);
-
-            if (user == null) return BadRequest(new { message = "Invalid Credentials" });
-
-            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            try
             {
-                return BadRequest(new { message = "Invalid Credentials" });
+                return await _authService.LoginAsync(dto);
             }
-
-            var jwt = _jwtService.Generate(user.Id);
-
-            return Ok(new { token = jwt, name = user.Name, email = user.Email });
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
         }
-
 
         [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin(GoogleLoginDto dto)
         {
-            var validation = await ValidateGoogleToken(dto.GoogleToken);
-            if (!validation.IsValid)
+            try
             {
-                return BadRequest(new { error = validation.ErrorMessage });
+                return await _authService.GoogleLoginAsync(dto);
             }
-
-            var user = _repository.GetByEmail(dto.Email);
-            if (user == null)
+            catch (Exception ex)
             {
-                user = new User
-                {
-                    Email = dto.Email,
-                    Name = dto.Name,
-                    Password = "default google login password"
-                };
-                await _repository.CreateAsync(user);
+                return StatusCode(500, $"An error occurred: {ex.Message}");
             }
-
-            var jwt = _jwtService.Generate(user.Id);
-            return Ok(new { token = jwt, name = dto.Name, email = dto.Email });
-
         }
 
         [HttpPost("Validate-Google-Token")]
         public async Task<GoogleTokenValidationResult> ValidateGoogleToken(string googleToken)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                var validationEndpoint = "https://oauth2.googleapis.com/tokeninfo?id_token=" + googleToken;
-                var response = await httpClient.GetAsync(validationEndpoint);
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    var tokenInfo = JsonConvert.DeserializeObject<GoogleTokenInfo>(responseContent);
-
-                    var validationResult = new GoogleTokenValidationResult
-                    {
-                        IsValid = true,
-                        Email = tokenInfo.Email
-                    };
-
-                    return validationResult;
-                }
-                else
-                {
-                    var validationResult = new GoogleTokenValidationResult
-                    {
-                        IsValid = false,
-                        ErrorMessage = "Token validation failed."
-                    };
-
-                    return validationResult;
-                }
+                return await _authService.ValidateGoogleTokenAsync(googleToken);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred: {ex.Message}");
             }
         }
 
         [HttpGet("user")]
-        public IActionResult GetUser()
+        public async Task<IActionResult> GetUser()
         {
             try
             {
-                var authorizationHeader = Request.Headers["Authorization"];
-
-                if (string.IsNullOrEmpty(authorizationHeader))
-                {
-                    return Unauthorized();
-                }
-
-                var token = authorizationHeader.ToString();
-
-                var decodedToken = _jwtService.Verify(token);
-
-                int userId = int.Parse(decodedToken.Issuer);
-
-                var user = _repository.GetById(userId);
-
-                return Ok(user);
+                return await _authService.GetUserAsync();
             }
             catch (Exception ex)
             {
-                return Unauthorized();
+                return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
 
-
         [HttpPost("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            Response.Cookies.Delete("jwt");
-
-            return Ok(new
+            try
             {
-                message = "success"
-            });
+                return await _authService.LogoutAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
         }
-    }
-
-    internal class GoogleTokenInfo
-    {
-        internal object Email;
     }
 }

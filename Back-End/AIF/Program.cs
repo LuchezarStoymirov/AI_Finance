@@ -26,6 +26,7 @@ namespace AIF
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddHttpContextAccessor(); // Add IHttpContextAccessor
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -35,8 +36,9 @@ namespace AIF
             builder.Services.AddDbContext<AifDatabaseContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<JwtService>();
+            builder.Services.AddScoped<IJwtService, JwtService>();
             builder.Services.AddScoped<IScrapingService, ScrapingService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddSwaggerGen(c =>
             {
@@ -83,7 +85,6 @@ namespace AIF
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
 
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -94,7 +95,6 @@ namespace AIF
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
