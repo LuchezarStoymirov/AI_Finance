@@ -6,27 +6,26 @@ import { useState, useEffect } from "react";
 export const StockData = () => {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setData(await apiService.getStockData());
-      } catch (error) {
-        throw error;
-      }
-    })();
-  }, []);
-
-  const getStocks = () => {
-    (async () => {
-      try {
-        setData(await apiService.getStockData());
-      } catch (error) {
-        throw error;
-      }
-    })();
+  const fetchData = async () => {
+    try {
+      const newData = await apiService.getStockData();
+      setData(newData);
+    } catch (error) {
+      throw error;
+    }
   };
 
-  setInterval(getStocks, 5000);
+  useEffect(() => {
+    fetchData();
+
+    const interval = setInterval(() => {
+      fetchData();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   const createRow = (
     item: {
