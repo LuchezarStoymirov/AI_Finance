@@ -6,6 +6,7 @@ namespace AIF.Services
     public interface IJwtService
     {
         Task<string> GenerateAsync(int id);
+
         Task<JwtSecurityToken> VerifyAsync(string jwt);
     }
 }

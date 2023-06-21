@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AIF.Models.GoogleModels;
 
 namespace AIF.Services
 {
@@ -42,10 +43,7 @@ namespace AIF.Services
         {
             var user = await _repository.GetByEmailAsync(dto.Email);
 
-            if (user == null)
-                return new BadRequestObjectResult(new { message = "Invalid Credentials" });
-
-            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
                 return new BadRequestObjectResult(new { message = "Invalid Credentials" });
 
             var jwt = await _jwtService.GenerateAsync(user.Id);
@@ -74,6 +72,7 @@ namespace AIF.Services
             }
 
             var jwt = await _jwtService.GenerateAsync(user.Id);
+
             return new OkObjectResult(new { token = jwt, name = dto.Name, email = dto.Email });
         }
 
@@ -111,29 +110,22 @@ namespace AIF.Services
 
         public async Task<IActionResult> GetUserAsync()
         {
-            try
-            {
-                var authorizationHeader = _httpContext.Request.Headers["Authorization"];
+            var authorizationHeader = _httpContext.Request.Headers["Authorization"];
 
-                if (string.IsNullOrEmpty(authorizationHeader))
-                {
-                    return new UnauthorizedResult();
-                }
-
-                var token = authorizationHeader.ToString();
-
-                var decodedToken = await _jwtService.VerifyAsync(token);
-
-                int userId = int.Parse(decodedToken.Issuer);
-
-                var user = await _repository.GetByIdAsync(userId);
-
-                return new OkObjectResult(user);
-            }
-            catch (Exception ex)
+            if (string.IsNullOrEmpty(authorizationHeader))
             {
                 return new UnauthorizedResult();
             }
+
+            var token = authorizationHeader.ToString();
+
+            var decodedToken = await _jwtService.VerifyAsync(token);
+
+            int userId = int.Parse(decodedToken.Issuer);
+
+            var user = await _repository.GetByIdAsync(userId);
+
+            return new OkObjectResult(user);
         }
 
         public async Task<IActionResult> LogoutAsync()
@@ -145,10 +137,5 @@ namespace AIF.Services
                 message = "success"
             });
         }
-    }
-
-    internal class GoogleTokenInfo
-    {
-        internal object Email;
     }
 }

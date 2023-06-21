@@ -3,6 +3,7 @@ using AIF.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using AIF.Models.GoogleModels;
 
 namespace AIF.Controllers
 {
