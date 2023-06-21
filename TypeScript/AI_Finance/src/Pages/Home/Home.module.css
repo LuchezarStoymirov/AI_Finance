@@ -13,23 +13,15 @@
 .gridrowOdd {
   justify-content: flex-end;
   padding: 10px;
+  opacity: 0;
+  animation: fade-in 1s ease forwards;
 }
 
 .gridrowEven {
   justify-content: flex-start;
   padding: 10px;
-}
-
-.content {
-  position: relative;
-  width: 90%;
-  max-width: 400px;
-  background: rgba(30, 36, 44, 0.6);
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-  margin-left: 5%;
+  opacity: 0;
+  animation: fade-in 1s ease forwards;
 }
 
 .title {
@@ -48,7 +40,15 @@
   mix-blend-mode: difference;
 }
 
-/* Media Queries */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 767px) {
   .container {
     justify-content: center;
