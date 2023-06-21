@@ -51,6 +51,11 @@
   color: white;
 }
 
+.export:hover {
+  color: var(--lightBlue);
+  background-color: white;
+}
+
 @media (max-width: 767px) {
   .box {
     padding: 10px;
