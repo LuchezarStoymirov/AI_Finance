@@ -11,7 +11,7 @@ interface FinanceData {
 
 export const DataRow = (props: FinanceData) => {
   const change = props.change;
-  const changeint: number = parseInt(change, 10);
+  const changeint: number = parseFloat(change);
 
   return (
     <div className={style.row}>
@@ -30,7 +30,7 @@ export const DataRow = (props: FinanceData) => {
           <h3
             className={style.price}
             style={{
-              color: changeint > 0 ? "green" : "red",
+              color: changeint < 0 ? "red" : "green",
             }}
           >
             {props.change}
