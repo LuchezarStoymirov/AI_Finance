@@ -30,7 +30,7 @@ export const DataRow = (props: FinanceData) => {
           <h3
             className={style.price}
             style={{
-              color: changeint >= 0 ? "green" : "red",
+              color: changeint > 0 ? "green" : "red",
             }}
           >
             {props.change}
