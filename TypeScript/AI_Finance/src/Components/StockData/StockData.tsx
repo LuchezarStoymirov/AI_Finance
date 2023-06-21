@@ -41,8 +41,6 @@ export const StockData = () => {
     return <DataRow key={id} symbol={item.name} price={item.price} marketCap={item.marketCap} change={item.change} />;
   };
 
-  console.log(data);
-
   return (
     <div className={style.box}>
       <div className={style.titlebox}>
