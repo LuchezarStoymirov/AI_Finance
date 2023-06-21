@@ -32,17 +32,18 @@ export const Login = () => {
     const info = {
       name: decoded_jwt.name,
       email: decoded_jwt.email,
-      googleToken: response.credential
-    }
-    await autservice.googleLogin(info)
-      .then(res => {
+      googleToken: response.credential,
+    };
+    await autservice
+      .googleLogin(info)
+      .then((res) => {
         localStorage.setItem("username", decoded_jwt.name);
         localStorage.setItem("email", decoded_jwt.email);
         localStorage.setItem("token", res.data.token);
-        window.location.href = '/';
+        window.location.href = "/";
       })
-      .catch(error => {
-        throw error
+      .catch((error) => {
+        throw error;
       });
   };
 
@@ -66,13 +67,12 @@ export const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.name);
         localStorage.setItem("email", res.data.email);
-        window.location.href = '/';
+        window.location.href = "/";
       })
       .catch((error) => {
         throw error;
       });
   };
-
 
   return (
     <div className={style.container}>
