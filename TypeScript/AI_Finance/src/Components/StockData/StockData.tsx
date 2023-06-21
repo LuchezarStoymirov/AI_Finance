@@ -38,7 +38,6 @@ export const StockData = () => {
     },
     id: number
   ) => {
-    console.log(data);
     return (
       <DataRow
         key={id}
