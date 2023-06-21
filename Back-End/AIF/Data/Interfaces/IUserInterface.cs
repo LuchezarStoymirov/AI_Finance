@@ -1,11 +1,14 @@
 ﻿using AIF.Models;
+using System.Threading.Tasks;
 
 namespace AIF.Data
 {
     public interface IUserRepository
     {
         Task<User> CreateAsync(User user);
-        User GetByEmail(string email);
-        User GetById(int id);
+
+        Task<User> GetByEmailAsync(string email);
+
+        Task<User> GetByIdAsync(int id);
     }
 }

@@ -35,5 +35,9 @@
 
   <ItemGroup>
     <None Remove="Data\" />
+    <None Remove="Models\GoogleModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\GoogleModels\" />
   </ItemGroup>
 </Project>

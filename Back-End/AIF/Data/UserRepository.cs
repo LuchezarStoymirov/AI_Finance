@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using AIF.Data;
-using AIF.Models;
+﻿using AIF.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace AIF.Data
 {
@@ -15,20 +15,19 @@ namespace AIF.Data
 
         public async Task<User> CreateAsync(User user)
         {
-            _context.Users.Add(user);
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-
             return user;
         }
 
-        public User GetByEmail(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
-            return this._context.Users.FirstOrDefault(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public User GetById(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            return await _context.Users.FindAsync(id);
         }
     }
 }
