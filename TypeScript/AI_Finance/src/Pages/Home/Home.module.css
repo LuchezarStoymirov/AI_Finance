@@ -14,14 +14,14 @@
   justify-content: flex-end;
   padding: 10px;
   opacity: 0;
-  animation: fade-in 1s ease forwards;
+  animation: fade-in-left 1s ease forwards;
 }
 
 .gridrowEven {
   justify-content: flex-start;
   padding: 10px;
   opacity: 0;
-  animation: fade-in 1s ease forwards;
+  animation: fade-in-right 1s ease forwards;
 }
 
 .title {
@@ -40,12 +40,25 @@
   mix-blend-mode: difference;
 }
 
-@keyframes fade-in {
+@keyframes fade-in-left {
   0% {
     opacity: 0;
+    transform: translateX(-100%);
   }
   100% {
     opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
