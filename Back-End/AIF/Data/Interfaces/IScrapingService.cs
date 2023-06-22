@@ -7,5 +7,6 @@ namespace AIF.Services
     public interface IScrapingService
     {
         Task<List<ScrapingDto>> GetTopCurrenciesAsync();
+        byte[] ExportToCSV(List<ScrapingDto> currencies);
     }
 }

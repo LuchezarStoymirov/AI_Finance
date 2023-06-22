@@ -29,5 +29,20 @@ namespace AIF.Controllers
                 return BadRequest("Failed to retrieve top currencies. Error: " + ex.Message);
             }
         }
+
+        [HttpGet("export/csv")]
+        public async Task<IActionResult> ExportToCSV()
+        {
+            try
+            {
+                var currencies = await _scrapingService.GetTopCurrenciesAsync();
+                var csvBytes = _scrapingService.ExportToCSV(currencies);
+                return File(csvBytes, "text/csv", "top_currencies.csv");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Failed to export top currencies. Error: " + ex.Message);
+            }
+        }
     }
 }
