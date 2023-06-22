@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { autservice } from "../../services/autService";
 import { googleToken } from "./constants";
@@ -27,6 +27,8 @@ export const Login = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleCallbackResponse = async (response: CallBack) => {
     const decoded_jwt: GoogleLogin = jwtDecode(response.credential);
@@ -68,7 +70,7 @@ export const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.name);
         localStorage.setItem("email", res.data.email);
-        window.location.href = '/';
+        navigate('/');
       })
       .catch((error) => {
         throw error;
