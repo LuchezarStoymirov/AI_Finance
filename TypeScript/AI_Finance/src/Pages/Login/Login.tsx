@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { autservice } from "../../services/autService";
 import { googleToken } from "./constants";
@@ -40,7 +41,7 @@ export const Login = () => {
         localStorage.setItem("username", decoded_jwt.name);
         localStorage.setItem("email", decoded_jwt.email);
         localStorage.setItem("token", res.data.token);
-        window.location.href = "/";
+        Navigate({ to: '/' }); 
       })
       .catch((error) => {
         throw error;
@@ -67,7 +68,7 @@ export const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.name);
         localStorage.setItem("email", res.data.email);
-        window.location.href = "/";
+        Navigate({ to: '/' }); 
       })
       .catch((error) => {
         throw error;

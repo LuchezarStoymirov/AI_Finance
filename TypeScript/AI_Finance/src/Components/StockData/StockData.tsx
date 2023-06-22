@@ -7,6 +7,7 @@ export const StockData = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
+    // eslint-disable-next-line no-useless-catch
     try {
       const newData = await apiService.getStockData();
       setData(newData);
