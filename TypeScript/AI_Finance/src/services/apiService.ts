@@ -11,11 +11,11 @@ const authHeader = () => {
 };
 
 const getStockData = async () => {
-  const url = config.baseURL;
-  const data = await fetchWrapper.get(url, authHeader());
-  return data;
-};
+  const url = config.baseURL + config.scraping;
+    const res = await fetchWrapper.get(url, authHeader());
+    return res;
+}
 
 export const apiService = {
-  getStockData,
-};
+    getStockData
+}
