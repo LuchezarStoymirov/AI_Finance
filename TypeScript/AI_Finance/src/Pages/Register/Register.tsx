@@ -15,7 +15,10 @@ interface FormData {
 export const Register = () => {
   const schema = yup.object().shape({
     user: yup.string().required("Field cannot be empty"),
-    email: yup.string().email("Email must be valid").required("Field cannot be empty"),
+    email: yup
+      .string()
+      .email("Email must be valid")
+      .required("Field cannot be empty"),
     password: yup.string().required("Field cannot be empty"),
     confirmPassword: yup
       .string()
