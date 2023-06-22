@@ -1,12 +1,12 @@
-﻿using AIF.Dtos;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AIF.Dtos;
 
 namespace AIF.Services
 {
     public interface IScrapingService
     {
         Task<List<ScrapingDto>> GetTopCurrenciesAsync();
-        byte[] ExportToExcel(List<ScrapingDto> currencies);
+        byte[] ExportToCSV(List<ScrapingDto> currencies);
     }
 }

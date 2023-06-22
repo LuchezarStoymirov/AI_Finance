@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using AIF.Dtos;
 using HtmlAgilityPack;
-using OfficeOpenXml;
 
 namespace AIF.Services
 {
@@ -32,7 +31,7 @@ namespace AIF.Services
 
                 var currencies = new List<ScrapingDto>();
 
-                foreach (var row in currencyRows)
+                foreach (var row in currencyRows.Take(3))
                 {
                     var nameCell = row.SelectSingleNode(".//span[@class='profile__subtitle-name']");
                     var priceCell = row.SelectSingleNode(".//td[@class='table__cell table__cell--2-of-8 table__cell--responsive']//div[@class='valuta valuta--light']");
@@ -67,34 +66,39 @@ namespace AIF.Services
             }
         }
 
-        public byte[] ExportToExcel(List<ScrapingDto> currencies)
+        public byte[] ExportToCSV(List<ScrapingDto> currencies)
         {
-            using (var package = new ExcelPackage())
+            var csvContent = new StringBuilder();
+
+            // Append header row
+            csvContent.AppendLine("Name,Price,Market Cap,Change");
+
+            // Append data rows
+            foreach (var currency in currencies)
             {
-                var worksheet = package.Workbook.Worksheets.Add("Currencies");
-
-                worksheet.Cells[1, 1].Value = "Name";
-                worksheet.Cells[1, 2].Value = "Price";
-                worksheet.Cells[1, 3].Value = "Market Cap";
-                worksheet.Cells[1, 4].Value = "Change";
-
-                for (int i = 0; i < currencies.Count; i++)
-                {
-                    worksheet.Cells[i + 2, 1].Value = currencies[i].Name;
-                    worksheet.Cells[i + 2, 2].Value = currencies[i].Price;
-                    worksheet.Cells[i + 2, 3].Value = currencies[i].MarketCap;
-                    worksheet.Cells[i + 2, 4].Value = currencies[i].Change;
-                }
-
-                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
-
-                return package.GetAsByteArray();
+                csvContent.AppendLine($"{EscapeCsvField(currency.Name)},{EscapeCsvField(currency.Price)},{EscapeCsvField(currency.MarketCap)},{EscapeCsvField(currency.Change)}");
             }
+
+            // Convert the CSV content to a byte array
+            var csvBytes = Encoding.UTF8.GetBytes(csvContent.ToString());
+
+            return csvBytes;
         }
 
         private string RemoveNewLines(string input)
         {
             return string.Join("", input.Split(new[] { '\n', '\r', ' ' }, StringSplitOptions.RemoveEmptyEntries));
+        }
+
+        private string EscapeCsvField(string field)
+        {
+            // If the field contains a comma or double quote, surround it with double quotes and escape any double quotes within the field
+            if (field.Contains(',') || field.Contains('"'))
+            {
+                return $"\"{field.Replace("\"", "\"\"")}\"";
+            }
+
+            return field;
         }
     }
 }

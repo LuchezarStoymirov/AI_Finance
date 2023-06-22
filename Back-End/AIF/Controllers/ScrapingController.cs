@@ -30,17 +30,14 @@ namespace AIF.Controllers
             }
         }
 
-        [HttpGet("export")]
-        public async Task<IActionResult> ExportTopCurrenciesAsync()
+        [HttpGet("export/csv")]
+        public async Task<IActionResult> ExportToCSV()
         {
             try
             {
                 var currencies = await _scrapingService.GetTopCurrenciesAsync();
-
-                // Export to Excel
-                var excelData = _scrapingService.ExportToExcel(currencies);
-
-                return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "currencies.xlsx");
+                var csvBytes = _scrapingService.ExportToCSV(currencies);
+                return File(csvBytes, "text/csv", "top_currencies.csv");
             }
             catch (Exception ex)
             {
