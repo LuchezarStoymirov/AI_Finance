@@ -16,6 +16,13 @@ const getStockData = async () => {
     return res;
 }
 
+const exportData = async () => {
+  const url = config.baseURL + config.export;
+  const res = await fetchWrapper.get(url, authHeader());
+  return res;
+};
+
 export const apiService = {
-    getStockData
-}
+  getStockData,
+  exportData,
+};
