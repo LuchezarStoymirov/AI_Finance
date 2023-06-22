@@ -68,7 +68,7 @@ export const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.name);
         localStorage.setItem("email", res.data.email);
-        Navigate({ to: '/' }); 
+        window.location.href = '/';
       })
       .catch((error) => {
         throw error;
