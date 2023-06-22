@@ -73,13 +73,11 @@ namespace AIF.Services
             {
                 var worksheet = package.Workbook.Worksheets.Add("Currencies");
 
-                // Header row
                 worksheet.Cells[1, 1].Value = "Name";
                 worksheet.Cells[1, 2].Value = "Price";
                 worksheet.Cells[1, 3].Value = "Market Cap";
                 worksheet.Cells[1, 4].Value = "Change";
 
-                // Data rows
                 for (int i = 0; i < currencies.Count; i++)
                 {
                     worksheet.Cells[i + 2, 1].Value = currencies[i].Name;
@@ -88,7 +86,6 @@ namespace AIF.Services
                     worksheet.Cells[i + 2, 4].Value = currencies[i].Change;
                 }
 
-                // Auto-fit columns for better visibility
                 worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
                 return package.GetAsByteArray();
