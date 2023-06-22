@@ -1,17 +1,27 @@
-.info{
-    width: 82.6%;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    height: 200px;
-    border-radius: 8px;
-    margin: 20px;
-    overflow: auto;
-  }
+.info {
+  width: 82.6%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  height: 200px;
+  border-radius: 8px;
+  margin: 20px;
+  opacity: 0;
+  animation: fade-in-bottom 1s ease forwards;
+}
 
-
-  @media (max-width: 767px){
-    .info{
-      padding: 10px;
-    }
+@keyframes fade-in-bottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
   }
-  
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .info {
+    padding: 10px;
+  }
+}

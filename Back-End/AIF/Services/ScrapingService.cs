@@ -32,7 +32,7 @@ namespace AIF.Services
 
                 var currencies = new List<ScrapingDto>();
 
-                foreach (var row in currencyRows.Take(3))
+                foreach (var row in currencyRows)
                 {
                     var nameCell = row.SelectSingleNode(".//span[@class='profile__subtitle-name']");
                     var priceCell = row.SelectSingleNode(".//td[@class='table__cell table__cell--2-of-8 table__cell--responsive']//div[@class='valuta valuta--light']");
