@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AIF.Dtos;
 using HtmlAgilityPack;
+using OfficeOpenXml;
 
 namespace AIF.Services
 {
@@ -62,6 +64,34 @@ namespace AIF.Services
             catch (Exception ex)
             {
                 throw new Exception("Failed to retrieve top currencies.", ex);
+            }
+        }
+
+        public byte[] ExportToExcel(List<ScrapingDto> currencies)
+        {
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Currencies");
+
+                // Header row
+                worksheet.Cells[1, 1].Value = "Name";
+                worksheet.Cells[1, 2].Value = "Price";
+                worksheet.Cells[1, 3].Value = "Market Cap";
+                worksheet.Cells[1, 4].Value = "Change";
+
+                // Data rows
+                for (int i = 0; i < currencies.Count; i++)
+                {
+                    worksheet.Cells[i + 2, 1].Value = currencies[i].Name;
+                    worksheet.Cells[i + 2, 2].Value = currencies[i].Price;
+                    worksheet.Cells[i + 2, 3].Value = currencies[i].MarketCap;
+                    worksheet.Cells[i + 2, 4].Value = currencies[i].Change;
+                }
+
+                // Auto-fit columns for better visibility
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                return package.GetAsByteArray();
             }
         }
 
