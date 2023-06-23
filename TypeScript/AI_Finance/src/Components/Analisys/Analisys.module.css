@@ -10,7 +10,7 @@
   animation: fade-in-bottom 1s ease forwards;
 }
 
-.content{
+.content {
   padding: 6px;
   color: white;
   background-color: var(--dataRowBlue);
@@ -31,5 +31,8 @@
 @media (max-width: 767px) {
   .info {
     padding: 10px;
+    margin: 5%;
+    width: 95%;
+    height: auto;
   }
 }

@@ -14,7 +14,7 @@ export const NewsRow = (props: { title: string; content: string }) => {
         <img
           src="src/Images/neutron.jpeg"
           alt=""
-          style={{ width: "300px", borderRadius: "8px" }}
+          className={style.image}
         />
         <p>
           Binance Labs and CoinFund have co-led a $10 million funding round for
@@ -43,7 +43,7 @@ export const NewsRow = (props: { title: string; content: string }) => {
         <img
           src="src/Images/binance.jpeg"
           alt=""
-          style={{ width: "300px", borderRadius: "8px" }}
+          className={style.image}
         />
         <p>
           Crypto exchange giant Binance has announced a new zero-maker fee
