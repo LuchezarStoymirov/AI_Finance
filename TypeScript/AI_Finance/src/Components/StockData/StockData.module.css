@@ -46,7 +46,7 @@
 .search{
   width: auto;
   border-radius: 8px;
-  margin-left: 60%;
+  margin-left: 20px;
   border: 1px solid var(--lightBlue);
   color: white;
   background-color: inherit;
