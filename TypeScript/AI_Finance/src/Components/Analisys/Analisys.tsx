@@ -17,6 +17,23 @@ export const Analisys = () => {
         pattern. This is the first time we have seen it this good and evident in
         a while.
       </p>
+      <p className={style.content}>
+        The absence of buyers at the $26,500 level indicates that selling
+        pressure in the cryptocurrency market remains strong. Currently, it is
+        crucial for Bitcoin to maintain support above $26,500. If it can
+        consistently close above this level, the next target will be to break
+        above $27,100. Achieving this would signify a reclaiming of the upward
+        trend and a break of the short-term downtrend that has persisted since
+        April. If Bitcoin manages to move above the $27,000 level, it will
+        encounter intermediate resistance levels at $28,000 and $29,000. The
+        short-term target remains in the range of $29,600 to $30,500. However,
+        there is a risk of Bitcoin's downward trend accelerating if it falls
+        below $27,000. If selling pressure intensifies within the current
+        support zone, BTC may decline toward the $24,000 level. If hourly closes
+        dip below $26,400, it could trigger bearish momentum. Conversely, hourly
+        closes above the intermediate resistance at $26,600 could lead to a test
+        of the falling trend line around the $27,100 area.
+      </p>
     </div>
   );
 };

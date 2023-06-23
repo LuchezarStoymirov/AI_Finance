@@ -8,6 +8,7 @@
   padding: 6px;
   opacity: 0;
   animation: fade-in-bottom 1s ease forwards;
+  overflow: auto;
 }
 
 .content {

@@ -43,6 +43,15 @@
   align-items: center;
 }
 
+.search{
+  width: auto;
+  border-radius: 8px;
+  margin-left: 60%;
+  border: 1px solid var(--lightBlue);
+  color: white;
+  background-color: inherit;
+}
+
 .export {
   height: 20px;
   background-color: var(--lightBlue);
@@ -51,6 +60,7 @@
   width: 30px;
   height: 30px;
   color: white;
+  margin-left: 5px;
 }
 
 .export:hover {
