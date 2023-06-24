@@ -37,17 +37,15 @@ export const Login = () => {
       email: decoded_jwt.email,
       googleToken: response.credential,
     };
-    await autservice
-      .googleLogin(info)
-      .then((res) => {
-        localStorage.setItem("username", decoded_jwt.name);
-        localStorage.setItem("email", decoded_jwt.email);
-        localStorage.setItem("token", res.data.token);
-        Navigate({ to: '/' }); 
-      })
-      .catch((error) => {
-        throw error;
-      });
+    try {
+      const res = await autservice.googleLogin(info);
+      localStorage.setItem("username", decoded_jwt.name);
+      localStorage.setItem("email", decoded_jwt.email);
+      localStorage.setItem("token", res.data.token);
+      navigate('/');
+    } catch (error) {
+      throw error;
+    }
   };
 
   useEffect(() => {
@@ -64,17 +62,15 @@ export const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await autservice
-      .login(data)
-      .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("username", res.data.name);
-        localStorage.setItem("email", res.data.email);
-        navigate('/');
-      })
-      .catch((error) => {
-        throw error;
-      });
+    try {
+      const res = await autservice.login(data);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.name);
+      localStorage.setItem("email", res.data.email);
+      navigate('/');
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
