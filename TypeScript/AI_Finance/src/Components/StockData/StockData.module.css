@@ -47,9 +47,9 @@
   height: 20px;
   background-color: var(--lightBlue);
   border: 1px solid var(--lightBlue);
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  border-radius: 8px;
+  width: 60px;
+  height: 20px;
   color: white;
 }
 
