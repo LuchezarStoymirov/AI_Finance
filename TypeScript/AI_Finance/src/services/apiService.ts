@@ -26,10 +26,10 @@ const getUserData = async () => {
   const url = config.baseURL + config.user;
   const res = await fetchWrapper.get(url, authHeader());
   return res;
-}
+};
 
 export const apiService = {
   getStockData,
   exportData,
-  getUserData
+  getUserData,
 };
