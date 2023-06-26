@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MouseEvent } from "react";
 import style from "./Header.module.css";
 import { Grid, IconButton, Menu, MenuItem } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { apiService } from "../../services/apiService";
 
 export const Header = () => {
+  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -20,6 +23,20 @@ export const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // eslint-disable-next-line no-useless-catch
+      try {
+        const res = await apiService.getUserData();
+        setUser(res.name);
+        setEmail(res.email);
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Grid container className={style.header} alignItems="center">
@@ -71,12 +88,8 @@ export const Header = () => {
                 },
               }}
             >
-              <MenuItem className={style.username}>
-                {localStorage.getItem("username")}
-              </MenuItem>
-              <MenuItem className={style.email}>
-                {localStorage.getItem("email")}
-              </MenuItem>
+              <MenuItem className={style.username}>{user}</MenuItem>
+              <MenuItem className={style.email}>{email}</MenuItem>
               <MenuItem onClick={logUserOut}>Sign out</MenuItem>
             </Menu>
           </div>
