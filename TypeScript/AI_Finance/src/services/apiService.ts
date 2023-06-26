@@ -5,7 +5,7 @@ const authHeader = () => {
   const token = localStorage.getItem("token");
   return {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
   };
 };
@@ -22,7 +22,14 @@ const exportData = async () => {
   return res;
 };
 
+const getUserData = async () => {
+  const url = config.baseURL + 'user';
+  const res = await fetchWrapper.get(url, authHeader());
+  return res;
+}
+
 export const apiService = {
   getStockData,
   exportData,
+  getUserData
 };
