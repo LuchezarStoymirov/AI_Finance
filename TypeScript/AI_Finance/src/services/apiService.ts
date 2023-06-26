@@ -23,7 +23,7 @@ const exportData = async () => {
 };
 
 const getUserData = async () => {
-  const url = config.baseURL + 'user';
+  const url = config.baseURL + config.user;
   const res = await fetchWrapper.get(url, authHeader());
   return res;
 }
