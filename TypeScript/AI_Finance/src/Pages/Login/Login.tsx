@@ -1,17 +1,9 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import { autservice } from "../../services/autService";
 import { googleToken } from "./constants";
 import style from "./Login.module.css";
 import jwtDecode from "jwt-decode";
-
-declare global {
-  interface Window {
-    google: any;
-  }
-}
 
 interface CallBack {
   credential: string;
@@ -43,7 +35,7 @@ export const Login = () => {
         localStorage.setItem("username", decoded_jwt.name);
         localStorage.setItem("email", decoded_jwt.email);
         localStorage.setItem("token", res.data.token);
-        Navigate({ to: '/' }); 
+        navigate("/");
       })
       .catch((error) => {
         throw error;
@@ -56,10 +48,10 @@ export const Login = () => {
       callback: handleCallbackResponse,
     });
 
-    window.google?.accounts.id.renderButton(
-      document.getElementById("loginDiv"),
-      { theme: "outline", size: "large" }
-    );
+    window.google?.accounts.id.renderButton(document.getElementById("loginDiv"), {
+      theme: "outline",
+      size: "large",
+    });
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -70,7 +62,7 @@ export const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.name);
         localStorage.setItem("email", res.data.email);
-        navigate('/');
+        navigate("/");
       })
       .catch((error) => {
         throw error;
@@ -81,7 +73,7 @@ export const Login = () => {
     <div className={style.container}>
       <form onSubmit={handleSubmit} className={style.form}>
         <img
-          src="src\images\CashGrab-logo-light.png"
+          src="src/images/CashGrab-logo-light.png"
           alt="Login Image"
           className={style.image}
         />
