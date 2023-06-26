@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { autservice } from "../../services/autService";
 import { googleToken } from "./constants";
 import style from "./Login.module.css";
