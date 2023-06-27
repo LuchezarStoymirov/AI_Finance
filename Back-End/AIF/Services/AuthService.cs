@@ -132,21 +132,21 @@ namespace AIF.Services
         {
             if (string.IsNullOrEmpty(token))
             {
-                return false; // Token is missing
+                return false; 
             }
 
             var decodedToken = await _jwtService.VerifyAsync(token);
 
             if (decodedToken == null)
             {
-                return false; // Token is invalid or expired
+                return false; 
             }
 
             int userId = int.Parse(decodedToken.Issuer);
 
             var user = await _repository.GetByIdAsync(userId);
 
-            return user != null; // Determine if the user exists or not
+            return user != null; 
         }
 
 
