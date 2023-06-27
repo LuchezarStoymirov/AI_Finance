@@ -6,5 +6,6 @@ export const config = {
   googleLogin: "google-login",
   scraping: "Scraping",
   export: "Scraping/export/csv",
-  user: "user"
+  user: "user",
+  logout: "logout"
 };
