@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using AIF.Models.GoogleModels;
 
-namespace AIF.Services
+namespace AIF.Data.Interfaces
 {
     public interface IAuthService
     {

@@ -1,7 +1,7 @@
 ﻿using AIF.Models;
 using System.Threading.Tasks;
 
-namespace AIF.Data
+namespace AIF.Data.Interfaces
 {
     public interface IUserRepository
     {

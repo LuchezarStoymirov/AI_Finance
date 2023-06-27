@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
-namespace AIF.Services
+namespace AIF.Data.Interfaces
 {
     public interface IJwtService
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using AIF.Data.Interfaces;
 using AIF.Dtos;
 using HtmlAgilityPack;
 

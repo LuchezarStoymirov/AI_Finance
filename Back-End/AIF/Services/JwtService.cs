@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Threading.Tasks;
+using AIF.Data.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AIF.Services

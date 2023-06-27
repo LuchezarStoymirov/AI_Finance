@@ -1,6 +1,9 @@
-﻿using AIF.Services;
+﻿using AIF.Data.Interfaces;
+using AIF.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace AIF.Controllers
@@ -10,10 +13,12 @@ namespace AIF.Controllers
     public class ScrapingController : ControllerBase
     {
         private readonly IScrapingService _scrapingService;
+        private readonly IAWSS3Service _s3Service;
 
-        public ScrapingController(IScrapingService scrapingService)
+        public ScrapingController(IScrapingService scrapingService, IAWSS3Service s3Service)
         {
             _scrapingService = scrapingService;
+            _s3Service = s3Service;
         }
 
         [HttpGet]
@@ -42,6 +47,28 @@ namespace AIF.Controllers
             catch (Exception ex)
             {
                 return BadRequest("Failed to export top currencies. Error: " + ex.Message);
+            }
+        }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadFile(IFormFile file)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                    return BadRequest("No file uploaded.");
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream);
+                    await _s3Service.UploadFileAsync(file.FileName, memoryStream);
+                }
+
+                return Ok("File uploaded successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Failed to upload file. Error: " + ex.Message);
             }
         }
     }

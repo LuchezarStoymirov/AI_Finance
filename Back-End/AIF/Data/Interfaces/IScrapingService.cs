@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AIF.Dtos;
 
-namespace AIF.Services
+namespace AIF.Data.Interfaces
 {
     public interface IScrapingService
     {

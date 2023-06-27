@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using AIF.Data.Interfaces;
 
 namespace AIF
 {
@@ -39,6 +40,8 @@ namespace AIF
             builder.Services.AddScoped<IJwtService, JwtService>();
             builder.Services.AddScoped<IScrapingService, ScrapingService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IAWSS3Service>(provider => new AWSS3Service("AKIA42OAFCOOINMLKAMG", "wt7cOESlZ27FrzxELuGRyKjCM4vh1s/lNrave7Eo", "ai-finances", "eu-central-1"));
+
 
             builder.Services.AddSwaggerGen(c =>
             {
