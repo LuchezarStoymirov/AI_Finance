@@ -19,5 +19,7 @@ namespace AIF.Services
         Task<IActionResult> GetUserAsync();
 
         Task<IActionResult> LogoutAsync();
+
+        Task<bool> ValidateTokenAsync(string token);
     }
 }

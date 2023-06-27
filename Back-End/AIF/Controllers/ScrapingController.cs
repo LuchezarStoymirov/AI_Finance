@@ -5,15 +5,19 @@ using System.Threading.Tasks;
 
 namespace AIF.Controllers
 {
+    
     [ApiController]
     [Route("api/[controller]")]
     public class ScrapingController : ControllerBase
     {
         private readonly IScrapingService _scrapingService;
 
-        public ScrapingController(IScrapingService scrapingService)
+        private readonly IAuthService _authService;
+
+        public ScrapingController(IScrapingService scrapingService, IAuthService authService)
         {
             _scrapingService = scrapingService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -21,6 +25,14 @@ namespace AIF.Controllers
         {
             try
             {
+                var token = HttpContext.Request.Headers["Authorization"].ToString();
+                var isValid = await _authService.ValidateTokenAsync(token);
+
+                if (!isValid)
+                {
+                    return Unauthorized("Invalid or missing token");
+                }
+
                 var currencies = await _scrapingService.GetTopCurrenciesAsync();
                 return Ok(currencies);
             }
@@ -35,6 +47,14 @@ namespace AIF.Controllers
         {
             try
             {
+                var token = HttpContext.Request.Headers["Authorization"].ToString();
+                var isValid = await _authService.ValidateTokenAsync(token);
+
+                if (!isValid)
+                {
+                    return Unauthorized("Invalid or missing token");
+                }
+
                 var currencies = await _scrapingService.GetTopCurrenciesAsync();
                 var csvBytes = _scrapingService.ExportToCSV(currencies);
                 return File(csvBytes, "text/csv", "top_currencies.csv");
@@ -44,5 +64,6 @@ namespace AIF.Controllers
                 return BadRequest("Failed to export top currencies. Error: " + ex.Message);
             }
         }
+
     }
 }
