@@ -8,6 +8,7 @@
   --formColor: rgba(0, 0, 0, 0.6);
   --errorRed: #ff4030;
   --boxShadow: 0px 4px 8px black;
+  --blockedContnent: rgba(0, 0, 0, 0.8);
 }
 
 body {

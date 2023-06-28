@@ -12,14 +12,14 @@
 
 .gridrowOdd {
   justify-content: flex-end;
-  padding: 10px;
+  
   opacity: 0;
   animation: fade-in-left 1s ease forwards;
 }
 
 .gridrowEven {
   justify-content: flex-start;
-  padding: 10px;
+  
   opacity: 0;
   animation: fade-in-right 1s ease forwards;
 }

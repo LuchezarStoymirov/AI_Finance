@@ -1,6 +1,6 @@
 .box{
     width: 80%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--blockedContnent);
     backdrop-filter: blur(5px);
     height: 200px;
     border-radius: 8px;
@@ -8,6 +8,10 @@
     overflow: auto;
     text-align: center;
     color: white;
+  }
+
+  .title{
+    color: var(--lightBlue);
   }
 
   @media (max-width: 767px){
