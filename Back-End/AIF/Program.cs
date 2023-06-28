@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AIF.Controllers;
 using AIF.Data;
 using AIF.Services;
+using Amazon;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,8 +18,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 
 namespace AIF
 {
@@ -25,11 +27,9 @@ namespace AIF
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddHttpContextAccessor(); // Add IHttpContextAccessor
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -39,6 +39,17 @@ namespace AIF
             builder.Services.AddScoped<IJwtService, JwtService>();
             builder.Services.AddScoped<IScrapingService, ScrapingService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<S3Controller>();
+            builder.Services.AddScoped<IS3Service>(provider =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var accessKey = configuration.GetValue<string>("AWS:AccessKey");
+                var secretKey = configuration.GetValue<string>("AWS:SecretKey");
+                var bucketName = configuration.GetValue<string>("AWS:BucketName");
+                var regionString = configuration.GetValue<string>("AWS:Region");
+                var region = RegionEndpoint.GetBySystemName(regionString);
+                return new S3Service(accessKey, secretKey, bucketName, region);
+            });
 
             builder.Services.AddSwaggerGen(c =>
             {
@@ -77,8 +88,8 @@ namespace AIF
             .AddCookie()
             .AddGoogle(options =>
             {
-                options.ClientId = "477276107037-6nvps4ht1setgd3c4o4sao17fau71r17.apps.googleusercontent.com";
-                options.ClientSecret = "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";
+                options.ClientId = builder.Configuration["Google:ClientId"];
+                options.ClientSecret = builder.Configuration["Google:ClientSecret"];
             });
 
             var app = builder.Build();
