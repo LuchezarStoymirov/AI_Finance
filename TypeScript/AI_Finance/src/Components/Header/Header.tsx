@@ -4,16 +4,19 @@ import style from "./Header.module.css";
 import { Grid, IconButton, Menu, MenuItem } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { apiService } from "../../services/apiService";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
-  const logUserOut = () => {
+  const logUserOut = async () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    await apiService.logOut();
+    navigate("/login");
   };
 
   const handleMenu = (event: MouseEvent<HTMLButtonElement>) => {

@@ -28,8 +28,15 @@ const getUserData = async () => {
   return res;
 };
 
+const logOut = async () => {
+  const url = config.baseURL + config.logout;
+  const res = await fetchWrapper.post(url, authHeader());
+  return res;
+}
+
 export const apiService = {
   getStockData,
   exportData,
   getUserData,
+  logOut
 };
