@@ -13,9 +13,9 @@ export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
 
-  const logUserOut = () => {
+  const logUserOut = async () => {
     localStorage.removeItem("token");
-    apiService.logOut();
+    await apiService.logOut();
     navigate("/login");
   };
 
