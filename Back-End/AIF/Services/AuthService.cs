@@ -128,6 +128,29 @@ namespace AIF.Services
             return new OkObjectResult(user);
         }
 
+        public async Task<bool> ValidateTokenAsync(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return false; 
+            }
+
+            var decodedToken = await _jwtService.VerifyAsync(token);
+
+            if (decodedToken == null)
+            {
+                return false; 
+            }
+
+            int userId = int.Parse(decodedToken.Issuer);
+
+            var user = await _repository.GetByIdAsync(userId);
+
+            return user != null; 
+        }
+
+
+
         public async Task<IActionResult> LogoutAsync()
         {
             _httpContext.Response.Cookies.Delete("jwt");

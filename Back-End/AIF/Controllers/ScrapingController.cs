@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using AIF.Attributes;
 
 namespace AIF.Controllers
 {
@@ -10,13 +11,16 @@ namespace AIF.Controllers
     public class ScrapingController : ControllerBase
     {
         private readonly IScrapingService _scrapingService;
+        private readonly IAuthService _authService;
 
-        public ScrapingController(IScrapingService scrapingService)
+        public ScrapingController(IScrapingService scrapingService, IAuthService authService)
         {
             _scrapingService = scrapingService;
+            _authService = authService;
         }
 
         [HttpGet]
+        [JwtAuthorize]
         public async Task<IActionResult> GetTopCurrenciesAsync()
         {
             try
@@ -31,6 +35,7 @@ namespace AIF.Controllers
         }
 
         [HttpGet("export/csv")]
+        [JwtAuthorize]
         public async Task<IActionResult> ExportToCSV()
         {
             try
