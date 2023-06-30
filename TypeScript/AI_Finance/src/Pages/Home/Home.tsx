@@ -25,12 +25,6 @@ export const Home = () => {
         <Grid item container lg={6} md={6} sm={12} className={style.gridrowEven}>
           <News/>
         </Grid>
-        <Grid item container lg={6} md={6} sm={12} className={style.gridrowOdd}>
-          <Statements/>
-        </Grid>
-        <Grid item container lg={6} md={6} sm={12} className={style.gridrowEven}>
-          <Ratio/>
-        </Grid>
       </Grid>
       <Analisys/>
     </div>
