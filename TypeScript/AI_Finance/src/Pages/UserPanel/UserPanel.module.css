@@ -1,0 +1,19 @@
+.container {
+    position: relative;
+    background-image: url(src/Images/662960.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box{
+    height: 600px;
+    width: 400px;
+    background-color: white;
+    border: 1px solid var(--lightBlue);
+    border-radius: 8px;
+}

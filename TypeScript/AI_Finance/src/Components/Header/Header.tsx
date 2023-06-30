@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MouseEvent } from "react";
 import style from "./Header.module.css";
-import { Grid, IconButton, Menu, MenuItem } from "@mui/material";
+import { Grid, IconButton, Menu, MenuItem, Modal } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { apiService } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +27,10 @@ export const Header = () => {
     setAnchorEl(null);
   };
 
+  const settingsHandler = () => {
+    navigate("/user");
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       // eslint-disable-next-line no-useless-catch
@@ -42,6 +46,7 @@ export const Header = () => {
   }, []);
 
   return (
+    <>
     <Grid container className={style.header} alignItems="center">
       <Grid item>
         <img
@@ -93,11 +98,13 @@ export const Header = () => {
             >
               <MenuItem className={style.username}>{user}</MenuItem>
               <MenuItem className={style.email}>{email}</MenuItem>
+              <MenuItem className={style.email} onClick={settingsHandler}>Settings</MenuItem>
               <MenuItem onClick={logUserOut}>Sign out</MenuItem>
             </Menu>
           </div>
         )}
       </Grid>
     </Grid>
+    </>
   );
 };
