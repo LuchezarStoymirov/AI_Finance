@@ -8,5 +8,6 @@ namespace AIF.Services
     {
         Task<List<ScrapingDto>> GetTopCurrenciesAsync();
         byte[] ExportToCSV(List<ScrapingDto> currencies);
+        List<ScrapingDto> ScrapeNews(string url);
     }
 }

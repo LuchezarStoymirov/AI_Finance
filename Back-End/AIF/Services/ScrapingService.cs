@@ -69,6 +69,41 @@ namespace AIF.Services
             }
         }
 
+        public List<ScrapingDto> ScrapeNews(string url)
+        {
+            List<ScrapingDto> newsList = new List<ScrapingDto>();
+
+            // Load the HTML document
+            HtmlWeb htmlWeb = new HtmlWeb();
+            HtmlDocument htmlDoc = htmlWeb.Load(url);
+
+            // Scrape the second news article
+            HtmlNode secondNewsNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='fusion-app']/div[2]/div[2]/div/main/div/section[1]/div/div[2]/div/div[1]/div/div/div/div[2]/div[2]/div[2]/div[1]/a");
+            string secondNewsTitle = secondNewsNode.InnerText.Trim();
+            string secondNewsUrl = secondNewsNode.GetAttributeValue("href", "");
+
+            ScrapingDto secondNews = new ScrapingDto
+            {
+                Title = secondNewsTitle,
+                Url = secondNewsUrl
+            };
+            newsList.Add(secondNews);
+
+            // Scrape the first news article
+            HtmlNode firstNewsNode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='fusion-app']/div[2]/div[2]/div/main/div/section[1]/div/div[2]/div/div[1]/div/div/div/div[2]/div[1]/div[2]/div[1]/a");
+            string firstNewsTitle = firstNewsNode.InnerText.Trim();
+            string firstNewsUrl = firstNewsNode.GetAttributeValue("href", "");
+
+            ScrapingDto firstNews = new ScrapingDto
+            {
+                Title = firstNewsTitle,
+                Url = firstNewsUrl
+            };
+            newsList.Add(firstNews);
+
+            return newsList;
+        }
+
         public byte[] ExportToCSV(List<ScrapingDto> currencies)
         {
             try

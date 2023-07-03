@@ -49,5 +49,21 @@ namespace AIF.Controllers
                 return BadRequest("Failed to export top currencies. Error: " + ex.Message);
             }
         }
+
+        [HttpGet("news")]
+        public IActionResult GetNews()
+        {
+            try
+            {
+                string url = "https://www.coindesk.com/";
+                var newsList = _scrapingService.ScrapeNews(url);
+                return Ok(newsList);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception and return an appropriate response
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
     }
 }
