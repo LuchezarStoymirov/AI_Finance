@@ -5,10 +5,14 @@ import { useEffect, useState } from "react";
 export const UserPanel = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedImage, setSelectedImage] = useState(
+    "src/Images/profilepic.jpg"
+  );
+  const genericProfilePic = "src/Images/genericprofilepic.jpg";
 
   useEffect(() => {
     const fetchData = async () => {
+      // eslint-disable-next-line no-useless-catch
       try {
         const res = await apiService.getUserData();
         setUsername(res.name);
@@ -23,17 +27,37 @@ export const UserPanel = () => {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   return (
     <div className={style.container}>
       <div className={style.box}>
-        <h3>{username}</h3>
-        <h3>{email}</h3>
-        <input type="file" onChange={handleImageUpload} />
-        {selectedImage && <img src={URL.createObjectURL(selectedImage)} alt="Uploaded" className={style.profilePic}/>}
+        <div className={style.userinfo}>
+          <img
+            src={selectedImage || genericProfilePic}
+            alt="Uploaded"
+            className={style.profilePic}
+          />
+          </div>
+          <div className={style.profileAttributes}>
+          <input type="file" onChange={handleImageUpload} />
+          <div className={style.usercell}>
+          <h3>Username:</h3>
+          <h4>{username}</h4>
+          <p className={style.change}>Change</p>
+          </div>
+          <div className={style.usercell}>
+          <h3>Email:</h3>
+          <h4>{email}</h4>
+          <p className={style.change}>Change</p>
+          </div>
+          </div>
       </div>
     </div>
   );

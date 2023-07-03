@@ -16,6 +16,8 @@
     background-color: white;
     border: 1px solid var(--lightBlue);
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
 }
 
 .profilePic{
@@ -23,4 +25,47 @@
     height: 100px;
     border-radius: 50%;
     border: 3px solid var(--lightBlue);
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.userinfo{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: var(--headerBlue);
+    border-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.profileAttributes{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    background-color: white;
+    padding: 20px;
+    height: 100vh;
+    justify-content: start;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.usercell, h3{
+    color: darkgrey;
+    margin: 0px
+}
+
+.usercell, h4{
+    color: black;
+    margin: 0px;
+}
+
+.usercell{
+    margin-top: 10px;
+}
+
+.change{
+    color: var(--lightBlue);
+    text-decoration: underline;
 }
