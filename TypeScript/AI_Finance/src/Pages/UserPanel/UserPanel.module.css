@@ -10,7 +10,7 @@
     flex-direction: column;
 }
 
-.box{
+.box {
     height: 600px;
     width: 400px;
     background-color: white;
@@ -18,8 +18,19 @@
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-}
-
+    animation: slide-up 0.3s ease-in-out;
+  }
+  
+  @keyframes slide-up {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 .profilePic{
     width: 100px;
     height: 100px;
@@ -51,12 +62,12 @@
     border-bottom-right-radius: 8px;
 }
 
-.usercell, h3{
+.usercell > h3{
     color: darkgrey;
     margin: 0px
 }
 
-.usercell, h4{
+.usercell > h4{
     color: black;
     margin: 0px;
 }
@@ -68,4 +79,18 @@
 .change{
     color: var(--lightBlue);
     text-decoration: underline;
+}
+
+.homebutton{
+    width: 60px;
+    color: white;
+    background-color: var(--lightBlue);
+    border: none;
+    border-radius: 8px;
+}
+
+.returndiv{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
 }

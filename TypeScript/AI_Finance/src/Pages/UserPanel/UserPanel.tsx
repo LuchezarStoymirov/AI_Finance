@@ -1,6 +1,7 @@
 import style from "./UserPanel.module.css";
 import { apiService } from "../../services/apiService";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const UserPanel = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,12 @@ export const UserPanel = () => {
     "src/Images/profilepic.jpg"
   );
   const genericProfilePic = "src/Images/genericprofilepic.jpg";
+
+  const navigate = useNavigate();
+
+  const returnHome = () => {
+    navigate('/');
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +64,9 @@ export const UserPanel = () => {
           <h4>{email}</h4>
           <p className={style.change}>Change</p>
           </div>
+          </div>
+          <div className={style.returndiv}>
+          <button className={style.homebutton} onClick={returnHome}>Done</button>
           </div>
       </div>
     </div>
