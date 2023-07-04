@@ -22,11 +22,15 @@ namespace AIF.Services
 
         public async Task UploadFileAsync(byte[] fileBytes, string fileExtension)
         {
+            string folderName = DateTime.Now.ToString("yyyyMMdd");
             string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + fileExtension;
+
+            await CreateFolderIfNotExistsAsync(folderName);
+
             using (var memoryStream = new MemoryStream(fileBytes))
             {
                 var fileTransferUtility = new TransferUtility(_s3Client);
-                await fileTransferUtility.UploadAsync(memoryStream, _bucketName, fileName);
+                await fileTransferUtility.UploadAsync(memoryStream, _bucketName, $"{folderName}/{fileName}");
             }
         }
 
@@ -56,13 +60,24 @@ namespace AIF.Services
                 Key = filename
             };
 
-            using (var response = await _s3Client.GetObjectAsync(request))
-            using (var responseStream = response.ResponseStream)
-            using (var memoryStream = new MemoryStream())
+            var response = await _s3Client.GetObjectAsync(request);
+            var responseStream = response.ResponseStream;
+            using var memoryStream = new MemoryStream();
+            await responseStream.CopyToAsync(memoryStream);
+            return memoryStream.ToArray();
+        }
+
+        private async Task CreateFolderIfNotExistsAsync(string folderName)
+        {
+            var folderKey = $"{folderName}/";
+            var putRequest = new PutObjectRequest
             {
-                await responseStream.CopyToAsync(memoryStream);
-                return memoryStream.ToArray();
-            }
+                BucketName = _bucketName,
+                Key = folderKey,
+                ContentBody = string.Empty
+            };
+
+            await _s3Client.PutObjectAsync(putRequest);
         }
     }
 }

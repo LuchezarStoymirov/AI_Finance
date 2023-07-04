@@ -29,5 +29,16 @@ namespace AIF.Data
         {
             return await _context.Users.FindAsync(id);
         }
+
+        public async Task<User> UpdateProfilePictureUrlAsync(int userId, string profilePictureUrl)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                user.ProfilePictureUrl = profilePictureUrl;
+                await _context.SaveChangesAsync();
+            }
+            return user;
+        }
     }
 }
