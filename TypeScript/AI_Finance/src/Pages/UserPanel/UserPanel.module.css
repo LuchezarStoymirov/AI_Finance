@@ -76,11 +76,6 @@
     margin-top: 10px;
 }
 
-.change{
-    color: var(--lightBlue);
-    text-decoration: underline;
-}
-
 .homebutton{
     width: 60px;
     color: white;
