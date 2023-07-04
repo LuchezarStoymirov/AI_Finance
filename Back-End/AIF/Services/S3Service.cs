@@ -3,6 +3,7 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -47,7 +48,7 @@ namespace AIF.Services
             return fileList;
         }
 
-        public async Task<byte[]> DonwloadFileAsync(string filename, string fileExtension)
+        public async Task<byte[]> DownloadFileAsync(string filename, string fileExtension)
         {
             var request = new GetObjectRequest
             {
@@ -64,5 +65,4 @@ namespace AIF.Services
             }
         }
     }
-
 }

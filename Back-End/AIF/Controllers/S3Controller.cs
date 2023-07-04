@@ -43,27 +43,27 @@ namespace AIF.Controllers
         }
 
 
-        [HttpGet("All Files")]
+        [HttpGet("AllFiles")]
         public async Task<ActionResult> GetAllFiles()
         {
             try
             {
-                var filelist = await _s3Service.GetAllFilesAsync();
-                return Ok(filelist);
+                var fileList = await _s3Service.GetAllFilesAsync();
+                return Ok(fileList);
             }
             catch (Exception ex)
             {
-                return BadRequest("Failed to retrieve file list. Error " + ex.Message);
+                return BadRequest("Failed to retrieve file list. Error: " + ex.Message);
             }
         }
 
-        [HttpGet("Download file from S3")]
-        public async Task<IActionResult> DonwloadFromS3(string fileName)
+        [HttpGet("DownloadFileFromS3")]
+        public async Task<IActionResult> DownloadFromS3(string fileName)
         {
             try
             {
-                var fileBytes = await _s3Service.DonwloadFileAsync(fileName , ".csv");
-                return File(fileBytes, "appliction/octet-stream", fileName);
+                var fileBytes = await _s3Service.DownloadFileAsync(fileName, ".csv");
+                return File(fileBytes, "application/octet-stream", fileName);
             }
             catch (Exception ex)
             {
