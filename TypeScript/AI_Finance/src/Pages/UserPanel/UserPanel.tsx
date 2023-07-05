@@ -7,15 +7,22 @@ import { pics } from "./constants";
 export const UserPanel = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [selectedImage, setSelectedImage] = useState(
-    pics.startingpic
-  );
-  
+  const [selectedImage, setSelectedImage] = useState(pics.startingpic);
+  const [changeName, setChangeName] = useState(false);
+  const [changeEmail, setChangeEmail] = useState(false);
   const navigate = useNavigate();
 
-  const returnHome = () => {
-    navigate('/');
+  const nameHandler = () => {
+    setChangeName(!changeName);
   }
+
+  const emailHandler = () => {
+    setChangeEmail(!changeEmail);
+  }
+
+  const returnHome = () => {
+    navigate("/");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,21 +58,29 @@ export const UserPanel = () => {
             alt="Uploaded"
             className={style.profilePic}
           />
-          </div>
-          <div className={style.profileAttributes}>
+        </div>
+        <div className={style.profileAttributes}>
           <input type="file" onChange={handleImageUpload} />
           <div className={style.usercell}>
-          <h3>Username:</h3>
-          <h4>{username}</h4>
+            <h3>Username:</h3>
+            <div className={style.datagroup}>
+              <h4>{username}</h4>
+              <button className={style.change} onClick={nameHandler}>{'\u270E'}</button>
+            </div>
           </div>
           <div className={style.usercell}>
-          <h3>Email:</h3>
-          <h4>{email}</h4>
+            <h3>Email:</h3>
+            <div className={style.datagroup}>
+              <h4>{email}</h4>
+              <button className={style.change}>{'\u270E'}</button>
+            </div>
           </div>
-          </div>
-          <div className={style.returndiv}>
-          <button className={style.homebutton} onClick={returnHome}>Done</button>
-          </div>
+        </div>
+        <div className={style.returndiv}>
+          <button className={style.homebutton} onClick={returnHome}>
+            Done
+          </button>
+        </div>
       </div>
     </div>
   );
