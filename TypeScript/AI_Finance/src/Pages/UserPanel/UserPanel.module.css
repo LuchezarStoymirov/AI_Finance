@@ -102,3 +102,75 @@
     margin: 10px;
     border: none;
 }
+
+.change:hover{
+    border: 1px solid var(--lightBlue);
+}
+
+.nameModal{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalBox{
+    width: 400px;
+    height: 150px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    padding-bottom: 10px;
+}
+
+.valueInput{
+    border: none;
+    border-bottom: 1px solid var(--lightBlue);
+    width: 250px;
+    font-size: 20px;
+}
+
+.submit{
+    margin-top: 20px;
+    width: 60px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: var(--lightBlue);
+    color: white;
+    border: 1px solid var(--lightBlue);
+}
+
+.submit:hover {
+    background-color: white;
+    color: var(--lightBlue);
+}
+
+.closediv{
+    width: 100%;
+    margin: 0;
+    height: 16vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: start;
+}
+
+.closeButton{
+    border-radius: 50%;
+    background-color: var(--lightBlue);
+    color: white;
+    margin: 5px;
+    border: 1px solid var(--lightBlue);
+}
+
+.closeButton:hover{
+    background-color: white;
+    color: var(--lightBlue);
+}
