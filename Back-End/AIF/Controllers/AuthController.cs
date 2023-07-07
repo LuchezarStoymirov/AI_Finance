@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using AIF.Models.GoogleModels;
+using AIF.Data;
+using Microsoft.EntityFrameworkCore;
+using AIF.Models;
+
 
 namespace AIF.Controllers
 {
@@ -41,6 +45,35 @@ namespace AIF.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("updateuser")]
+        public async Task<IActionResult> UpdateUser(UpdateUserDto dto)
+        {
+            using (var context = new AifDatabaseContext())
+            {
+                var user = await context.Users.FirstOrDefaultAsync(u =>
+                    u.Name == dto.OldUsername || u.Email == dto.OldEmail);
+
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                if (!string.IsNullOrEmpty(dto.NewUsername))
+                {
+                    user.Name = dto.NewUsername;
+                }
+
+                if (!string.IsNullOrEmpty(dto.NewEmail))
+                {
+                    user.Email = dto.NewEmail;
+                }
+
+                await context.SaveChangesAsync();
+
+                return Ok("User updated successfully");
             }
         }
 

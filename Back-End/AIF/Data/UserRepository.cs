@@ -1,4 +1,5 @@
 ﻿using AIF.Models;
+using AIF.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -18,6 +19,11 @@ namespace AIF.Data
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
+        }
+
+        public Task CreateAsync(UserService user)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<User> GetByEmailAsync(string email)
