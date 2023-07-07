@@ -10,8 +10,8 @@ export const UserPanel = () => {
   const [selectedImage, setSelectedImage] = useState(pics.startingpic);
   const [changeName, setChangeName] = useState(false);
   const [changeEmail, setChangeEmail] = useState(false);
-  const [newUsername, setNewUsername] = useState('');
-  const [newEmail, setNewEmail] = useState('');
+  const [newUsername, setNewUsername] = useState("");
+  const [newEmail, setNewEmail] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export const UserPanel = () => {
   const closeModal = () => {
     setChangeEmail(false);
     setChangeName(false);
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +56,26 @@ export const UserPanel = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  const sendNameData = () => {
+    const data = {
+      oldUsername: username,
+      newUsername: newUsername,
+      oldEmail: email,
+      newEmail: email
+    }
+    apiService.changeUsername();
+  }
+
+  const sendEmailData = () => {
+    const data = {
+      oldUsername: username,
+      newUsername: username,
+      oldEmail: email,
+      newEmail: newEmail
+    }
+    apiService.changeUsername();
+  }
 
   return (
     <div className={style.container}>
@@ -94,30 +114,46 @@ export const UserPanel = () => {
           </button>
         </div>
       </div>
-      {changeName && <div className={style.nameModal}>
-        <div className={style.modalBox}>
-          <div className={style.closediv}>
-            <button className={style.closeButton} onClick={closeModal}>x</button>
+      {changeName && (
+        <div className={style.nameModal}>
+          <div className={style.modalBox}>
+            <div className={style.closediv}>
+              <button className={style.closeButton} onClick={closeModal}>
+                x
+              </button>
+            </div>
+            <input
+              type="text"
+              placeholder="Enter new Username"
+              className={style.valueInput}
+              onChange={(event) => {
+                setNewUsername(event.target.value);
+              }}
+            />
+            <button className={style.submit} onClick={sendNameData}>Submit</button>
           </div>
-          <input type="text" placeholder="Enter new Username"  className={style.valueInput} onChange={event => {
-            setNewUsername(event.target.value);
-          }}/>
-          <button className={style.submit}>Submit</button>
         </div>
-      </div>}
-      {changeEmail && <div className={style.nameModal}>
-        <div className={style.modalBox}>
-          <div className={style.closediv}>
-            <button className={style.closeButton} onClick={closeModal}>x</button>
+      )}
+      {changeEmail && (
+        <div className={style.nameModal}>
+          <div className={style.modalBox}>
+            <div className={style.closediv}>
+              <button className={style.closeButton} onClick={closeModal}>
+                x
+              </button>
+            </div>
+            <input
+              type="text"
+              placeholder="Enter new Email"
+              className={style.valueInput}
+              onChange={(event) => {
+                setNewEmail(event.target.value);
+              }}
+            />
+            <button className={style.submit} onClick={sendEmailData}>Submit</button>
           </div>
-          <input type="text" placeholder="Enter new Email"  className={style.valueInput} onChange={event => {
-            console.log(newEmail);
-            setNewEmail(event.target.value);
-            console.log(newEmail);
-          }}/>
-          <button className={style.submit}>Submit</button>
         </div>
-      </div>}
+      )}
     </div>
   );
 };

@@ -34,9 +34,23 @@ const logOut = async () => {
   return res;
 }
 
+const changeUsername = async () => {
+  const url = config.baseURL + config.updateUser;
+  const res = await fetchWrapper.post(url, authHeader());
+  return res;
+}
+
+const changeEmail = async () => {
+  const url = config.baseURL + config.updateUser;
+  const res = await fetchWrapper.post(url, authHeader());
+  return res;
+}
+
 export const apiService = {
   getStockData,
   exportData,
   getUserData,
-  logOut
+  logOut,
+  changeUsername,
+  changeEmail
 };

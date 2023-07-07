@@ -7,5 +7,6 @@ export const config = {
   scraping: "Scraping",
   export: "Scraping/export/csv",
   user: "user",
-  logout: "logout"
+  logout: "logout",
+  updateUser: "update-user"
 };
