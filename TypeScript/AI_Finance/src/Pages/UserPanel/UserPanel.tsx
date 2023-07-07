@@ -64,7 +64,7 @@ export const UserPanel = () => {
       oldEmail: email,
       newEmail: email
     }
-    apiService.changeUsername();
+    apiService.changeUsername(data);
   }
 
   const sendEmailData = () => {
@@ -74,7 +74,7 @@ export const UserPanel = () => {
       oldEmail: email,
       newEmail: newEmail
     }
-    apiService.changeUsername();
+    apiService.changeUsername(data);
   }
 
   return (
