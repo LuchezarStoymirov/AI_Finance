@@ -62,20 +62,20 @@ export const UserPanel = () => {
       oldUsername: username,
       newUsername: newUsername,
       oldEmail: email,
-      newEmail: email
-    }
+      newEmail: email,
+    };
     apiService.changeUsername(data);
-  }
+  };
 
   const sendEmailData = () => {
     const data = {
       oldUsername: username,
       newUsername: username,
       oldEmail: email,
-      newEmail: newEmail
-    }
+      newEmail: newEmail,
+    };
     apiService.changeUsername(data);
-  }
+  };
 
   return (
     <div className={style.container}>
@@ -130,7 +130,9 @@ export const UserPanel = () => {
                 setNewUsername(event.target.value);
               }}
             />
-            <button className={style.submit} onClick={sendNameData}>Submit</button>
+            <button className={style.submit} onClick={sendNameData}>
+              Submit
+            </button>
           </div>
         </div>
       )}
@@ -150,7 +152,9 @@ export const UserPanel = () => {
                 setNewEmail(event.target.value);
               }}
             />
-            <button className={style.submit} onClick={sendEmailData}>Submit</button>
+            <button className={style.submit} onClick={sendEmailData}>
+              Submit
+            </button>
           </div>
         </div>
       )}

@@ -19,19 +19,20 @@
     display: flex;
     flex-direction: column;
     animation: slide-up 0.3s ease-in-out;
-  }
-  
-  @keyframes slide-up {
+}
+
+@keyframes slide-up {
     0% {
-      opacity: 0;
-      transform: translateY(100%);
+        opacity: 0;
+        transform: translateY(100%);
     }
     100% {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-.profilePic{
+}
+
+.profilePic {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -40,7 +41,7 @@
     margin-bottom: 20px;
 }
 
-.userinfo{
+.userinfo {
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -50,7 +51,7 @@
     border-bottom-right-radius: 0px;
 }
 
-.profileAttributes{
+.profileAttributes {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -62,21 +63,21 @@
     border-bottom-right-radius: 8px;
 }
 
-.usercell > h3{
+.usercell > h3 {
     color: darkgrey;
-    margin: 0px
+    margin: 0px;
 }
 
-.usercell > h4{
+.usercell > h4 {
     color: black;
     margin: 0px;
 }
 
-.usercell{
+.usercell {
     margin-top: 10px;
 }
 
-.homebutton{
+.homebutton {
     width: 60px;
     color: white;
     background-color: var(--lightBlue);
@@ -84,18 +85,18 @@
     border-radius: 8px;
 }
 
-.returndiv{
+.returndiv {
     display: flex;
     justify-content: center;
     padding: 10px;
 }
 
-.datagroup{
+.datagroup {
     display: flex;
     flex-direction: row;
 }
 
-.change{
+.change {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -103,11 +104,11 @@
     border: none;
 }
 
-.change:hover{
+.change:hover {
     border: 1px solid var(--lightBlue);
 }
 
-.nameModal{
+.nameModal {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.3);
     width: 100vw;
@@ -118,7 +119,7 @@
     align-items: center;
 }
 
-.modalBox{
+.modalBox {
     width: 400px;
     height: 150px;
     background-color: white;
@@ -130,14 +131,14 @@
     padding-bottom: 10px;
 }
 
-.valueInput{
+.valueInput {
     border: none;
     border-bottom: 1px solid var(--lightBlue);
     width: 250px;
     font-size: 20px;
 }
 
-.submit{
+.submit {
     margin-top: 20px;
     width: 60px;
     height: 30px;
@@ -152,7 +153,7 @@
     color: var(--lightBlue);
 }
 
-.closediv{
+.closediv {
     width: 100%;
     margin: 0;
     height: 16vh;
@@ -162,7 +163,7 @@
     align-items: start;
 }
 
-.closeButton{
+.closeButton {
     border-radius: 50%;
     background-color: var(--lightBlue);
     color: white;
@@ -170,7 +171,35 @@
     border: 1px solid var(--lightBlue);
 }
 
-.closeButton:hover{
+.closeButton:hover {
     background-color: white;
     color: var(--lightBlue);
+}
+
+@media screen and (max-width: 768px) {
+    .box {
+        height: 400px;
+        width: 300px;
+    }
+    
+    .profilePic {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .usercell > h3 {
+        font-size: 14px;
+    }
+    
+    .usercell > h4 {
+        font-size: 16px;
+    }
+    
+    .valueInput {
+        font-size: 16px;
+    }
+    
+    .submit {
+        font-size: 14px;
+    }
 }
