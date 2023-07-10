@@ -32,7 +32,7 @@ namespace AIF.Services
                 Name = dto.Name,
                 Email = dto.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                ProfilePictureUrl = "s3://ai-finances/20230710/20230710101111.png"
+                ProfilePictureUrl = "s3://ai-finances/Profile Pictures/Default Profile Picture.png"
             };
 
             await _repository.CreateAsync(user);

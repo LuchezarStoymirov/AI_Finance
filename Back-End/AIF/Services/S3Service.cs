@@ -79,5 +79,31 @@ namespace AIF.Services
 
             await _s3Client.PutObjectAsync(putRequest);
         }
+
+        public async Task DeleteFileAsync(string filename)
+        {
+            var request = new DeleteObjectRequest
+            {
+                BucketName = _bucketName,
+                Key = filename
+            };
+
+            await _s3Client.DeleteObjectAsync(request);
+        }
+
+        public async Task DeleteFolderAsync(string folderName)
+        {
+            var fileList = await GetAllFilesAsync();
+            var folderPrefix = $"{folderName}/";
+
+            foreach (var file in fileList)
+            {
+                if (file.StartsWith(folderPrefix))
+                {
+                    await DeleteFileAsync(file);
+                }
+            }
+        }
+
     }
 }
