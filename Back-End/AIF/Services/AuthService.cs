@@ -31,7 +31,8 @@ namespace AIF.Services
             {
                 Name = dto.Name,
                 Email = dto.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                ProfilePictureUrl = "s3://ai-finances/20230710/20230710101111.png"
             };
 
             await _repository.CreateAsync(user);
