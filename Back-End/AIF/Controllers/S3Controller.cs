@@ -98,5 +98,29 @@ namespace AIF.Controllers
                 return BadRequest("Failed to delete folder. Error: " + ex.Message);
             }
         }
+
+        [HttpPost("ChangeProfilePicture")]
+        public async Task<IActionResult> ChangeProfilePicture(IFormFile file, int userId)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                    return BadRequest("No file uploaded.");
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream);
+                    var fileBytes = memoryStream.ToArray();
+                    string fileExtension = Path.GetExtension(file.FileName);
+                    var newAddress = await _s3Service.UpdateProfilePictureAsync(userId, fileBytes, fileExtension);
+
+                    return Ok(newAddress);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Failed to change profile picture. Error: " + ex.Message);
+            }
+        }
     }
 }

@@ -7,5 +7,6 @@
         Task<byte[]> DownloadFileAsync(string filename, string fileExtension);
         Task DeleteFileAsync(string filename);
         Task DeleteFolderAsync(string folderName);
+        Task<string> UpdateProfilePictureAsync(int userId, byte[] newPictureBytes, string fileExtension);
     }
 }

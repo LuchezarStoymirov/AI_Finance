@@ -48,8 +48,13 @@ namespace AIF
                 var bucketName = configuration.GetValue<string>("AWS:BucketName");
                 var regionString = configuration.GetValue<string>("AWS:Region");
                 var region = RegionEndpoint.GetBySystemName(regionString);
-                return new S3Service(accessKey, secretKey, bucketName, region);
+
+                // Resolve AifDatabaseContext from the service provider
+                var dbContext = provider.GetRequiredService<AifDatabaseContext>();
+
+                return new S3Service(accessKey, secretKey, bucketName, region, dbContext);
             });
+
 
             builder.Services.AddSwaggerGen(c =>
             {

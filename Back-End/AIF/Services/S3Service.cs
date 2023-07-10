@@ -1,11 +1,13 @@
-﻿using Amazon;
-using Amazon.S3;
-using Amazon.S3.Model;
-using Amazon.S3.Transfer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using AIF.Data;
+using Amazon;
+using Amazon.S3;
+using Amazon.S3.Model;
+using Amazon.S3.Transfer;
+
 
 namespace AIF.Services
 {
@@ -13,11 +15,13 @@ namespace AIF.Services
     {
         private readonly string _bucketName;
         private readonly IAmazonS3 _s3Client;
+        private readonly IUserRepository _userRepository;
 
-        public S3Service(string accessKey, string secretKey, string bucketName, RegionEndpoint region)
+        public S3Service(string accessKey, string secretKey, string bucketName, RegionEndpoint region, IUserRepository userRepository)
         {
             _bucketName = bucketName;
             _s3Client = new AmazonS3Client(accessKey, secretKey, region);
+            _userRepository = userRepository;
         }
 
         public async Task UploadFileAsync(byte[] fileBytes, string fileExtension)
@@ -102,6 +106,63 @@ namespace AIF.Services
                 {
                     await DeleteFileAsync(file);
                 }
+            }
+        }
+
+        public async Task<string> UpdateProfilePictureAsync(byte[] newPictureBytes, string fileExtension)
+        {
+            try
+            {
+                int userId = GetUserIdFromDatabase(); // Retrieve the user ID from the database
+
+                string folderName = "Profile Pictures";
+                string newFileName = $"{userId} Profile Picture{fileExtension}";
+                string profilePictureKey = $"{folderName}/{newFileName}";
+
+                var fileList = await GetAllFilesAsync();
+
+                if (fileList.Contains(profilePictureKey))
+                {
+                    await DeleteFileAsync(profilePictureKey);
+                }
+
+                await UploadFileAsync(newPictureBytes, profilePictureKey);
+
+                string newAddress = $"{_bucketName}/{profilePictureKey}";
+
+                await UpdateProfilePictureAddressInDatabase(userId, newAddress);
+
+                return newAddress;
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+                throw ex;
+            }
+        }
+
+        private int GetUserIdFromDatabase()
+        {
+            // Replace this with your actual code to retrieve the user ID from the database
+            // For example, if you're using Entity Framework, you can do something like:
+            var user = _userRepository.GetLoggedInUser(); // Modify this according to your repository method
+            if (user != null)
+            {
+                return user.Id;
+            }
+
+            throw new Exception("User not found in the database."); // Throw an exception if user not found
+        }
+
+        private async Task UpdateProfilePictureAddressInDatabase(int userId, string newAddress)
+        {
+            // Replace this with your actual code to update the database with the new profile picture address
+            // For example, if you're using Entity Framework, you can do something like:
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user != null)
+            {
+                user.ProfilePictureUrl = newAddress;
+                await _userRepository.UpdateAsync(user);
             }
         }
 
