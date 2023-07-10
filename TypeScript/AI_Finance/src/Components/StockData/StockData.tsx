@@ -71,7 +71,7 @@ export const StockData = () => {
         <div className={style.titlecluster}>
           <h1 className={style.title}>Prices</h1>
           <button className={style.export} onClick={exportFinancialData}>
-            ↓
+            Export
           </button>
         </div>
         <div className={style.header}>

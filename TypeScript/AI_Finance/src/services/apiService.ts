@@ -1,6 +1,13 @@
 import { fetchWrapper } from "./fetchWrapper";
 import { config } from "../Config/urlConfig";
 
+interface Data {
+  oldUsername: string;
+  newUsername: string;
+  oldEmail: string;
+  newEmail: string;
+}
+
 const authHeader = () => {
   const token = localStorage.getItem("token");
   return {
@@ -32,11 +39,25 @@ const logOut = async () => {
   const url = config.baseURL + config.logout;
   const res = await fetchWrapper.post(url, authHeader());
   return res;
-}
+};
+
+const changeUsername = async (data: Data) => {
+  const url = config.baseURL + config.updateUser;
+  const res = await fetchWrapper.post(url, data);
+  return res;
+};
+
+const changeEmail = async (data: Data) => {
+  const url = config.baseURL + config.updateUser;
+  const res = await fetchWrapper.post(url, data);
+  return res;
+};
 
 export const apiService = {
   getStockData,
   exportData,
   getUserData,
-  logOut
+  logOut,
+  changeUsername,
+  changeEmail,
 };

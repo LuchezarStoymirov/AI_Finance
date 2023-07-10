@@ -6,12 +6,14 @@
   align-items: center;
 }
 
-.header-logo {
+.logoImage {
   color: white;
   margin: 0;
   font-size: 32px;
   opacity: 0;
   animation: fade-in-left 1s ease forwards;
+  width: 100%;
+  max-width: 200px;
 }
 
 .profileIcon {
@@ -56,46 +58,10 @@
   }
 }
 
-.header-link {
-  margin-right: 20px;
-}
-
-.header-link__item {
-  color: white;
-  text-decoration: none;
-  font-size: 20px;
-  margin-right: 20px;
-}
-
-.header-link__item:hover {
-  color: var(--lightBlue);
-}
-
-.logoImage {
-  width: 100%;
-  max-width: 200px;
-}
-
 @media (max-width: 767px) {
   .header {
     flex-direction: column;
     padding-left: 0;
     padding-right: 0;
-  }
-
-  .header-logo {
-    order: 2;
-    text-align: right;
-    margin-bottom: 10px;
-  }
-
-  .header-link {
-    order: 1;
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  .header-link__item {
-    margin-right: 10px;
   }
 }

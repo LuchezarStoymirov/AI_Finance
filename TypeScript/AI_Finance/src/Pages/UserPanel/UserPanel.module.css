@@ -1,0 +1,216 @@
+.container {
+  position: relative;
+  background-image: url(src/Images/662960.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.box {
+  height: 500px;
+  width: 400px;
+  background-color: white;
+  border: 1px solid var(--lightBlue);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  animation: slide-up 0.3s ease-in-out;
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profilePic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--lightBlue);
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: var(--headerBlue);
+  border-radius: 8px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.profileAttributes {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: white;
+  padding: 20px;
+  height: 100vh;
+  justify-content: start;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.usercell > h3 {
+  color: darkgrey;
+  margin: 0px;
+}
+
+.usercell > h4 {
+  color: black;
+  margin: 0px;
+}
+
+.usercell {
+  margin-top: 10px;
+}
+
+.homebutton {
+  width: 80px;
+  height: 30px;
+  color: white;
+  background-color: var(--lightBlue);
+  border: none;
+  border-radius: 8px;
+  border: 1px solid var(--lightBlue);
+}
+
+.homebutton:hover {
+  background-color: white;
+  color: var(--lightBlue);
+}
+
+.returndiv {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 100px;
+}
+
+.datagroup {
+  display: flex;
+  flex-direction: row;
+}
+
+.change {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 10px;
+  border: none;
+}
+
+.change:hover {
+  border: 1px solid var(--lightBlue);
+}
+
+.nameModal {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalBox {
+  width: 400px;
+  height: 150px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 8px;
+  padding-bottom: 10px;
+}
+
+.valueInput {
+  border: none;
+  border-bottom: 1px solid var(--lightBlue);
+  width: 250px;
+  font-size: 20px;
+}
+
+.submit {
+  margin-top: 20px;
+  width: 60px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: var(--lightBlue);
+  color: white;
+  border: 1px solid var(--lightBlue);
+}
+
+.submit:hover {
+  background-color: white;
+  color: var(--lightBlue);
+}
+
+.closediv {
+  width: 100%;
+  margin: 0;
+  height: 16vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: start;
+}
+
+.closeButton {
+  border-radius: 50%;
+  background-color: var(--lightBlue);
+  color: white;
+  margin: 5px;
+  border: 1px solid var(--lightBlue);
+}
+
+.closeButton:hover {
+  background-color: white;
+  color: var(--lightBlue);
+}
+
+@media screen and (max-width: 768px) {
+  .box {
+    height: 400px;
+    width: 300px;
+  }
+
+  .profilePic {
+    width: 80px;
+    height: 80px;
+  }
+
+  .usercell > h3 {
+    font-size: 14px;
+  }
+
+  .usercell > h4 {
+    font-size: 16px;
+  }
+
+  .valueInput {
+    font-size: 16px;
+  }
+
+  .submit {
+    font-size: 14px;
+  }
+
+  .modalBox {
+    margin: 10px;
+  }
+}
