@@ -4,23 +4,30 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { pics } from "./constants";
 
+interface Data {
+  oldUsername: string;
+  newUsername: string;
+  oldEmail: string;
+  newEmail: string;
+}
+
 export const UserPanel = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [selectedImage, setSelectedImage] = useState(pics.startingpic);
-  const [changeName, setChangeName] = useState(false);
-  const [changeEmail, setChangeEmail] = useState(false);
+  const [shouldChangeName, setShouldChangeName] = useState(false);
+  const [shouldChangeEmail, setShouldChangeEmail] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
 
   const navigate = useNavigate();
 
   const nameHandler = () => {
-    setChangeName(!changeName);
+    setShouldChangeName(!shouldChangeName);
   };
 
   const emailHandler = () => {
-    setChangeEmail(!changeEmail);
+    setShouldChangeEmail(!shouldChangeEmail);
   };
 
   const returnHome = () => {
@@ -28,8 +35,8 @@ export const UserPanel = () => {
   };
 
   const closeModal = () => {
-    setChangeEmail(false);
-    setChangeName(false);
+    setShouldChangeEmail(false);
+    setShouldChangeName(false);
   };
 
   useEffect(() => {
@@ -58,7 +65,7 @@ export const UserPanel = () => {
   };
 
   const sendNameData = () => {
-    const data = {
+    const data: Data = {
       oldUsername: username,
       newUsername: newUsername,
       oldEmail: email,
@@ -68,7 +75,7 @@ export const UserPanel = () => {
   };
 
   const sendEmailData = () => {
-    const data = {
+    const data: Data = {
       oldUsername: username,
       newUsername: username,
       oldEmail: email,
@@ -114,7 +121,7 @@ export const UserPanel = () => {
           </button>
         </div>
       </div>
-      {changeName && (
+      {shouldChangeName && (
         <div className={style.nameModal}>
           <div className={style.modalBox}>
             <div className={style.closediv}>
@@ -136,7 +143,7 @@ export const UserPanel = () => {
           </div>
         </div>
       )}
-      {changeEmail && (
+      {shouldChangeEmail && (
         <div className={style.nameModal}>
           <div className={style.modalBox}>
             <div className={style.closediv}>

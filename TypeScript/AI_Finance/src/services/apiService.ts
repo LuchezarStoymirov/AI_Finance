@@ -1,7 +1,7 @@
 import { fetchWrapper } from "./fetchWrapper";
 import { config } from "../Config/urlConfig";
 
-interface Data{
+interface Data {
   oldUsername: string;
   newUsername: string;
   oldEmail: string;
@@ -39,19 +39,19 @@ const logOut = async () => {
   const url = config.baseURL + config.logout;
   const res = await fetchWrapper.post(url, authHeader());
   return res;
-}
+};
 
-const changeUsername = async (data : Data) => {
+const changeUsername = async (data: Data) => {
   const url = config.baseURL + config.updateUser;
-  const res = await fetchWrapper.post(url,data);
+  const res = await fetchWrapper.post(url, data);
   return res;
-}
+};
 
-const changeEmail = async (data : Data) => {
+const changeEmail = async (data: Data) => {
   const url = config.baseURL + config.updateUser;
-  const res = await fetchWrapper.post(url,data);
+  const res = await fetchWrapper.post(url, data);
   return res;
-}
+};
 
 export const apiService = {
   getStockData,
@@ -59,5 +59,5 @@ export const apiService = {
   getUserData,
   logOut,
   changeUsername,
-  changeEmail
+  changeEmail,
 };
