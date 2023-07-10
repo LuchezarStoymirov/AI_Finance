@@ -83,6 +83,12 @@
     background-color: var(--lightBlue);
     border: none;
     border-radius: 8px;
+    border: 1px solid var(--lightBlue);
+}
+
+.homebutton:hover{
+    background-color: white;
+    color: var(--lightBlue);
 }
 
 .returndiv {
