@@ -1,11 +1,9 @@
-﻿using Amazon;
+﻿using AIF.Data;
+using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+
 
 namespace AIF.Services
 {
@@ -13,11 +11,13 @@ namespace AIF.Services
     {
         private readonly string _bucketName;
         private readonly IAmazonS3 _s3Client;
+        private readonly IUserRepository _userRepository;
 
-        public S3Service(string accessKey, string secretKey, string bucketName, RegionEndpoint region)
+        public S3Service(string accessKey, string secretKey, string bucketName, RegionEndpoint region, IUserRepository userRepository)
         {
             _bucketName = bucketName;
             _s3Client = new AmazonS3Client(accessKey, secretKey, region);
+            _userRepository = userRepository;
         }
 
         public async Task UploadFileAsync(byte[] fileBytes, string fileExtension)
@@ -79,5 +79,70 @@ namespace AIF.Services
 
             await _s3Client.PutObjectAsync(putRequest);
         }
+
+        public async Task DeleteFileAsync(string filename)
+        {
+            var request = new DeleteObjectRequest
+            {
+                BucketName = _bucketName,
+                Key = filename
+            };
+
+            await _s3Client.DeleteObjectAsync(request);
+        }
+
+        public async Task DeleteFolderAsync(string folderName)
+        {
+            var fileList = await GetAllFilesAsync();
+            var folderPrefix = $"{folderName}/";
+
+            foreach (var file in fileList)
+            {
+                if (file.StartsWith(folderPrefix))
+                {
+                    await DeleteFileAsync(file);
+                }
+            }
+        }
+
+        public async Task<string> UpdateProfilePictureAsync(int userId, byte[] newPictureBytes, string fileExtension)
+        {
+            string folderName = "Profile Pictures";
+            string newFileName = $"{userId} Profile Picture{fileExtension}";
+            string profilePictureKey = $"{folderName}/{newFileName}";
+
+            var fileList = await GetAllFilesAsync();
+
+            await CreateFolderIfNotExistsAsync(folderName);
+
+            if (fileList.Contains(profilePictureKey))
+            {
+                await DeleteFileAsync(profilePictureKey);
+            }
+
+            using (var memoryStream = new MemoryStream(newPictureBytes))
+            {
+                var fileTransferUtility = new TransferUtility(_s3Client);
+                await fileTransferUtility.UploadAsync(memoryStream, _bucketName, $"{folderName}/{newFileName}");
+            }
+
+            string newAddress = $"s3://{_bucketName}/{profilePictureKey}";
+
+            await UpdateProfilePictureAddressInDatabase(userId, newAddress);
+
+            return newAddress;
+        }
+
+
+        private async Task UpdateProfilePictureAddressInDatabase(int userId, string newAddress)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user != null)
+            {
+                user.ProfilePictureUrl = newAddress;
+                await _userRepository.UpdateAsync(user);
+            }
+        }
+
     }
 }

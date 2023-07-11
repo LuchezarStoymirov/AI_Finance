@@ -70,5 +70,57 @@ namespace AIF.Controllers
                 return BadRequest("Failed to download file. Error: " + ex.Message);
             }
         }
+
+        [HttpDelete("DeleteFileFromS3")]
+        public async Task<IActionResult> DeleteFileFromS3(string fileName)
+        {
+            try
+            {
+                await _s3Service.DeleteFileAsync(fileName);
+                return Ok("File deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Failed to delete file. Error: " + ex.Message);
+            }
+        }
+
+        [HttpDelete("DeleteFolderFromS3")]
+        public async Task<IActionResult> DeleteFolderFromS3(string folderName)
+        {
+            try
+            {
+                await _s3Service.DeleteFolderAsync(folderName);
+                return Ok("Folder deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Failed to delete folder. Error: " + ex.Message);
+            }
+        }
+
+        [HttpPost("ChangeProfilePicture")]
+        public async Task<IActionResult> ChangeProfilePicture(IFormFile file, int userId)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                    return BadRequest("No file uploaded.");
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream);
+                    var fileBytes = memoryStream.ToArray();
+                    string fileExtension = Path.GetExtension(file.FileName);
+                    var newAddress = await _s3Service.UpdateProfilePictureAsync(userId, fileBytes, fileExtension);
+
+                    return Ok(newAddress);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Failed to change profile picture. Error: " + ex.Message);
+            }
+        }
     }
 }
