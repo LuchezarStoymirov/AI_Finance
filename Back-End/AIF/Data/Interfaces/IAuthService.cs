@@ -12,6 +12,12 @@ namespace AIF.Services
 
         Task<IActionResult> LoginAsync(LoginDto dto);
 
+        Task<IActionResult> ChangeNameAsync(string newName);
+
+        Task<IActionResult> ChangeEmailAsync(string newEmail);
+
+        Task<IActionResult> ChangePasswordAsync(ChangePasswordDto dto);
+
         Task<IActionResult> GoogleLoginAsync(GoogleLoginDto dto);
 
         Task<GoogleTokenValidationResult> ValidateGoogleTokenAsync(string googleToken);

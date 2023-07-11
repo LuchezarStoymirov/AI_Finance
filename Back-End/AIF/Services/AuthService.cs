@@ -129,6 +129,96 @@ namespace AIF.Services
             return new OkObjectResult(user);
         }
 
+        public async Task<IActionResult> ChangeNameAsync(string newName)
+        {
+            var authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+
+            if (string.IsNullOrEmpty(authorizationHeader))
+            {
+                return new UnauthorizedResult();
+            }
+
+            var token = authorizationHeader.ToString();
+
+            var decodedToken = await _jwtService.VerifyAsync(token);
+
+            int userId = int.Parse(decodedToken.Issuer);
+
+            var user = await _repository.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new NotFoundResult();
+            }
+
+            user.Name = newName;
+            await _repository.UpdateAsync(user);
+
+            return new OkResult();
+        }
+
+        public async Task<IActionResult> ChangeEmailAsync(string newEmail)
+        {
+            var authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+
+            if (string.IsNullOrEmpty(authorizationHeader))
+            {
+                return new UnauthorizedResult();
+            }
+
+            var token = authorizationHeader.ToString();
+
+            var decodedToken = await _jwtService.VerifyAsync(token);
+
+            int userId = int.Parse(decodedToken.Issuer);
+
+            var user = await _repository.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new NotFoundResult();
+            }
+
+            user.Email = newEmail;
+            await _repository.UpdateAsync(user);
+
+            return new OkResult();
+        }
+
+        public async Task<IActionResult> ChangePasswordAsync(ChangePasswordDto dto)
+        {
+            var authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+
+            if (string.IsNullOrEmpty(authorizationHeader))
+            {
+                return new UnauthorizedResult();
+            }
+
+            var token = authorizationHeader.ToString();
+
+            var decodedToken = await _jwtService.VerifyAsync(token);
+
+            int userId = int.Parse(decodedToken.Issuer);
+
+            var user = await _repository.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new NotFoundResult();
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, user.Password))
+            {
+                return new BadRequestObjectResult(new { message = "Invalid current password" });
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+            await _repository.UpdateAsync(user);
+
+            return new OkResult();
+        }
+
+
         public async Task<bool> ValidateTokenAsync(string token)
         {
             if (string.IsNullOrEmpty(token))
