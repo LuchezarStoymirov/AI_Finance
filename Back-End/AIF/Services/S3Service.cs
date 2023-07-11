@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using AIF.Data;
+﻿using AIF.Data;
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
@@ -109,26 +105,30 @@ namespace AIF.Services
             }
         }
 
-        public async Task<string> UpdateProfilePictureAsync(byte[] newPictureBytes, string fileExtension)
+        public async Task<string> UpdateProfilePictureAsync(int userId, byte[] newPictureBytes, string fileExtension)
         {
             try
             {
-                int userId = GetUserIdFromDatabase(); // Retrieve the user ID from the database
-
                 string folderName = "Profile Pictures";
                 string newFileName = $"{userId} Profile Picture{fileExtension}";
                 string profilePictureKey = $"{folderName}/{newFileName}";
 
                 var fileList = await GetAllFilesAsync();
 
+                await CreateFolderIfNotExistsAsync(folderName);
+
                 if (fileList.Contains(profilePictureKey))
                 {
                     await DeleteFileAsync(profilePictureKey);
                 }
 
-                await UploadFileAsync(newPictureBytes, profilePictureKey);
-
-                string newAddress = $"{_bucketName}/{profilePictureKey}";
+                using (var memoryStream = new MemoryStream(newPictureBytes))
+                {
+                    var fileTransferUtility = new TransferUtility(_s3Client);
+                    await fileTransferUtility.UploadAsync(memoryStream, _bucketName, $"{folderName}/{newFileName}");
+                }
+              
+                string newAddress = $"s3://{_bucketName}/{profilePictureKey}";
 
                 await UpdateProfilePictureAddressInDatabase(userId, newAddress);
 
@@ -136,28 +136,12 @@ namespace AIF.Services
             }
             catch (Exception ex)
             {
-                // Handle exception
                 throw ex;
             }
         }
 
-        private int GetUserIdFromDatabase()
-        {
-            // Replace this with your actual code to retrieve the user ID from the database
-            // For example, if you're using Entity Framework, you can do something like:
-            var user = _userRepository.GetLoggedInUser(); // Modify this according to your repository method
-            if (user != null)
-            {
-                return user.Id;
-            }
-
-            throw new Exception("User not found in the database."); // Throw an exception if user not found
-        }
-
         private async Task UpdateProfilePictureAddressInDatabase(int userId, string newAddress)
         {
-            // Replace this with your actual code to update the database with the new profile picture address
-            // For example, if you're using Entity Framework, you can do something like:
             var user = await _userRepository.GetByIdAsync(userId);
             if (user != null)
             {

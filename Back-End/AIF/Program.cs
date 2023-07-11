@@ -49,10 +49,10 @@ namespace AIF
                 var regionString = configuration.GetValue<string>("AWS:Region");
                 var region = RegionEndpoint.GetBySystemName(regionString);
 
-                // Resolve AifDatabaseContext from the service provider
-                var dbContext = provider.GetRequiredService<AifDatabaseContext>();
+                // Resolve IUserRepository from the service provider
+                var userRepository = provider.GetRequiredService<IUserRepository>();
 
-                return new S3Service(accessKey, secretKey, bucketName, region, dbContext);
+                return new S3Service(accessKey, secretKey, bucketName, region, userRepository);
             });
 
 

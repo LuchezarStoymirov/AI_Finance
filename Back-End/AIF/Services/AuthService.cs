@@ -16,13 +16,13 @@ namespace AIF.Services
     {
         private readonly IUserRepository _repository;
         private readonly IJwtService _jwtService;
-        private readonly HttpContext _httpContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AuthService(IUserRepository repository, IJwtService jwtService, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
             _jwtService = jwtService;
-            _httpContext = httpContextAccessor.HttpContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> RegisterAsync(RegisterDto dto)
@@ -111,7 +111,7 @@ namespace AIF.Services
 
         public async Task<IActionResult> GetUserAsync()
         {
-            var authorizationHeader = _httpContext.Request.Headers["Authorization"];
+            var authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
 
             if (string.IsNullOrEmpty(authorizationHeader))
             {
@@ -133,28 +133,26 @@ namespace AIF.Services
         {
             if (string.IsNullOrEmpty(token))
             {
-                return false; 
+                return false;
             }
 
             var decodedToken = await _jwtService.VerifyAsync(token);
 
             if (decodedToken == null)
             {
-                return false; 
+                return false;
             }
 
             int userId = int.Parse(decodedToken.Issuer);
 
             var user = await _repository.GetByIdAsync(userId);
 
-            return user != null; 
+            return user != null;
         }
-
-
 
         public async Task<IActionResult> LogoutAsync()
         {
-            _httpContext.Response.Cookies.Delete("jwt");
+            _httpContextAccessor.HttpContext.Response.Cookies.Delete("jwt");
 
             return new OkObjectResult(new
             {
