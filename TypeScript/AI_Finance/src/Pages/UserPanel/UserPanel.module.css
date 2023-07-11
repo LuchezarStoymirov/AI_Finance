@@ -77,6 +77,10 @@
   margin-top: 10px;
 }
 
+.inputLabel{
+    display: none;
+}
+
 .homebutton {
   width: 80px;
   height: 30px;
