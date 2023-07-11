@@ -109,7 +109,7 @@ export const UserPanel = () => {
           <input
             type="file"
             id="profilePicInput"
-            style={{ display: "none" }}
+            className={style.inputLabel}
             onChange={handleUpload}
           />
         </div>
