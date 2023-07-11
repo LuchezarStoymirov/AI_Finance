@@ -107,38 +107,32 @@ namespace AIF.Services
 
         public async Task<string> UpdateProfilePictureAsync(int userId, byte[] newPictureBytes, string fileExtension)
         {
-            try
+            string folderName = "Profile Pictures";
+            string newFileName = $"{userId} Profile Picture{fileExtension}";
+            string profilePictureKey = $"{folderName}/{newFileName}";
+
+            var fileList = await GetAllFilesAsync();
+
+            await CreateFolderIfNotExistsAsync(folderName);
+
+            if (fileList.Contains(profilePictureKey))
             {
-                string folderName = "Profile Pictures";
-                string newFileName = $"{userId} Profile Picture{fileExtension}";
-                string profilePictureKey = $"{folderName}/{newFileName}";
-
-                var fileList = await GetAllFilesAsync();
-
-                await CreateFolderIfNotExistsAsync(folderName);
-
-                if (fileList.Contains(profilePictureKey))
-                {
-                    await DeleteFileAsync(profilePictureKey);
-                }
-
-                using (var memoryStream = new MemoryStream(newPictureBytes))
-                {
-                    var fileTransferUtility = new TransferUtility(_s3Client);
-                    await fileTransferUtility.UploadAsync(memoryStream, _bucketName, $"{folderName}/{newFileName}");
-                }
-              
-                string newAddress = $"s3://{_bucketName}/{profilePictureKey}";
-
-                await UpdateProfilePictureAddressInDatabase(userId, newAddress);
-
-                return newAddress;
+                await DeleteFileAsync(profilePictureKey);
             }
-            catch (Exception ex)
+
+            using (var memoryStream = new MemoryStream(newPictureBytes))
             {
-                throw ex;
+                var fileTransferUtility = new TransferUtility(_s3Client);
+                await fileTransferUtility.UploadAsync(memoryStream, _bucketName, $"{folderName}/{newFileName}");
             }
+
+            string newAddress = $"s3://{_bucketName}/{profilePictureKey}";
+
+            await UpdateProfilePictureAddressInDatabase(userId, newAddress);
+
+            return newAddress;
         }
+
 
         private async Task UpdateProfilePictureAddressInDatabase(int userId, string newAddress)
         {
