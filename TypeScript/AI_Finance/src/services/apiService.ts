@@ -53,6 +53,12 @@ const changeEmail = async (data: Data) => {
   return res;
 };
 
+const uploadProfilePic = async (formData: FormData) => {
+  const url = config.baseURL + config.uploadImage;
+  const res = await fetchWrapper.post(url, formData);
+  return res;
+};
+
 export const apiService = {
   getStockData,
   exportData,
@@ -60,4 +66,5 @@ export const apiService = {
   logOut,
   changeUsername,
   changeEmail,
+  uploadProfilePic
 };

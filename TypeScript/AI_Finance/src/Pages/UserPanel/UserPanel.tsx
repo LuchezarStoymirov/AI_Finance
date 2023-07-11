@@ -84,14 +84,33 @@ export const UserPanel = () => {
     apiService.changeUsername(data);
   };
 
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("ProfilePic", file);
+
+      apiService.uploadProfilePic(formData);
+    }
+  };
+
   return (
     <div className={style.container}>
       <div className={style.box}>
         <div className={style.userinfo}>
-          <img
-            src={selectedImage || pics.genericProfilePic}
-            alt="Uploaded"
-            className={style.profilePic}
+          <label htmlFor="profilePicInput">
+            <img
+              src={selectedImage || pics.genericProfilePic}
+              alt="Uploaded"
+              className={style.profilePic}
+            />
+          </label>
+          <input
+            type="file"
+            id="profilePicInput"
+            style={{ display: "none" }}
+            onChange={handleUpload}
           />
         </div>
         <div className={style.profileAttributes}>

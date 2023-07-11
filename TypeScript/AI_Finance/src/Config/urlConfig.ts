@@ -8,5 +8,6 @@ export const config = {
   export: "Scraping/export/csv",
   user: "user",
   logout: "logout",
-  updateUser: "update-user"
+  updateUser: "update-user",
+  uploadImage: "S3/upload"
 };
