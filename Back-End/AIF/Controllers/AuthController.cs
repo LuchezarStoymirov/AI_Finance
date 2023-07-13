@@ -83,45 +83,18 @@ namespace AIF.Controllers
             }
         }
 
-        [HttpPost("change-name")]
-        public async Task<IActionResult> ChangeName(ChangeNameDto dto)
+        [HttpPost("update-user-info")]
+        public async Task<IActionResult> UpdateUserInfo(UpdateUserInfoDto dto)
         {
             try
             {
-                return await _authService.ChangeNameAsync(dto.NewName);
+                return await _authService.UpdateUserInfoAsync(dto);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
-
-        [HttpPost("change-email")]
-        public async Task<IActionResult> ChangeEmail(ChangeEmailDto dto)
-        {
-            try
-            {
-                return await _authService.ChangeEmailAsync(dto.NewEmail);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
-            }
-        }
-
-        [HttpPost("change-password")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
-        {
-            try
-            {
-                return await _authService.ChangePasswordAsync(dto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
-            }
-        }
-
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
