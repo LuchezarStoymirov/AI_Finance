@@ -83,6 +83,19 @@ namespace AIF.Controllers
             }
         }
 
+        [HttpPost("update-user-info")]
+        public async Task<IActionResult> UpdateUserInfo(UpdateUserInfoDto dto)
+        {
+            try
+            {
+                return await _authService.UpdateUserInfoAsync(dto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {

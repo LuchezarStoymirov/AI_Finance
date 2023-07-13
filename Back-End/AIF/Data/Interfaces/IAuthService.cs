@@ -20,6 +20,8 @@ namespace AIF.Services
 
         Task<IActionResult> LogoutAsync();
 
+        Task<IActionResult> UpdateUserInfoAsync(UpdateUserInfoDto dto);
+
         Task<bool> ValidateTokenAsync(string token);
     }
 }

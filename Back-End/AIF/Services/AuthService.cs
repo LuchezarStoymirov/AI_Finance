@@ -129,6 +129,43 @@ namespace AIF.Services
             return new OkObjectResult(user);
         }
 
+        public async Task<IActionResult> UpdateUserInfoAsync(UpdateUserInfoDto dto)
+        {
+            var authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+
+            if (string.IsNullOrEmpty(authorizationHeader))
+            {
+                return new UnauthorizedResult();
+            }
+
+            var token = authorizationHeader.ToString();
+
+            var decodedToken = await _jwtService.VerifyAsync(token);
+
+            int userId = int.Parse(decodedToken.Issuer);
+
+            var user = await _repository.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new NotFoundResult();
+            }
+
+            if (!string.IsNullOrEmpty(dto.NewName))
+            {
+                user.Name = dto.NewName;
+            }
+
+            if (!string.IsNullOrEmpty(dto.NewEmail))
+            {
+                user.Email = dto.NewEmail;
+            }
+
+            await _repository.UpdateAsync(user);
+
+            return new OkResult();
+        }
+
         public async Task<bool> ValidateTokenAsync(string token)
         {
             if (string.IsNullOrEmpty(token))
