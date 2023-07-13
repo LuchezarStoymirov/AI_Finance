@@ -67,7 +67,8 @@ namespace AIF.Services
                 {
                     Email = dto.Email,
                     Name = dto.Name,
-                    Password = "default google login password"
+                    Password = "default google login password",
+                    ProfilePictureUrl = "s3://ai-finances/Profile Pictures/Default Profile Picture.png"
                 };
                 await _repository.CreateAsync(user);
             }
