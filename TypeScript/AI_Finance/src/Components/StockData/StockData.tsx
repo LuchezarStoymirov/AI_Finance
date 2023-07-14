@@ -68,10 +68,14 @@ export const StockData = () => {
   return (
     <div className={style.box}>
       <div className={style.titlebox}>
-        <div className={style.titlecluster}>
+      <div className={style.titlecluster}>
           <h1 className={style.title}>Prices</h1>
           <button className={style.export} onClick={exportFinancialData}>
             Export
+          </button>
+          <input type="text" placeholder="Search..." className={style.search} />
+          <button className={style.spyglass} onClick={exportFinancialData}>
+            &#x1F50D;
           </button>
         </div>
         <div className={style.header}>

@@ -1,12 +1,18 @@
 .info {
   width: 82.6%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(5px);
   height: 200px;
   border-radius: 8px;
   margin: 20px;
   opacity: 0;
   animation: fade-in-bottom 1s ease forwards;
+}
+
+.title{
+  color: var(--lightBlue);
+  margin-left: 40%;
+  margin-top: 6%;
 }
 
 @keyframes fade-in-bottom {

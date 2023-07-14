@@ -15,6 +15,13 @@
     color: var(--lightBlue);
 }
 
+.image{
+    width: 300px;
+    border-radius: 8px;
+    margin-left: 20%;
+}
+
+
 @media (max-width: 767px){
     .box{
         width: 80%;
